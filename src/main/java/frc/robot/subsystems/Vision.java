@@ -29,7 +29,7 @@ public class Vision extends SubsystemBase{
 
     @Override
     public void periodic() {
-        _limelightFourPose = LimelightHelpers.getBotPose2d("limelight-four");
+        _limelightFourPose = LimelightHelpers.getBotPose2d("limelight");
         // if (DriverStation.isDisabled() && DriverStation.getAlliance().isPresent()){
         //     if (DriverStation.getAlliance().get() == Alliance.Red){
         //         LimelightHelpers.SetFiducialIDFiltersOverride("limelight-four", FieldConstants.kRedTagIDs);
@@ -67,7 +67,7 @@ public class Vision extends SubsystemBase{
     {
         ArrayList<VisionMeasurement> visionMeasurements = new ArrayList<>();
             LimelightHelpers.SetRobotOrientation(
-                "limelight-four",
+                "limelight",
                 rotation.getDegrees(),
                 0, 
                 0, 
@@ -75,11 +75,11 @@ public class Vision extends SubsystemBase{
                 0,
                 0
             );
-            LimelightHelpers.SetIMUMode("limelight-four", 0);
+            LimelightHelpers.SetIMUMode("limelight", 0);
 
             PoseEstimate limelightFourPoseEstimate =
                 LimelightHelpers.getBotPoseEstimate_wpiBlue_MegaTag2(
-                    "limelight-four"
+                    "limelight"
                 );
 
             if (limelightFourPoseEstimate != null && limelightFourPoseEstimate.tagCount > 0) {
@@ -99,7 +99,7 @@ public class Vision extends SubsystemBase{
     }
 
     public Pose2d getRobotPoseInTargetSpace() {
-        var botPoseTargetSpace = LimelightHelpers.getBotPose_TargetSpace("limelight-four");
+        var botPoseTargetSpace = LimelightHelpers.getBotPose_TargetSpace("limelight");
 
         return new Pose2d(botPoseTargetSpace[0], botPoseTargetSpace[2], new Rotation2d(botPoseTargetSpace[4]));
     }
