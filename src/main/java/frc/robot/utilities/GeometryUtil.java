@@ -62,7 +62,7 @@ public class GeometryUtil {
             .minus(currentPoseValue.getTranslation())
             .getAngle()
             .plus(Rotation2d.fromDegrees(isFollowingFront ? 0 : 180))
-            .minus(currentPoseValue.getRotation())
+            //.minus(currentPoseValue.getRotation())
             .getDegrees();
     }
 
