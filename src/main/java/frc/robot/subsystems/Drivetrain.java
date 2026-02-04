@@ -31,6 +31,7 @@ import edu.wpi.first.wpilibj.RobotController;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.Subsystem;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
@@ -112,6 +113,7 @@ public class Drivetrain implements Subsystem {
         if (Utils.isSimulation()) {
             startSimThread();
         }
+        setDefaultCommand(idle());
     }
 
     /* SysId routine for characterizing translation. This is used to find PID gains for the drive motors. */
@@ -222,6 +224,10 @@ public class Drivetrain implements Subsystem {
         updateOdometry();
         handleCurrentTarget();
         handleCurrentState();
+        SmartDashboard.putString("Current State", _currentState.toString());
+        SmartDashboard.putNumber("Target X", _target.getX());
+        SmartDashboard.putNumber("Target Y", _target.getY());
+        SmartDashboard.putNumber("Target Z", _target.getRotation().getDegrees());
     }
     
     private void updateOdometry() {
@@ -230,7 +236,7 @@ public class Drivetrain implements Subsystem {
 
         _swerve.setVisionMeasurementStdDevs(VecBuilder.fill(.7, .7, Math.PI));
         for (VisionMeasurement visionMeasurement : visionMeasurements) {
-            this.addVisionMeasurement(
+            _swerve.addVisionMeasurement(
                     visionMeasurement.pose, Utils.fpgaToCurrentTime(visionMeasurement.timestamp));
         }
 
@@ -306,14 +312,18 @@ public class Drivetrain implements Subsystem {
                 _swerve.setControl(BRAKE);
                 break;
             case OPEN_LOOP:
+                _swerve.setControl(
                 DRIVE.withVelocityX(-CONTROLLER.getLeftY() * _maxSpeed) // Drive forward with negative Y (forward)
                     .withVelocityY(-CONTROLLER.getLeftX() * _maxSpeed) // Drive left with negative X (left)
-                    .withRotationalRate(-CONTROLLER.getRightX() * _maxAngularRate); // Drive counterclockwise with negative X (left)
+                    .withRotationalRate(-CONTROLLER.getRightX() * _maxAngularRate)
+                    ); // Drive counterclockwise with negative X (left)
                 break;
             case AIM:
+                _swerve.setControl(
                 DRIVE.withVelocityX(-CONTROLLER.getLeftY() * _maxSpeed) // Drive forward with negative Y (forward)
                     .withVelocityY(-CONTROLLER.getLeftX() * _maxSpeed) // Drive left with negative X (left)
-                    .withRotationalRate(-_targetRotation * _maxAngularRate); // Drive counterclockwise with negative X (left)
+                    .withRotationalRate(-_targetRotation * _maxAngularRate) // Drive counterclockwise with negative X (left)
+                );
                 break;
             default:
                 _swerve.setControl(BRAKE);
