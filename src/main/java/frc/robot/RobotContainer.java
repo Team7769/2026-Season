@@ -80,6 +80,10 @@ public class RobotContainer {
           Commands.runOnce(() -> SHOOTER.setWantedState(ShooterState.IDLE))
         );
 
+        DRIVER_CONTROLLER.back().onTrue(
+          Commands.runOnce(() -> DRIVETRAIN.seedFieldCentric())
+        );
+
         DRIVER_CONTROLLER.rightTrigger().onTrue(
           Commands.runOnce(() -> SHOOTER.play())
         ).onFalse(
