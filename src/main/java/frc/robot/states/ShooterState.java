@@ -3,7 +3,7 @@ package frc.robot.states;
 public enum ShooterState {
     PLAY,
     PAUSE,
-    INDEX,
+    IDLE,
     SHOOT,
     INTAKE
 }

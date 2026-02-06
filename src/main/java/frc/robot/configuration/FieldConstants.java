@@ -1,7 +1,5 @@
 package frc.robot.configuration;
 
-import edu.wpi.first.math.geometry.Pose2d;
-import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import frc.robot.utilities.GeometryUtil;
 
@@ -10,9 +8,9 @@ public final class FieldConstants {
     // public static final double kFieldWidth = 8.052;
     public static final double kFieldLength = 16.54;
     public static final double kFieldWidth = 8.069;
-    public static final double kHalfFieldWidth = 4.026;
-    public static final double kQuarterFieldWidth = 4.026/2;
-    public static final double kHalfFieldLength = 8.27;
+    public static final double kHalfFieldWidth = kFieldWidth / 2;
+    public static final double kQuarterFieldWidth = kFieldWidth / 4;
+    public static final double kHalfFieldLength = kFieldLength / 2;
     public static final Translation2d kFieldCenter = new Translation2d(kHalfFieldLength, kHalfFieldWidth);
 
     // Coral Source Coordinates:

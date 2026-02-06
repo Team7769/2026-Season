@@ -38,17 +38,6 @@ public class RobotContainer {
     }
 
     private void configureBindings() {
-        // Note that X is defined as forward according to WPILib convention,
-        // and Y is defined as to the left according to WPILib convention.
-        // DRIVETRAIN.setDefaultCommand(
-        //     // Drivetrain will execute this command periodically
-        //     DRIVETRAIN.applyRequest(() ->
-        //         DRIVE.withVelocityX(-DRIVER_CONTROLLER.getLeftY() * _maxSpeed) // Drive forward with negative Y (forward)
-        //             .withVelocityY(-DRIVER_CONTROLLER.getLeftX() * _maxSpeed) // Drive left with negative X (left)
-        //             .withRotationalRate(-DRIVER_CONTROLLER.getRightX() * _maxAngularRate) // Drive counterclockwise with negative X (left)
-        //     )
-        // );
-
         // Idle while the robot is disabled. This ensures the configured
         // neutral mode is applied to the drive motors while disabled.
         RobotModeTriggers.disabled().onTrue(
@@ -81,16 +70,14 @@ public class RobotContainer {
           Commands.runOnce(() -> DRIVETRAIN.setTargetZoneB(GeometryUtil::isRedAlliance))
         );
 
-        DRIVER_CONTROLLER.rightBumper().whileTrue(
-          Commands.runOnce(() -> SHOOTER.moveIndex())
+        DRIVER_CONTROLLER.rightBumper().onTrue(
+          Commands.runOnce(() -> SHOOTER.setWantedState(ShooterState.SHOOT))
         ).onFalse(
-          Commands.runOnce(() -> SHOOTER.stopIndex())
+          Commands.runOnce(() -> SHOOTER.setWantedState(ShooterState.INTAKE))
         );
 
         DRIVER_CONTROLLER.leftBumper().onTrue(
-          Commands.runOnce(() -> SHOOTER.moveShooter())
-        ).onFalse(
-          Commands.runOnce(() -> SHOOTER.stopShooter())
+          Commands.runOnce(() -> SHOOTER.setWantedState(ShooterState.IDLE))
         );
 
         DRIVER_CONTROLLER.rightTrigger().onTrue(

@@ -1,4 +1,5 @@
 package frc.robot.subsystems;
+
 import com.ctre.phoenix6.Orchestra;
 import com.ctre.phoenix6.hardware.TalonFX;
 
@@ -11,28 +12,35 @@ public class Shooter implements Subsystem {
     private Orchestra _orchestra;
     private TalonFX index = new TalonFX(16);
     private TalonFX shooter = new TalonFX(15);
-    //_swerve.getModule(0)
-    public Shooter(){
+
+    // _swerve.getModule(0)
+    public Shooter() {
         _orchestra = new Orchestra();
         _orchestra.loadMusic("tetris.chrp");
         _orchestra.addInstrument(index);
         _orchestra.addInstrument(shooter);
     }
 
-    public void moveIndex(){
-    index.set(-0.3);
+    public void intake() {
+        index.set(0.3);
+        shooter.set(0.55);
     }
 
-    public void stopIndex(){
-    index.set(0);
+    public void shoot() {
+        index.set(-0.3);
+        shooter.set(0.55);
     }
 
-    public void moveShooter(){
-    shooter.set(.55);
+    public void stopIndex() {
+        index.set(0);
     }
 
-    public void stopShooter(){
-    shooter.set(0);
+    public void moveShooter() {
+        shooter.set(.55);
+    }
+
+    public void stopShooter() {
+        shooter.set(0);
     }
 
     public void setWantedState(ShooterState wantedState) {
@@ -49,26 +57,28 @@ public class Shooter implements Subsystem {
         _orchestra.pause();
     }
 
+    @Override
     public void periodic() {
         handleCurrentState();
     }
 
-        private void handleCurrentState() {
+    private void handleCurrentState() {
         switch (_currentState) {
             case PAUSE:
-                 _orchestra.pause();
+                _orchestra.pause();
                 break;
             case PLAY:
-                 _orchestra.play();
+                _orchestra.play();
                 break;
-            case INDEX:
-                moveIndex();
+            case IDLE:
+                stopIndex();
+                stopShooter();
                 break;
             case SHOOT:
-                 moveShooter();
+                shoot();
                 break;
             case INTAKE:
-                 moveShooter();
+                intake();
                 break;
             default:
                 _orchestra.stop();
