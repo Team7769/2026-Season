@@ -101,7 +101,7 @@ public class Drivetrain implements Subsystem {
         
         _targetFollowControllerX = new PIDController(0.85, 0, 0.04);
         _targetFollowControllerY = new PIDController(0.85, 0, 0.04);
-        _targetFollowControllerZ = new PIDController(0.025, 0, 0.001);
+        _targetFollowControllerZ = new PIDController(0.025, 0, 0.002);
         _targetFollowControllerX.setTolerance(.05);
         _targetFollowControllerY.setTolerance(.05);
         _targetFollowControllerZ.setTolerance(2);
@@ -322,7 +322,7 @@ public class Drivetrain implements Subsystem {
                 _swerve.setControl(
                 DRIVE.withVelocityX(-CONTROLLER.getLeftY() * _maxSpeed) // Drive forward with negative Y (forward)
                     .withVelocityY(-CONTROLLER.getLeftX() * _maxSpeed) // Drive left with negative X (left)
-                    .withRotationalRate(-_targetRotation * _maxAngularRate) // Drive counterclockwise with negative X (left)
+                    .withRotationalRate(_targetRotation * _maxAngularRate) // Drive counterclockwise with negative X (left)
                 );
                 break;
             default:

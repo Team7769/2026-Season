@@ -20,6 +20,8 @@ import frc.robot.configuration.FieldConstants;
 import frc.robot.generated.TunerConstants;
 import frc.robot.states.DrivetrainState;
 import frc.robot.subsystems.Drivetrain;
+import frc.robot.states.ShooterState;
+import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.Vision;
 import frc.robot.utilities.GeometryUtil;
 
@@ -29,6 +31,7 @@ public class RobotContainer {
 
     public final Vision VISION = new Vision();
     public final Drivetrain DRIVETRAIN = new Drivetrain(DRIVER_CONTROLLER, VISION);
+    public final Shooter SHOOTER = new Shooter();
 
     public RobotContainer() {
         configureBindings();
@@ -62,11 +65,11 @@ public class RobotContainer {
           Commands.runOnce(() -> DRIVETRAIN.setWantedState(DrivetrainState.OPEN_LOOP))
         );
 
-        DRIVER_CONTROLLER.a().onTrue(
+        DRIVER_CONTROLLER.y().onTrue(
           Commands.runOnce(() -> DRIVETRAIN.setTargetHub(GeometryUtil::isRedAlliance))
         );
         
-        DRIVER_CONTROLLER.b().onTrue(
+        DRIVER_CONTROLLER.a().onTrue(
           Commands.runOnce(() -> DRIVETRAIN.setTargetDepot(GeometryUtil::isRedAlliance))
         );
 
@@ -74,8 +77,26 @@ public class RobotContainer {
           Commands.runOnce(() -> DRIVETRAIN.setTargetZoneA(GeometryUtil::isRedAlliance))
         );
         
-        DRIVER_CONTROLLER.y().onTrue(
+        DRIVER_CONTROLLER.b().onTrue(
           Commands.runOnce(() -> DRIVETRAIN.setTargetZoneB(GeometryUtil::isRedAlliance))
+        );
+
+        DRIVER_CONTROLLER.rightBumper().whileTrue(
+          Commands.runOnce(() -> SHOOTER.moveIndex())
+        ).onFalse(
+          Commands.runOnce(() -> SHOOTER.stopIndex())
+        );
+
+        DRIVER_CONTROLLER.leftBumper().onTrue(
+          Commands.runOnce(() -> SHOOTER.moveShooter())
+        ).onFalse(
+          Commands.runOnce(() -> SHOOTER.stopShooter())
+        );
+
+        DRIVER_CONTROLLER.rightTrigger().onTrue(
+          Commands.runOnce(() -> SHOOTER.play())
+        ).onFalse(
+          Commands.runOnce(() -> SHOOTER.pause())
         );
 
         // Run SysId routines when holding back/start and X/Y.

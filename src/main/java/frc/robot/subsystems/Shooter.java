@@ -1,0 +1,78 @@
+package frc.robot.subsystems;
+import com.ctre.phoenix6.Orchestra;
+import com.ctre.phoenix6.hardware.TalonFX;
+
+import edu.wpi.first.units.measure.Voltage;
+import edu.wpi.first.wpilibj2.command.Subsystem;
+import frc.robot.states.ShooterState;
+
+public class Shooter implements Subsystem {
+    private ShooterState _currentState = ShooterState.PAUSE;
+    private Orchestra _orchestra;
+    private TalonFX index = new TalonFX(16);
+    private TalonFX shooter = new TalonFX(15);
+    //_swerve.getModule(0)
+    public Shooter(){
+        _orchestra = new Orchestra();
+        _orchestra.loadMusic("tetris.chrp");
+        _orchestra.addInstrument(index);
+        _orchestra.addInstrument(shooter);
+    }
+
+    public void moveIndex(){
+    index.set(-0.3);
+    }
+
+    public void stopIndex(){
+    index.set(0);
+    }
+
+    public void moveShooter(){
+    shooter.set(.55);
+    }
+
+    public void stopShooter(){
+    shooter.set(0);
+    }
+
+    public void setWantedState(ShooterState wantedState) {
+        if (wantedState != _currentState) {
+            _currentState = wantedState;
+        }
+    }
+
+    public void play() {
+        _orchestra.play();
+    }
+
+    public void pause() {
+        _orchestra.pause();
+    }
+
+    public void periodic() {
+        handleCurrentState();
+    }
+
+        private void handleCurrentState() {
+        switch (_currentState) {
+            case PAUSE:
+                 _orchestra.pause();
+                break;
+            case PLAY:
+                 _orchestra.play();
+                break;
+            case INDEX:
+                moveIndex();
+                break;
+            case SHOOT:
+                 moveShooter();
+                break;
+            case INTAKE:
+                 moveShooter();
+                break;
+            default:
+                _orchestra.stop();
+                break;
+        }
+    }
+}
