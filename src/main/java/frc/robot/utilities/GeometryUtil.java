@@ -42,6 +42,11 @@ public class GeometryUtil {
         var redTranslation = blueTranslation.rotateAround(FieldConstants.kFieldCenter, Rotation2d.k180deg);
         return redTranslation;
     }
+
+    public static Pose2d rotatePoseForRedAlliance(Pose2d bluePose) {
+        var redPose = bluePose.rotateAround(FieldConstants.kFieldCenter, Rotation2d.k180deg);
+        return redPose;
+    }
     
     public static Translation2d mirrorReef(Translation2d blueTranslation2d) {
         Translation2d reefTranslation = new Translation2d();
@@ -62,7 +67,7 @@ public class GeometryUtil {
             .minus(currentPoseValue.getTranslation())
             .getAngle()
             .plus(Rotation2d.fromDegrees(isFollowingFront ? 0 : 180))
-            .minus(currentPoseValue.getRotation())
+            //.minus(currentPoseValue.getRotation())
             .getDegrees();
     }
 

@@ -4,5 +4,7 @@ public enum DrivetrainState {
     AIM,
     IDLE,
     OPEN_LOOP,
-    POINT_FOLLOW
+    POINT_FOLLOW,
+    CLIMB_STAGE,
+    CLIMB_ENGAGE
 }

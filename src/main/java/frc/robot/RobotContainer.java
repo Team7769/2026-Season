@@ -10,16 +10,20 @@ import com.ctre.phoenix6.swerve.SwerveModule.DriveRequestType;
 import com.ctre.phoenix6.swerve.SwerveRequest;
 
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.RobotModeTriggers;
+import edu.wpi.first.wpilibj2.command.button.Trigger;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine.Direction;
 import frc.robot.configuration.FieldConstants;
 import frc.robot.generated.TunerConstants;
 import frc.robot.states.DrivetrainState;
 import frc.robot.subsystems.Drivetrain;
+import frc.robot.states.ShooterState;
+import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.Vision;
 import frc.robot.utilities.GeometryUtil;
 
@@ -29,23 +33,13 @@ public class RobotContainer {
 
     public final Vision VISION = new Vision();
     public final Drivetrain DRIVETRAIN = new Drivetrain(DRIVER_CONTROLLER, VISION);
+    public final Shooter SHOOTER = new Shooter();
 
     public RobotContainer() {
         configureBindings();
     }
 
     private void configureBindings() {
-        // Note that X is defined as forward according to WPILib convention,
-        // and Y is defined as to the left according to WPILib convention.
-        // DRIVETRAIN.setDefaultCommand(
-        //     // Drivetrain will execute this command periodically
-        //     DRIVETRAIN.applyRequest(() ->
-        //         DRIVE.withVelocityX(-DRIVER_CONTROLLER.getLeftY() * _maxSpeed) // Drive forward with negative Y (forward)
-        //             .withVelocityY(-DRIVER_CONTROLLER.getLeftX() * _maxSpeed) // Drive left with negative X (left)
-        //             .withRotationalRate(-DRIVER_CONTROLLER.getRightX() * _maxAngularRate) // Drive counterclockwise with negative X (left)
-        //     )
-        // );
-
         // Idle while the robot is disabled. This ensures the configured
         // neutral mode is applied to the drive motors while disabled.
         RobotModeTriggers.disabled().onTrue(
@@ -62,11 +56,11 @@ public class RobotContainer {
           Commands.runOnce(() -> DRIVETRAIN.setWantedState(DrivetrainState.OPEN_LOOP))
         );
 
-        DRIVER_CONTROLLER.a().onTrue(
+        DRIVER_CONTROLLER.y().onTrue(
           Commands.runOnce(() -> DRIVETRAIN.setTargetHub(GeometryUtil::isRedAlliance))
         );
         
-        DRIVER_CONTROLLER.b().onTrue(
+        DRIVER_CONTROLLER.a().onTrue(
           Commands.runOnce(() -> DRIVETRAIN.setTargetDepot(GeometryUtil::isRedAlliance))
         );
 
@@ -74,8 +68,51 @@ public class RobotContainer {
           Commands.runOnce(() -> DRIVETRAIN.setTargetZoneA(GeometryUtil::isRedAlliance))
         );
         
-        DRIVER_CONTROLLER.y().onTrue(
+        DRIVER_CONTROLLER.b().onTrue(
           Commands.runOnce(() -> DRIVETRAIN.setTargetZoneB(GeometryUtil::isRedAlliance))
+        );
+
+        DRIVER_CONTROLLER.rightBumper().onTrue(
+          Commands.runOnce(() -> SHOOTER.setWantedState(ShooterState.SHOOT))
+        ).onFalse(
+          Commands.runOnce(() -> SHOOTER.setWantedState(ShooterState.INTAKE))
+        );
+
+        DRIVER_CONTROLLER.leftBumper().onTrue(
+          Commands.runOnce(() -> SHOOTER.setWantedState(ShooterState.IDLE))
+        );
+
+        DRIVER_CONTROLLER.back().onTrue(
+          Commands.runOnce(() -> DRIVETRAIN.seedFieldCentric())
+        );
+
+        DRIVER_CONTROLLER.start().onTrue(
+          Commands.runOnce(() -> {
+            DRIVETRAIN.setWantedState(DrivetrainState.CLIMB_STAGE);
+            DRIVETRAIN.setTargetStageLeftClimb(GeometryUtil::isRedAlliance);
+         })
+        ).onFalse(
+          Commands.runOnce(() -> DRIVETRAIN.setWantedState(DrivetrainState.OPEN_LOOP))
+        );
+
+        new Trigger(DRIVETRAIN::isStagedForClimb).onTrue(
+          Commands.sequence(
+            Commands.runOnce(() -> DRIVETRAIN.setTargetEngageLeftClimb(GeometryUtil::isRedAlliance)),
+            Commands.runOnce(() -> DRIVETRAIN.setWantedState(DrivetrainState.CLIMB_ENGAGE))
+             )
+        );
+        
+        new Trigger(DRIVETRAIN::isReadyToClimb).onTrue(
+          Commands.runOnce(() -> {
+            SmartDashboard.putBoolean("isClimbed", true);
+            DRIVETRAIN.setWantedState(DrivetrainState.OPEN_LOOP);
+          })
+        );
+
+        DRIVER_CONTROLLER.rightTrigger().onTrue(
+          Commands.runOnce(() -> SHOOTER.play())
+        ).onFalse(
+          Commands.runOnce(() -> SHOOTER.pause())
         );
 
         // Run SysId routines when holding back/start and X/Y.
