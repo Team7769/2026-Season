@@ -6,5 +6,6 @@ public enum DrivetrainState {
     OPEN_LOOP,
     POINT_FOLLOW,
     CLIMB_STAGE,
-    CLIMB_ENGAGE
+    CLIMB_ENGAGE,
+    AUTO
 }
