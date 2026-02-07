@@ -97,7 +97,10 @@ public class RobotContainer {
         );
         
         new Trigger(DRIVETRAIN::isReadyToClimb).onTrue(
-          Commands.runOnce(() -> SmartDashboard.putBoolean("isClimbed", true))
+          Commands.runOnce(() -> {
+            SmartDashboard.putBoolean("isClimbed", true);
+            DRIVETRAIN.setWantedState(DrivetrainState.OPEN_LOOP);
+          })
         );
 
         DRIVER_CONTROLLER.rightTrigger().onTrue(
