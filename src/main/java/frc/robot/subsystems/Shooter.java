@@ -1,13 +1,15 @@
 package frc.robot.subsystems;
 
+
 import com.ctre.phoenix6.Orchestra;
 import com.ctre.phoenix6.hardware.TalonFX;
 
 import edu.wpi.first.units.measure.Voltage;
 import edu.wpi.first.wpilibj2.command.Subsystem;
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.states.ShooterState;
 
-public class Shooter implements Subsystem {
+public class Shooter extends SubsystemBase {
     private ShooterState _currentState = ShooterState.PAUSE;
     private Orchestra _orchestra;
     private TalonFX index = new TalonFX(16);
@@ -16,19 +18,19 @@ public class Shooter implements Subsystem {
     // _swerve.getModule(0)
     public Shooter() {
         _orchestra = new Orchestra();
-        _orchestra.loadMusic("tetris.chrp");
+        _orchestra.loadMusic("SeekAndDestroy.chrp");
         _orchestra.addInstrument(index);
         _orchestra.addInstrument(shooter);
     }
 
     public void intake() {
         index.set(0.3);
-        shooter.set(0.55);
+        shooter.set(0.65);
     }
 
     public void shoot() {
         index.set(-0.3);
-        shooter.set(0.55);
+        shooter.set(0.65);
     }
 
     public void stopIndex() {
