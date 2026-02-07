@@ -87,13 +87,19 @@ public class RobotContainer {
         );
 
         DRIVER_CONTROLLER.start().onTrue(
-          Commands.runOnce(() -> DRIVETRAIN.setWantedState(DrivetrainState.CLIMB_STAGE))
+          Commands.runOnce(() -> {
+            DRIVETRAIN.setWantedState(DrivetrainState.CLIMB_STAGE);
+            DRIVETRAIN.setTargetStageLeftClimb(GeometryUtil::isRedAlliance);
+         })
         ).onFalse(
           Commands.runOnce(() -> DRIVETRAIN.setWantedState(DrivetrainState.OPEN_LOOP))
         );
 
         new Trigger(DRIVETRAIN::isStagedForClimb).onTrue(
-          Commands.runOnce(() -> DRIVETRAIN.setWantedState(DrivetrainState.CLIMB_ENGAGE))
+          Commands.sequence(
+            Commands.runOnce(() -> DRIVETRAIN.setTargetEngageLeftClimb(GeometryUtil::isRedAlliance)),
+            Commands.runOnce(() -> DRIVETRAIN.setWantedState(DrivetrainState.CLIMB_ENGAGE))
+             )
         );
         
         new Trigger(DRIVETRAIN::isReadyToClimb).onTrue(

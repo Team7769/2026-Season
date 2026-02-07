@@ -51,9 +51,11 @@ import frc.robot.utilities.VisionMeasurement;
  * https://v6.docs.ctr-electronics.com/en/stable/docs/tuner/tuner-swerve/index.html
  */
 public class Drivetrain extends SubsystemBase {
-    
-    private double _maxSpeed = 1.0 * TunerConstants.kSpeedAt12Volts.in(MetersPerSecond); // kSpeedAt12Volts desired top speed
-    private double _maxAngularRate = RotationsPerSecond.of(0.75).in(RadiansPerSecond); // 3/4 of a rotation per second max angular velocity
+
+    private double _maxSpeed = 1.0 * TunerConstants.kSpeedAt12Volts.in(MetersPerSecond); // kSpeedAt12Volts desired top
+                                                                                         // speed
+    private double _maxAngularRate = RotationsPerSecond.of(0.75).in(RadiansPerSecond); // 3/4 of a rotation per second
+                                                                                       // max angular velocity
 
     /* Setting up bindings for necessary control of the swerve drive platform */
     private final SwerveRequest.FieldCentric DRIVE = new SwerveRequest.FieldCentric()
@@ -78,11 +80,10 @@ public class Drivetrain extends SubsystemBase {
     private double _xFollow = 0;
     private double _yFollow = 0;
 
-    
     StructPublisher<Pose2d> publisher = NetworkTableInstance.getDefault()
-    .getStructTopic("Robot Pose", Pose2d.struct).publish();
+            .getStructTopic("Robot Pose", Pose2d.struct).publish();
     StructPublisher<Pose2d> targetPosePublisher = NetworkTableInstance.getDefault()
-    .getStructTopic("Target Pose", Pose2d.struct).publish();
+            .getStructTopic("Target Pose", Pose2d.struct).publish();
     private final Field2d m_field;
 
     /* Blue alliance sees forward as 0 degrees (toward red alliance wall) */
@@ -101,10 +102,10 @@ public class Drivetrain extends SubsystemBase {
         _swerve = TunerConstants.createDrivetrain();
         CONTROLLER = controller;
         VISION = vision;
-        
-        _targetFollowControllerX = new PIDController(0.1, 0, 0.04);
-        _targetFollowControllerY = new PIDController(0.1, 0, 0.04);
-        _targetFollowControllerZ = new PIDController(0.025, 0, 0.002);
+
+        _targetFollowControllerX = new PIDController(1.35, 0, 0.04);
+        _targetFollowControllerY = new PIDController(1.35, 0, 0.04);
+        _targetFollowControllerZ = new PIDController(0.05, 0, 0.002);
         _targetFollowControllerX.setTolerance(.05);
         _targetFollowControllerY.setTolerance(.05);
         _targetFollowControllerZ.setTolerance(2);
@@ -121,68 +122,66 @@ public class Drivetrain extends SubsystemBase {
         resetGyro();
     }
 
-    /* SysId routine for characterizing translation. This is used to find PID gains for the drive motors. */
+    /*
+     * SysId routine for characterizing translation. This is used to find PID gains
+     * for the drive motors.
+     */
     private final SysIdRoutine m_sysIdRoutineTranslation = new SysIdRoutine(
-        new SysIdRoutine.Config(
-            null,        // Use default ramp rate (1 V/s)
-            Volts.of(4), // Reduce dynamic step voltage to 4 V to prevent brownout
-            null,        // Use default timeout (10 s)
-            // Log state with SignalLogger class
-            state -> SignalLogger.writeString("SysIdTranslation_State", state.toString())
-        ),
-        new SysIdRoutine.Mechanism(
-            output -> _swerve.setControl(m_translationCharacterization.withVolts(output)),
-            null,
-            this
-        )
-    );
+            new SysIdRoutine.Config(
+                    null, // Use default ramp rate (1 V/s)
+                    Volts.of(4), // Reduce dynamic step voltage to 4 V to prevent brownout
+                    null, // Use default timeout (10 s)
+                    // Log state with SignalLogger class
+                    state -> SignalLogger.writeString("SysIdTranslation_State", state.toString())),
+            new SysIdRoutine.Mechanism(
+                    output -> _swerve.setControl(m_translationCharacterization.withVolts(output)),
+                    null,
+                    this));
 
-    /* SysId routine for characterizing steer. This is used to find PID gains for the steer motors. */
+    /*
+     * SysId routine for characterizing steer. This is used to find PID gains for
+     * the steer motors.
+     */
     private final SysIdRoutine m_sysIdRoutineSteer = new SysIdRoutine(
-        new SysIdRoutine.Config(
-            null,        // Use default ramp rate (1 V/s)
-            Volts.of(7), // Use dynamic voltage of 7 V
-            null,        // Use default timeout (10 s)
-            // Log state with SignalLogger class
-            state -> SignalLogger.writeString("SysIdSteer_State", state.toString())
-        ),
-        new SysIdRoutine.Mechanism(
-            volts -> _swerve.setControl(m_steerCharacterization.withVolts(volts)),
-            null,
-            this
-        )
-    );
+            new SysIdRoutine.Config(
+                    null, // Use default ramp rate (1 V/s)
+                    Volts.of(7), // Use dynamic voltage of 7 V
+                    null, // Use default timeout (10 s)
+                    // Log state with SignalLogger class
+                    state -> SignalLogger.writeString("SysIdSteer_State", state.toString())),
+            new SysIdRoutine.Mechanism(
+                    volts -> _swerve.setControl(m_steerCharacterization.withVolts(volts)),
+                    null,
+                    this));
 
     /*
      * SysId routine for characterizing rotation.
-     * This is used to find PID gains for the FieldCentricFacingAngle HeadingController.
-     * See the documentation of SwerveRequest.SysIdSwerveRotation for info on importing the log to SysId.
+     * This is used to find PID gains for the FieldCentricFacingAngle
+     * HeadingController.
+     * See the documentation of SwerveRequest.SysIdSwerveRotation for info on
+     * importing the log to SysId.
      */
     private final SysIdRoutine m_sysIdRoutineRotation = new SysIdRoutine(
-        new SysIdRoutine.Config(
-            /* This is in radians per second², but SysId only supports "volts per second" */
-            Volts.of(Math.PI / 6).per(Second),
-            /* This is in radians per second, but SysId only supports "volts" */
-            Volts.of(Math.PI),
-            null, // Use default timeout (10 s)
-            // Log state with SignalLogger class
-            state -> SignalLogger.writeString("SysIdRotation_State", state.toString())
-        ),
-        new SysIdRoutine.Mechanism(
-            output -> {
-                /* output is actually radians per second, but SysId only supports "volts" */
-                _swerve.setControl(m_rotationCharacterization.withRotationalRate(output.in(Volts)));
-                /* also log the requested output for SysId */
-                SignalLogger.writeDouble("Rotational_Rate", output.in(Volts));
-            },
-            null,
-            this
-        )
-    );
+            new SysIdRoutine.Config(
+                    /* This is in radians per second², but SysId only supports "volts per second" */
+                    Volts.of(Math.PI / 6).per(Second),
+                    /* This is in radians per second, but SysId only supports "volts" */
+                    Volts.of(Math.PI),
+                    null, // Use default timeout (10 s)
+                    // Log state with SignalLogger class
+                    state -> SignalLogger.writeString("SysIdRotation_State", state.toString())),
+            new SysIdRoutine.Mechanism(
+                    output -> {
+                        /* output is actually radians per second, but SysId only supports "volts" */
+                        _swerve.setControl(m_rotationCharacterization.withRotationalRate(output.in(Volts)));
+                        /* also log the requested output for SysId */
+                        SignalLogger.writeDouble("Rotational_Rate", output.in(Volts));
+                    },
+                    null,
+                    this));
 
     /* The SysId routine to test */
     private SysIdRoutine m_sysIdRoutineToApply = m_sysIdRoutineTranslation;
-
 
     /**
      * Runs the SysId Quasistatic test in the given direction for the routine
@@ -210,18 +209,21 @@ public class Drivetrain extends SubsystemBase {
     public void periodic() {
         /*
          * Periodically try to apply the operator perspective.
-         * If we haven't applied the operator perspective before, then we should apply it regardless of DS state.
-         * This allows us to correct the perspective in case the robot code restarts mid-match.
-         * Otherwise, only check and apply the operator perspective if the DS is disabled.
-         * This ensures driving behavior doesn't change until an explicit disable event occurs during testing.
+         * If we haven't applied the operator perspective before, then we should apply
+         * it regardless of DS state.
+         * This allows us to correct the perspective in case the robot code restarts
+         * mid-match.
+         * Otherwise, only check and apply the operator perspective if the DS is
+         * disabled.
+         * This ensures driving behavior doesn't change until an explicit disable event
+         * occurs during testing.
          */
         if (!m_hasAppliedOperatorPerspective || DriverStation.isDisabled()) {
             DriverStation.getAlliance().ifPresent(allianceColor -> {
                 _swerve.setOperatorPerspectiveForward(
-                    allianceColor == Alliance.Red
-                        ? kRedAlliancePerspectiveRotation
-                        : kBlueAlliancePerspectiveRotation
-                );
+                        allianceColor == Alliance.Red
+                                ? kRedAlliancePerspectiveRotation
+                                : kBlueAlliancePerspectiveRotation);
                 m_hasAppliedOperatorPerspective = true;
             });
         }
@@ -233,18 +235,21 @@ public class Drivetrain extends SubsystemBase {
         SmartDashboard.putNumber("Target X", _target.getX());
         SmartDashboard.putNumber("Target Y", _target.getY());
         SmartDashboard.putNumber("Target Z", _target.getRotation().getDegrees());
+        SmartDashboard.putBoolean("X Staged", isXStagedForClimb());
+        SmartDashboard.putBoolean("Y Staged", isYStagedForClimb());
+        SmartDashboard.putBoolean("Z Staged", isZStagedForClimb());
     }
-    
+
     private void updateOdometry() {
-        ArrayList<VisionMeasurement> visionMeasurements = VISION
-                .getVisionMeasurements(_swerve.getPigeon2().getRotation2d().plus(_swerve.getOperatorForwardDirection()));
+            ArrayList<VisionMeasurement> visionMeasurements = VISION
+                    .getVisionMeasurements(
+                            _swerve.getPigeon2().getRotation2d().plus(_swerve.getOperatorForwardDirection()));
 
-        _swerve.setVisionMeasurementStdDevs(VecBuilder.fill(.7, .7, Math.PI));
-        for (VisionMeasurement visionMeasurement : visionMeasurements) {
-            _swerve.addVisionMeasurement(
-                    visionMeasurement.pose, Utils.fpgaToCurrentTime(visionMeasurement.timestamp));
+            _swerve.setVisionMeasurementStdDevs(VecBuilder.fill(.7, .7, Math.PI));
+            for (VisionMeasurement visionMeasurement : visionMeasurements) {
+                _swerve.addVisionMeasurement(
+                        visionMeasurement.pose, Utils.fpgaToCurrentTime(visionMeasurement.timestamp));
         }
-
         publisher.set(getPose());
         m_field.setRobotPose(getPose());
         m_field.getObject("targetPose").setPose(_target);
@@ -256,8 +261,7 @@ public class Drivetrain extends SubsystemBase {
         }
     }
 
-    public void setWantedTarget(Translation2d target)
-    {
+    public void setWantedTarget(Translation2d target) {
         _target = new Pose2d(target, new Rotation2d());
     }
 
@@ -269,6 +273,22 @@ public class Drivetrain extends SubsystemBase {
         }
     }
 
+    public void setTargetStageLeftClimb(Supplier<Boolean> isRedAlliance) {
+        if (isRedAlliance.get()) {
+            _target = FieldConstants.kRedClimbStageLeftFront;
+        } else {
+            _target = FieldConstants.kBlueClimbStageLeftFront;
+        }
+    }
+
+    public void setTargetEngageLeftClimb(Supplier<Boolean> isRedAlliance) {
+        if (isRedAlliance.get()) {
+            _target = FieldConstants.kRedClimbEngageLeftFront;
+        } else {
+            _target = FieldConstants.kBlueClimbEngageLeftFront;
+        }
+    }
+
     public void setTargetDepot(Supplier<Boolean> isRedAlliance) {
         if (isRedAlliance.get()) {
             _target = new Pose2d(FieldConstants.kRedDepot, new Rotation2d());
@@ -276,7 +296,7 @@ public class Drivetrain extends SubsystemBase {
             _target = new Pose2d(FieldConstants.kBlueDepot, new Rotation2d());
         }
     }
-    
+
     public void setTargetZoneA(Supplier<Boolean> isRedAlliance) {
         if (isRedAlliance.get()) {
             _target = new Pose2d(FieldConstants.kRedZoneA, new Rotation2d());
@@ -284,7 +304,7 @@ public class Drivetrain extends SubsystemBase {
             _target = new Pose2d(FieldConstants.kBlueZoneA, new Rotation2d());
         }
     }
-    
+
     public void setTargetZoneB(Supplier<Boolean> isRedAlliance) {
         if (isRedAlliance.get()) {
             _target = new Pose2d(FieldConstants.kRedZoneB, new Rotation2d());
@@ -305,7 +325,8 @@ public class Drivetrain extends SubsystemBase {
         var currentPose = this.getPose();
         _targetRotation = _targetFollowControllerZ.calculate(currentPose.getRotation().getDegrees());
 
-        // var zDifference = GeometryUtil.getRotationDifference(this::getPose, _target.getRotation().getDegrees());
+        // var zDifference = GeometryUtil.getRotationDifference(this::getPose,
+        // _target.getRotation().getDegrees());
         // var xDifference = GeometryUtil.getXDifference(_target, this::getPose);
         // var yDifference = GeometryUtil.getYDifference(_target, this::getPose);
 
@@ -324,16 +345,21 @@ public class Drivetrain extends SubsystemBase {
                 break;
             case OPEN_LOOP:
                 _swerve.setControl(
-                DRIVE.withVelocityX(-CONTROLLER.getLeftY() * _maxSpeed) // Drive forward with negative Y (forward)
-                    .withVelocityY(-CONTROLLER.getLeftX() * _maxSpeed) // Drive left with negative X (left)
-                    .withRotationalRate(-CONTROLLER.getRightX() * _maxAngularRate)
-                    ); // Drive counterclockwise with negative X (left)
+                        DRIVE.withVelocityX(-CONTROLLER.getLeftY() * _maxSpeed) // Drive forward with negative Y
+                                                                                // (forward)
+                                .withVelocityY(-CONTROLLER.getLeftX() * _maxSpeed) // Drive left with negative X (left)
+                                .withRotationalRate(-CONTROLLER.getRightX() * _maxAngularRate)); // Drive
+                                                                                                 // counterclockwise
+                                                                                                 // with negative X
+                                                                                                 // (left)
                 break;
             case AIM:
                 _swerve.setControl(
-                DRIVE.withVelocityX(-CONTROLLER.getLeftY() * _maxSpeed) // Drive forward with negative Y (forward)
-                    .withVelocityY(-CONTROLLER.getLeftX() * _maxSpeed) // Drive left with negative X (left)
-                    .withRotationalRate(_targetRotation * _maxAngularRate) // Drive counterclockwise with negative X (left)
+                        DRIVE.withVelocityX(-CONTROLLER.getLeftY() * _maxSpeed) // Drive forward with negative Y
+                                                                                // (forward)
+                                .withVelocityY(-CONTROLLER.getLeftX() * _maxSpeed) // Drive left with negative X (left)
+                                .withRotationalRate(_targetRotation * _maxAngularRate) // Drive counterclockwise with
+                                                                                       // negative X (left)
                 );
                 break;
             case CLIMB_STAGE:
@@ -359,25 +385,43 @@ public class Drivetrain extends SubsystemBase {
                 break;
         }
     }
-    
+
     public Pose2d getPose() {
         return _swerve.getStateCopy().Pose;
     }
 
     public boolean isReadyToClimb() {
         // If position is at the ready position
-        return _currentState == DrivetrainState.CLIMB_ENGAGE 
-               && _targetFollowControllerX.atSetpoint()
-               && _targetFollowControllerY.atSetpoint()
-               && _targetFollowControllerZ.atSetpoint();
+        return _currentState == DrivetrainState.CLIMB_ENGAGE
+                && _targetFollowControllerX.atSetpoint()
+                && _targetFollowControllerY.atSetpoint()
+                && _targetFollowControllerZ.atSetpoint();
     }
-    
+
     public boolean isStagedForClimb() {
         // If position is at the staged position
-        return _currentState == DrivetrainState.CLIMB_STAGE 
-               && _targetFollowControllerX.atSetpoint()
-               && _targetFollowControllerY.atSetpoint()
-               && _targetFollowControllerZ.atSetpoint();
+        return _currentState == DrivetrainState.CLIMB_STAGE
+                && _targetFollowControllerX.atSetpoint()
+                && _targetFollowControllerY.atSetpoint()
+                && _targetFollowControllerZ.atSetpoint();
+    }
+
+    public boolean isXStagedForClimb() {
+        // If position is at the staged position
+        return _currentState == DrivetrainState.CLIMB_STAGE
+                && _targetFollowControllerX.atSetpoint();
+    }
+
+    public boolean isYStagedForClimb() {
+        // If position is at the staged position
+        return _currentState == DrivetrainState.CLIMB_STAGE
+                && _targetFollowControllerY.atSetpoint();
+    }
+
+    public boolean isZStagedForClimb() {
+        // If position is at the staged position
+        return _currentState == DrivetrainState.CLIMB_STAGE
+                && _targetFollowControllerZ.atSetpoint();
     }
 
     private void startSimThread() {
@@ -408,7 +452,8 @@ public class Drivetrain extends SubsystemBase {
      * Return the pose at a given timestamp, if the buffer is not empty.
      *
      * @param timestampSeconds The timestamp of the pose in seconds.
-     * @return The pose at the given timestamp (or Optional.empty() if the buffer is empty).
+     * @return The pose at the given timestamp (or Optional.empty() if the buffer is
+     *         empty).
      */
     public Optional<Pose2d> samplePoseAt(double timestampSeconds) {
         return _swerve.samplePoseAt(Utils.fpgaToCurrentTime(timestampSeconds));
