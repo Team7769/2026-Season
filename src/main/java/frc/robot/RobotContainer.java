@@ -10,6 +10,7 @@ import com.ctre.phoenix6.swerve.SwerveModule.DriveRequestType;
 import com.ctre.phoenix6.swerve.SwerveRequest;
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
+import com.pathplanner.lib.path.EventMarker;
 
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
@@ -41,7 +42,23 @@ public class RobotContainer {
 
     public RobotContainer() {
         NamedCommands.registerCommand("Auto Climb", 
-          Commands.runOnce(() -> DRIVETRAIN.setWantedState(DrivetrainState.CLIMB_STAGE)));
+          Commands.sequence( 
+            Commands.runOnce(() ->DRIVETRAIN.setTargetEngageLeftClimb(GeometryUtil::isRedAlliance)),
+            Commands.runOnce(() ->DRIVETRAIN.setWantedState(DrivetrainState.CLIMB_ENGAGE))
+            ));
+
+        NamedCommands.registerCommand("Start Shooting", 
+            Commands.runOnce(() -> SHOOTER.setWantedState(ShooterState.SHOOT))
+            );
+
+        NamedCommands.registerCommand("Stop Shooting", 
+            Commands.runOnce(() -> SHOOTER.setWantedState(ShooterState.IDLE))
+            );
+        
+        NamedCommands.registerCommand("Intake", 
+            Commands.runOnce(() -> SHOOTER.setWantedState(ShooterState.INTAKE))
+            );
+
         autoChooser = AutoBuilder.buildAutoChooser();
 
         // Another option that allows you to specify the default auto by its name
