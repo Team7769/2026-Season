@@ -74,7 +74,9 @@ public class Drivetrain extends SubsystemBase {
     private PIDController _targetFollowControllerX;
     private PIDController _targetFollowControllerY;
     private PIDController _targetFollowControllerZ;
-    private double _targetFollowLimit;
+    private double _targetFollowLimit = 0.35;
+    private double _xFollow = 0;
+    private double _yFollow = 0;
 
     
     StructPublisher<Pose2d> publisher = NetworkTableInstance.getDefault()
@@ -292,21 +294,27 @@ public class Drivetrain extends SubsystemBase {
     }
 
     private void handleCurrentTarget() {
-        var angleToTarget = GeometryUtil.getAngleToTarget(_target.getTranslation(), this::getPose, true);
-        _targetFollowControllerZ.setSetpoint(angleToTarget);
+
+        if (_currentState == DrivetrainState.AIM) {
+            var angleToTarget = GeometryUtil.getAngleToTarget(_target.getTranslation(), this::getPose, true);
+            _targetFollowControllerZ.setSetpoint(angleToTarget);
+        } else if (_currentState == DrivetrainState.CLIMB_STAGE || _currentState == DrivetrainState.CLIMB_ENGAGE) {
+            _targetFollowControllerZ.setSetpoint(_target.getRotation().getDegrees());
+        }
 
         var currentPose = this.getPose();
         _targetRotation = _targetFollowControllerZ.calculate(currentPose.getRotation().getDegrees());
 
-        //var zDifference = GeometryUtil.getRotationDifference(this::getPose, _target.getRotation().getDegrees());
+        // var zDifference = GeometryUtil.getRotationDifference(this::getPose, _target.getRotation().getDegrees());
         // var xDifference = GeometryUtil.getXDifference(_target, this::getPose);
         // var yDifference = GeometryUtil.getYDifference(_target, this::getPose);
-        // _targetFollowControllerX.setSetpoint(_target.getX());
-        // _targetFollowControllerY.setSetpoint(_target.getY());
-        // xFollow = _targetFollowControllerX.calculate(currentPose.getX());
-        // yFollow = _targetFollowControllerY.calculate(currentPose.getY());
-        // xFollow = MathUtil.clamp(xFollow, -_targetFollowLimit, _targetFollowLimit);
-        // yFollow = MathUtil.clamp(yFollow, -_targetFollowLimit, _targetFollowLimit);
+
+        _targetFollowControllerX.setSetpoint(_target.getX());
+        _targetFollowControllerY.setSetpoint(_target.getY());
+        _xFollow = _targetFollowControllerX.calculate(currentPose.getX());
+        _yFollow = _targetFollowControllerY.calculate(currentPose.getY());
+        _xFollow = MathUtil.clamp(_xFollow, -_targetFollowLimit, _targetFollowLimit);
+        _yFollow = MathUtil.clamp(_yFollow, -_targetFollowLimit, _targetFollowLimit);
     }
 
     private void handleCurrentState() {
@@ -328,6 +336,13 @@ public class Drivetrain extends SubsystemBase {
                     .withRotationalRate(_targetRotation * _maxAngularRate) // Drive counterclockwise with negative X (left)
                 );
                 break;
+            case CLIMB_STAGE:
+                _swerve.setControl(
+                DRIVE.withVelocityX(-CONTROLLER.getLeftY() * _maxSpeed) // Drive forward with negative Y (forward)
+                    .withVelocityY(-CONTROLLER.getLeftX() * _maxSpeed) // Drive left with negative X (left)
+                    .withRotationalRate(_targetRotation * _maxAngularRate) // Drive counterclockwise with negative X (left)
+                );
+                break;
             default:
                 _swerve.setControl(BRAKE);
                 break;
@@ -336,6 +351,16 @@ public class Drivetrain extends SubsystemBase {
     
     public Pose2d getPose() {
         return _swerve.getStateCopy().Pose;
+    }
+
+    public boolean isReadyToClimb() {
+        // If position is at the ready position
+        return _currentState == DrivetrainState.CLIMB_ENGAGE;
+    }
+    
+    public boolean isStagedForClimb() {
+        // If position is at the staged position
+        return _currentState == DrivetrainState.CLIMB_STAGE;
     }
 
     private void startSimThread() {
