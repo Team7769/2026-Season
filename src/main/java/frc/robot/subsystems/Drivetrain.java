@@ -102,8 +102,8 @@ public class Drivetrain extends SubsystemBase {
         CONTROLLER = controller;
         VISION = vision;
         
-        _targetFollowControllerX = new PIDController(0.85, 0, 0.04);
-        _targetFollowControllerY = new PIDController(0.85, 0, 0.04);
+        _targetFollowControllerX = new PIDController(0.1, 0, 0.04);
+        _targetFollowControllerY = new PIDController(0.1, 0, 0.04);
         _targetFollowControllerZ = new PIDController(0.025, 0, 0.002);
         _targetFollowControllerX.setTolerance(.05);
         _targetFollowControllerY.setTolerance(.05);
@@ -337,11 +337,22 @@ public class Drivetrain extends SubsystemBase {
                 );
                 break;
             case CLIMB_STAGE:
-                _swerve.setControl(
-                DRIVE.withVelocityX(-CONTROLLER.getLeftY() * _maxSpeed) // Drive forward with negative Y (forward)
-                    .withVelocityY(-CONTROLLER.getLeftX() * _maxSpeed) // Drive left with negative X (left)
-                    .withRotationalRate(_targetRotation * _maxAngularRate) // Drive counterclockwise with negative X (left)
-                );
+            case CLIMB_ENGAGE:
+                if (GeometryUtil.isRedAlliance()) {
+                    _swerve.setControl(
+                            DRIVE.withVelocityX(-_xFollow * _maxSpeed) // Drive forward with negative Y (forward)
+                                    .withVelocityY(-_yFollow * _maxSpeed) // Drive left with negative X (left)
+                                    .withRotationalRate(_targetRotation * _maxAngularRate) // Drive counterclockwise
+                                                                                           // with negative X (left)
+                    );
+                } else {
+                    _swerve.setControl(
+                            DRIVE.withVelocityX(_xFollow * _maxSpeed) // Drive forward with negative Y (forward)
+                                    .withVelocityY(_yFollow * _maxSpeed) // Drive left with negative X (left)
+                                    .withRotationalRate(_targetRotation * _maxAngularRate) // Drive counterclockwise
+                                                                                           // with negative X (left)
+                    );
+                }
                 break;
             default:
                 _swerve.setControl(BRAKE);
@@ -355,12 +366,18 @@ public class Drivetrain extends SubsystemBase {
 
     public boolean isReadyToClimb() {
         // If position is at the ready position
-        return _currentState == DrivetrainState.CLIMB_ENGAGE;
+        return _currentState == DrivetrainState.CLIMB_ENGAGE 
+               && _targetFollowControllerX.atSetpoint()
+               && _targetFollowControllerY.atSetpoint()
+               && _targetFollowControllerZ.atSetpoint();
     }
     
     public boolean isStagedForClimb() {
         // If position is at the staged position
-        return _currentState == DrivetrainState.CLIMB_STAGE;
+        return _currentState == DrivetrainState.CLIMB_STAGE 
+               && _targetFollowControllerX.atSetpoint()
+               && _targetFollowControllerY.atSetpoint()
+               && _targetFollowControllerZ.atSetpoint();
     }
 
     private void startSimThread() {
