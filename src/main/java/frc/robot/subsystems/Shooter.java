@@ -14,13 +14,21 @@ public class Shooter extends SubsystemBase {
     private Orchestra _orchestra;
     private TalonFX index = new TalonFX(16);
     private TalonFX shooter = new TalonFX(15);
+        private TalonFX a = new TalonFX(2);
+    private TalonFX b = new TalonFX(3);
+        private TalonFX c = new TalonFX(5);
+    private TalonFX d = new TalonFX(6);
 
     // _swerve.getModule(0)
     public Shooter() {
         _orchestra = new Orchestra();
-        _orchestra.loadMusic("SeekAndDestroy.chrp");
+        _orchestra.loadMusic("heyYa.chrp");
         _orchestra.addInstrument(index);
         _orchestra.addInstrument(shooter);
+        _orchestra.addInstrument(a);
+        _orchestra.addInstrument(b);
+        _orchestra.addInstrument(c);
+        _orchestra.addInstrument(d);
     }
 
     public void intake() {
@@ -66,12 +74,6 @@ public class Shooter extends SubsystemBase {
 
     private void handleCurrentState() {
         switch (_currentState) {
-            case PAUSE:
-                _orchestra.pause();
-                break;
-            case PLAY:
-                _orchestra.play();
-                break;
             case IDLE:
                 stopIndex();
                 stopShooter();
@@ -83,7 +85,8 @@ public class Shooter extends SubsystemBase {
                 intake();
                 break;
             default:
-                _orchestra.stop();
+                stopIndex();
+                stopShooter();
                 break;
         }
     }
