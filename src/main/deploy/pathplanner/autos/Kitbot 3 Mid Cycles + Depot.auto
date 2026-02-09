@@ -1,0 +1,79 @@
+{
+  "version": "2025.0",
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Kitbot Left Trench Start to Far Left Mid"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Kitbot Far Left Mid to Aiming At Hub"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 0.0
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Kitbot Aiming At Hub to Close Left Mid"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Close Left Mid to Aiming At Hub"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Kitbot Aiming At Hub to Close Left Mid"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 0
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Close Left Mid to Aiming At Hub"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Kitbot Left Aiming at Hub to Depot"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Kitbot Depot to Prep Climb"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Auto Climb"
+          }
+        }
+      ]
+    }
+  },
+  "resetOdom": true,
+  "folder": null,
+  "choreoAuto": false
+}

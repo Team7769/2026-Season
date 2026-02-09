@@ -3,16 +3,16 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 0.6789180327868851,
-        "y": 6.0
+        "x": 0.9131096586601151,
+        "y": 0.7095787963131568
       },
       "prevControl": null,
       "nextControl": {
-        "x": 1.342533642943505,
-        "y": 5.44434828318768
+        "x": 1.1122871030532955,
+        "y": 0.8756618004800999
       },
       "isLocked": false,
-      "linkedName": "Depot Center"
+      "linkedName": "Outpost"
     },
     {
       "anchor": {
@@ -20,8 +20,8 @@
         "y": 4.027811475409836
       },
       "prevControl": {
-        "x": 2.619923762328277,
-        "y": 4.460863814854677
+        "x": 3.1851232535641065,
+        "y": 3.5732524915648436
       },
       "nextControl": null,
       "isLocked": false,
@@ -33,11 +33,11 @@
   "pointTowardsZones": [
     {
       "fieldPosition": {
-        "x": 4.62,
+        "x": 4.6,
         "y": 4.03
       },
       "rotationOffset": 0.0,
-      "minWaypointRelativePos": 0.25,
+      "minWaypointRelativePos": 0.6993026047716776,
       "maxWaypointRelativePos": 1.0,
       "name": "Point Towards Zone"
     }
@@ -45,7 +45,7 @@
   "eventMarkers": [
     {
       "name": "Start Shooting",
-      "waypointRelativePos": 0.6312820384623937,
+      "waypointRelativePos": 0.7500211215098341,
       "endWaypointRelativePos": null,
       "command": {
         "type": "named",

@@ -3,35 +3,35 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 3.619024590163934,
-        "y": 4.027811475409836
+        "x": 4.536322919860539,
+        "y": 7.414732605912722
       },
       "prevControl": null,
       "nextControl": {
-        "x": 3.3255506953121823,
-        "y": 3.81707568831213
+        "x": 7.076990755458397,
+        "y": 7.237990495610262
       },
       "isLocked": false,
-      "linkedName": "Hub Center"
+      "linkedName": "Left Trench"
     },
     {
       "anchor": {
-        "x": 2.0086873126566336,
-        "y": 3.2952996310335174
+        "x": 8.247907236212194,
+        "y": 5.569986829630798
       },
       "prevControl": {
-        "x": 2.8907368771128237,
-        "y": 3.4568041314057925
+        "x": 8.634530602498824,
+        "y": 7.989144464395714
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "Prep climb"
+      "linkedName": "Far Left Mid"
     }
   ],
   "rotationTargets": [
     {
-      "waypointRelativePos": 0.436385422863792,
-      "rotationDegrees": 0.0
+      "waypointRelativePos": 0.8003233426159675,
+      "rotationDegrees": 90.0
     }
   ],
   "constraintZones": [],
@@ -47,7 +47,7 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 180.0
+    "rotation": 90.0
   },
   "reversed": false,
   "folder": null,

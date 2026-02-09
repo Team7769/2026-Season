@@ -22,7 +22,7 @@ public class Shooter extends SubsystemBase {
     // _swerve.getModule(0)
     public Shooter() {
         _orchestra = new Orchestra();
-        _orchestra.loadMusic("heyYa.chrp");
+        _orchestra.loadMusic("tetris.chrp");
         _orchestra.addInstrument(index);
         _orchestra.addInstrument(shooter);
         _orchestra.addInstrument(a);

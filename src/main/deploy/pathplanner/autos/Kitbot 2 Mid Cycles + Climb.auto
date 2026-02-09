@@ -5,45 +5,39 @@
     "data": {
       "commands": [
         {
-          "type": "named",
+          "type": "path",
           "data": {
-            "name": "Intake"
+            "pathName": "Kitbot Left Trench Start to Far Left Mid"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "Kitbot Left Ramp Start to Depot"
+            "pathName": "Kitbot Far Left Mid to Aiming At Hub"
           }
         },
         {
           "type": "wait",
           "data": {
-            "waitTime": 0.5
+            "waitTime": 1.0
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "Kitbot Depot to Hub"
-          }
-        },
-        {
-          "type": "wait",
-          "data": {
-            "waitTime": 4.0
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "Stop Shooting"
+            "pathName": "Kitbot Aiming At Hub to Close Left Mid"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "Kitbot Hub to Prep Climb"
+            "pathName": "Close Left Mid to Aiming At Hub"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Kitbot Aiming At Hub to Climb Prep"
           }
         },
         {

@@ -8,32 +8,27 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 3.3255506953121823,
-        "y": 3.81707568831213
+        "x": 2.578069783120182,
+        "y": 2.9146025697108264
       },
       "isLocked": false,
       "linkedName": "Hub Center"
     },
     {
       "anchor": {
-        "x": 2.0086873126566336,
-        "y": 3.2952996310335174
+        "x": 0.9131096586601151,
+        "y": 0.7095787963131568
       },
       "prevControl": {
-        "x": 2.8907368771128237,
-        "y": 3.4568041314057925
+        "x": 2.753842426008033,
+        "y": 2.6813565157059447
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "Prep climb"
+      "linkedName": "Outpost"
     }
   ],
-  "rotationTargets": [
-    {
-      "waypointRelativePos": 0.436385422863792,
-      "rotationDegrees": 0.0
-    }
-  ],
+  "rotationTargets": [],
   "constraintZones": [],
   "pointTowardsZones": [],
   "eventMarkers": [],
@@ -47,7 +42,7 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 180.0
+    "rotation": 0.0
   },
   "reversed": false,
   "folder": null,
