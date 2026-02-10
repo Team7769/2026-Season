@@ -75,7 +75,7 @@ public class RobotContainer {
         DRIVER_CONTROLLER.rightBumper().onTrue(
           Commands.runOnce(() -> SHOOTER.setWantedState(ShooterState.SHOOT))
         ).onFalse(
-          Commands.runOnce(() -> SHOOTER.setWantedState(ShooterState.INTAKE))
+          Commands.runOnce(() -> SHOOTER.setWantedState(ShooterState.PREPSHOOTER))
         );
 
         DRIVER_CONTROLLER.leftBumper().onTrue(
@@ -107,12 +107,6 @@ public class RobotContainer {
             SmartDashboard.putBoolean("isClimbed", true);
             DRIVETRAIN.setWantedState(DrivetrainState.OPEN_LOOP);
           })
-        );
-
-        DRIVER_CONTROLLER.rightTrigger().onTrue(
-          Commands.runOnce(() -> SHOOTER.play())
-        ).onFalse(
-          Commands.runOnce(() -> SHOOTER.pause())
         );
 
         // Run SysId routines when holding back/start and X/Y.
