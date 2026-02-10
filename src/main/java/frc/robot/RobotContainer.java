@@ -73,12 +73,14 @@ public class RobotContainer {
         );
 
         DRIVER_CONTROLLER.rightBumper().onTrue(
-          Commands.runOnce(() -> SHOOTER.setWantedState(ShooterState.SHOOT))
-        ).onFalse(
           Commands.runOnce(() -> SHOOTER.setWantedState(ShooterState.PREPSHOOTER))
+        ).onFalse(
+          Commands.runOnce(() -> SHOOTER.setWantedState(ShooterState.IDLE));
         );
 
-        DRIVER_CONTROLLER.leftBumper().onTrue(
+        DRIVER_CONTROLLER.rightTrigger().onTrue(
+          Commands.runOnce(() -> SHOOTER.setWantedState(ShooterState.SHOOT))
+        ).onFalse(
           Commands.runOnce(() -> SHOOTER.setWantedState(ShooterState.IDLE))
         );
 
