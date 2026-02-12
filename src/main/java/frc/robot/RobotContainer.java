@@ -25,6 +25,7 @@ import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine.Direction;
 import frc.robot.configuration.FieldConstants;
 import frc.robot.generated.TunerConstants;
 import frc.robot.states.DrivetrainState;
+import frc.robot.subsystems.Climb;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.states.ShooterState;
 import frc.robot.subsystems.Shooter;
@@ -39,6 +40,7 @@ public class RobotContainer {
     public final Vision VISION = new Vision();
     public final Drivetrain DRIVETRAIN = new Drivetrain(DRIVER_CONTROLLER, VISION);
     public final Shooter SHOOTER = new Shooter();
+    public final Climb CLIMB = new Climb();
 
     public RobotContainer() {
         NamedCommands.registerCommand("Auto Climb", 
@@ -131,7 +133,8 @@ public class RobotContainer {
         new Trigger(DRIVETRAIN::isStagedForClimb).onTrue(
           Commands.sequence(
             Commands.runOnce(() -> DRIVETRAIN.setTargetEngageLeftClimb(GeometryUtil::isRedAlliance)),
-            Commands.runOnce(() -> DRIVETRAIN.setWantedState(DrivetrainState.CLIMB_ENGAGE))
+            Commands.runOnce(() -> DRIVETRAIN.setWantedState(DrivetrainState.CLIMB_ENGAGE)),
+            Commands.runOnce(() -> CLIMB.Extend())
              )
         );
         
@@ -139,6 +142,7 @@ public class RobotContainer {
           Commands.runOnce(() -> {
             SmartDashboard.putBoolean("isClimbed", true);
             DRIVETRAIN.setWantedState(DrivetrainState.OPEN_LOOP);
+            CLIMB.Retract();
           })
         );
 

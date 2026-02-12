@@ -14,7 +14,6 @@ public class Climb extends SubsystemBase {
     private ClimbState _currentState = ClimbState.IDLE;
     private TalonFX _climb = new TalonFX(0); // Must find Talon ID
     private PositionDutyCycle _climbTargetPosition = new PositionDutyCycle(0);
-
     public Climb() {
     }
 
@@ -26,7 +25,7 @@ public class Climb extends SubsystemBase {
 
     public void Extend() {
         // _climb.set(0.3);
-        _climbTargetPosition.Position = 50; //Must find target climb position
+        _climbTargetPosition.Position = 3; // https://v6.docs.ctr-electronics.com/en/stable/docs/migration/migration-guide/closed-loop-guide.html
          _climb.setControl(_climbTargetPosition);
     }
 
