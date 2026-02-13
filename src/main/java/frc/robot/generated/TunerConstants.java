@@ -166,13 +166,6 @@ public class TunerConstants {
     private static final boolean kBackRightSteerMotorInverted = false;
     private static final boolean kBackRightEncoderInverted = false;
 
-    // Shooter
-    public static final int kLeftShooter1 = 15;
-    public static final int kLeftShooter2 = 16;
-    public static final int kRightShooter1 = 17;    
-    public static final int kRightShooter2 = 18;
-    public static final int kInjectorRoller = 19;
-
     private static final Distance kBackRightXPos = Inches.of(-9);
     private static final Distance kBackRightYPos = Inches.of(-9);
 
