@@ -10,6 +10,8 @@ import com.ctre.phoenix6.controls.VoltageOut;
 import com.ctre.phoenix6.configs.CurrentLimitsConfigs;
 import com.ctre.phoenix6.configs.FeedbackConfigs;
 import com.ctre.phoenix6.configs.MotionMagicConfigs;
+import com.ctre.phoenix6.configs.Slot0Configs;
+import com.ctre.phoenix6.configs.TalonFXConfiguration;
 import com.ctre.phoenix6.signals.GravityTypeValue;
 import com.ctre.phoenix6.signals.NeutralModeValue;
 
@@ -21,6 +23,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.PrintCommand;
 import edu.wpi.first.wpilibj2.command.Subsystem;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import edu.wpi.first.wpilibj.DigitalInput;
 import frc.robot.states.ShooterState;
 
 
@@ -31,6 +34,9 @@ public class Shooter extends SubsystemBase {
     private TalonFX _leftShooter2;
     private TalonFX _rightShooter2;
     private TalonFX _injector;
+    private VelocityVoltage _shooterVelocity = new VelocityVoltage(0);
+    private DigitalInput _leftPhotoEye;
+    private DigitalInput _rightPhotoEye;
 
     private PIDController _hoodPID;
     private double _shooterTarget;
@@ -51,14 +57,29 @@ public class Shooter extends SubsystemBase {
     }
 
     private void configShooter(){
+        TalonFXConfiguration shooterConfig = new TalonFXConfiguration();
         _leftShooter1 = new TalonFX(15);
         _leftShooter2 = new TalonFX(16);//follow
         _rightShooter1 = new TalonFX(17);
         _rightShooter2 = new TalonFX(18);//follow
+
+        var slot0 = shooterConfig.Slot0;
+
+        slot0.kV = 0.2;
+        slot0.kP = 0.2;
+        slot0.kI = 0.0;
+        slot0.kD = 0.0;
+
         _leftShooter1.setNeutralMode(NeutralModeValue.Coast);
         _leftShooter2.setNeutralMode(NeutralModeValue.Coast);
         _rightShooter1.setNeutralMode(NeutralModeValue.Coast);
         _rightShooter2.setNeutralMode(NeutralModeValue.Coast);
+
+        _leftShooter1.getConfigurator().apply(shooterConfig);
+        _leftShooter2.getConfigurator().apply(shooterConfig);
+        _rightShooter1.getConfigurator().apply(shooterConfig);
+        _rightShooter2.getConfigurator().apply(shooterConfig);
+
         _leftShooter2.setControl(new Follower(_leftShooter1.getDeviceID(), false));
         _rightShooter2.setControl(new Follower(_rightShooter1.getDeviceID(), false));
 
@@ -75,14 +96,14 @@ public class Shooter extends SubsystemBase {
     }
 
     private void prepShooter() {
-        _leftShooter1.setControl(new VelocityDutyCycle(30));
-        _rightShooter1.setControl(new VelocityDutyCycle(30));
+        _leftShooter1.setControl(_shooterVelocity.withVelocity(30));
+        _rightShooter1.setControl(_shooterVelocity.withVelocity(30));
         injectorOff();
     }
 
-    private void shoot() {
-        _leftShooter1.setControl(new VelocityDutyCycle(30));
-        _rightShooter1.setControl(new VelocityDutyCycle(30));
+    private void shoot(double shot) {
+        _leftShooter1.setControl(_shooterVelocity.withVelocity(shot));
+        _rightShooter1.setControl(_shooterVelocity.withVelocity(shot));
         injectorOn();
     }
 
@@ -93,8 +114,8 @@ public class Shooter extends SubsystemBase {
     }
 
     private void setIdle() {
-        _leftShooter1.setControl(new VelocityDutyCycle(10));
-        _rightShooter1.setControl(new VelocityDutyCycle(10));
+        _leftShooter1.setControl(_shooterVelocity.withVelocity(10));
+        _rightShooter1.setControl(_shooterVelocity.withVelocity(10));
         injectorOff();
     }
 
@@ -123,7 +144,7 @@ public class Shooter extends SubsystemBase {
                 setIdle();
                 break;
             case SHOOT:
-                shoot();
+                shoot(_shooterPosition);
                 break;
             case PREPSHOOTER:
                 prepShooter();
