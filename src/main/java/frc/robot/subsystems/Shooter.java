@@ -42,6 +42,7 @@ public class Shooter extends SubsystemBase {
     private boolean _isReadyToShoot = false;
     private double _shooterPosition;
     private double _shooterTarget;
+    private double _shooterError = 0.1;
     private double _hoodPosition;
     private double _hoodTarget;
     private Vision VISION = new Vision();
@@ -127,6 +128,13 @@ public class Shooter extends SubsystemBase {
 
         private void injectorOff() {
         _injector.set(0);
+    }
+
+    public boolean shooterReady(){
+        if(_shooterPosition - _shooterTarget <= _shooterError){
+            return true;
+        }
+        return false;
     }
 
     public void setWantedState(ShooterState wantedState) {
