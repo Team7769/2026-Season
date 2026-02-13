@@ -39,11 +39,12 @@ public class Shooter extends SubsystemBase {
     private DigitalInput _rightPhotoEye;
 
     private PIDController _hoodPID;
-    private double _shooterTarget;
     private boolean _isReadyToShoot = false;
     private double _shooterPosition;
+    private double _shooterTarget;
     private double _hoodPosition;
     private double _hoodTarget;
+    private Vision VISION = new Vision();
 
     private final double[] kDistanceIDs = {1.77, 2, 2.5, 3, 3.5, 4};
     private final double[] kHoodAngles = {4.5, 5.1, 5.55, 5.85, 6.2, 6.35};
@@ -53,7 +54,6 @@ public class Shooter extends SubsystemBase {
         configShooter();
         configInjector();
         configHood();
-        
     }
 
     private void configShooter(){
@@ -62,6 +62,8 @@ public class Shooter extends SubsystemBase {
         _leftShooter2 = new TalonFX(16);//follow
         _rightShooter1 = new TalonFX(17);
         _rightShooter2 = new TalonFX(18);//follow
+        _leftPhotoEye = new DigitalInput(0);
+        _rightPhotoEye = new DigitalInput(1);
 
         var slot0 = shooterConfig.Slot0;
 
@@ -80,8 +82,8 @@ public class Shooter extends SubsystemBase {
         _rightShooter1.getConfigurator().apply(shooterConfig);
         _rightShooter2.getConfigurator().apply(shooterConfig);
 
-        _leftShooter2.setControl(new Follower(_leftShooter1.getDeviceID(), false));
-        _rightShooter2.setControl(new Follower(_rightShooter1.getDeviceID(), false));
+        _leftShooter2.setControl(new Follower(_leftShooter1, false));
+        _rightShooter2.setControl(new Follower(_rightShooter1, false));
 
     }
 
