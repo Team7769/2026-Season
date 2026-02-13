@@ -16,7 +16,7 @@ import com.ctre.phoenix6.signals.GravityTypeValue;
 import com.ctre.phoenix6.signals.NeutralModeValue;
 
 import edu.wpi.first.math.controller.PIDController;
-
+import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 import frc.robot.generated.TunerConstants;
 import edu.wpi.first.units.measure.Voltage;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -38,6 +38,7 @@ public class Shooter extends SubsystemBase {
     private DigitalInput _leftPhotoEye;
     private DigitalInput _rightPhotoEye;
 
+    private SimpleMotorFeedforward _ff = new SimpleMotorFeedforward(0, 0);
     private PIDController _hoodPID;
     private boolean _isReadyToShoot = false;
     private double _shooterPosition;
