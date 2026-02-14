@@ -28,6 +28,8 @@ import frc.robot.states.DrivetrainState;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.states.ShooterState;
 import frc.robot.subsystems.Shooter;
+import frc.robot.states.IntakeState;
+import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Vision;
 import frc.robot.utilities.GeometryUtil;
 
@@ -39,6 +41,7 @@ public class RobotContainer {
     public final Vision VISION = new Vision();
     public final Drivetrain DRIVETRAIN = new Drivetrain(DRIVER_CONTROLLER, VISION);
     public final Shooter SHOOTER = new Shooter();
+    public final Intake INTAKE = new Intake();
 
     public RobotContainer() {
         NamedCommands.registerCommand("Auto Climb", 
