@@ -6,16 +6,19 @@ import edu.wpi.first.units.measure.Voltage;
 import edu.wpi.first.wpilibj2.command.Subsystem;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.states.IntakeState;
+import frc.robot.generated.TunerConstants;
 
 
 public class Intake extends SubsystemBase {
     private IntakeState _currentState = IntakeState.IDLE;
-    private TalonFX _intake = new TalonFX(16);
-    private TalonFX _slide = new TalonFX(15);
+    private TalonFX _intake;
+    private TalonFX _slide;
 
     // _swerve.getModule(0)
     public Intake() {
-
+        _intake = new TalonFX(16);
+        _slide = new TalonFX(17);
+        
     }
     public void startIntake() {
         _intake.set(-0.3);
