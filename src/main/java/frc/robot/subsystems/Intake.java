@@ -16,8 +16,8 @@ public class Intake extends SubsystemBase {
 
     // _swerve.getModule(0)
     public Intake() {
-        _intake = new TalonFX(16);
-        _slide = new TalonFX(17);
+        _intake = new TalonFX(20);
+        _slide = new TalonFX(21);
         
     }
     public void startIntake() {
@@ -29,11 +29,11 @@ public class Intake extends SubsystemBase {
     }
 
     public void intakeIn() {
-        _slide.set(.55);
+        _slide.set(.2);
     }
 
     public void intakeOut() {
-        _slide.set(-.55);
+        _slide.set(-.2);
     }
 
     public void stopSlide() {
