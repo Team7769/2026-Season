@@ -24,6 +24,7 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine.Direction;
 import frc.robot.configuration.FieldConstants;
 import frc.robot.generated.TunerConstants;
+import frc.robot.states.ClimbState;
 import frc.robot.states.DrivetrainState;
 import frc.robot.subsystems.Climb;
 import frc.robot.subsystems.Drivetrain;
@@ -82,7 +83,9 @@ public class RobotContainer {
         );
 
         RobotModeTriggers.teleop().onTrue(
-          Commands.runOnce(() -> DRIVETRAIN.setWantedState(DrivetrainState.OPEN_LOOP))
+          Commands.sequence(
+          Commands.runOnce(() -> DRIVETRAIN.setWantedState(DrivetrainState.OPEN_LOOP)),
+          Commands.runOnce(() -> CLIMB.setWantedState(ClimbState.EXTEND)))
         );
 
         DRIVER_CONTROLLER.leftTrigger().whileTrue(
@@ -134,7 +137,7 @@ public class RobotContainer {
           Commands.sequence(
             Commands.runOnce(() -> DRIVETRAIN.setTargetEngageLeftClimb(GeometryUtil::isRedAlliance)),
             Commands.runOnce(() -> DRIVETRAIN.setWantedState(DrivetrainState.CLIMB_ENGAGE)),
-            Commands.runOnce(() -> CLIMB.Extend())
+            Commands.runOnce(() -> CLIMB.setWantedState(ClimbState.EXTEND))
              )
         );
         
@@ -142,7 +145,7 @@ public class RobotContainer {
           Commands.runOnce(() -> {
             SmartDashboard.putBoolean("isClimbed", true);
             DRIVETRAIN.setWantedState(DrivetrainState.OPEN_LOOP);
-            CLIMB.Retract();
+            CLIMB.setWantedState(ClimbState.RETRACT);
           })
         );
 
