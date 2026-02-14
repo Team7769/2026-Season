@@ -59,7 +59,7 @@ public class RobotContainer {
             );
         
         NamedCommands.registerCommand("Intake", 
-            Commands.runOnce(() -> SHOOTER.setWantedState(ShooterState.INTAKE))
+            Commands.runOnce(() -> SHOOTER.setWantedState(ShooterState.IDLE))
             );
 
         autoChooser = AutoBuilder.buildAutoChooser();
