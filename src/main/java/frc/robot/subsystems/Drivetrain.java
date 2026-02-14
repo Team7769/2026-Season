@@ -12,6 +12,10 @@ import com.ctre.phoenix6.swerve.SwerveDrivetrainConstants;
 import com.ctre.phoenix6.swerve.SwerveModule.DriveRequestType;
 import com.ctre.phoenix6.swerve.SwerveModuleConstants;
 import com.ctre.phoenix6.swerve.SwerveRequest;
+import com.pathplanner.lib.auto.AutoBuilder;
+import com.pathplanner.lib.config.PIDConstants;
+import com.pathplanner.lib.config.RobotConfig;
+import com.pathplanner.lib.controllers.PPHolonomicDriveController;
 
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.Matrix;
@@ -63,6 +67,7 @@ public class Drivetrain extends SubsystemBase {
             .withDriveRequestType(DriveRequestType.OpenLoopVoltage); // Use open-loop control for drive motors
     private final SwerveRequest.SwerveDriveBrake BRAKE = new SwerveRequest.SwerveDriveBrake();
     private final SwerveRequest.PointWheelsAt POINT = new SwerveRequest.PointWheelsAt();
+    private final SwerveRequest.ApplyRobotSpeeds CHASSIS_SPEEDS = new SwerveRequest.ApplyRobotSpeeds();
 
     private static final double kSimLoopPeriod = 0.004; // 4 ms
     private Notifier m_simNotifier = null;
@@ -116,6 +121,40 @@ public class Drivetrain extends SubsystemBase {
 
         if (Utils.isSimulation()) {
             startSimThread();
+        }
+
+        try {
+
+            // Configure AutoBuilder last
+            AutoBuilder.configure(
+                    () -> _swerve.getState().Pose, // Get Pose
+                    _swerve::resetPose, () -> _swerve.getState().Speeds, // Get Speeds
+                    (speeds, feedforwards) -> _swerve.setControl( // Drive
+                            CHASSIS_SPEEDS.withSpeeds(speeds)),
+                    new PPHolonomicDriveController( // PPHolonomicController is the built in path following controller
+                                                    // for
+                                                    // holonomic drive trains
+                            new PIDConstants(2.5, 0.0, 0.0), // Translation PID constants
+                            new PIDConstants(2, 0.0, 0.0) // Rotation PID constants
+                    ),
+                    RobotConfig.fromGUISettings(), // The robot configuration
+                    () -> {
+                        // Boolean supplier that controls when the path will be mirrored for the red
+                        // alliance
+                        // This will flip the path being followed to the red side of the field.
+                        // THE ORIGIN WILL REMAIN ON THE BLUE SIDE
+
+                        var alliance = DriverStation.getAlliance();
+                        if (alliance.isPresent()) {
+                            return alliance.get() == DriverStation.Alliance.Red;
+                        }
+                        return false;
+                    },
+                    this // Reference to this subsystem to set requirements
+            );
+        } catch (Exception exception) {
+            DriverStation.reportError("Failed to load PathPlanner config and configure AutoBuilder",
+                    exception.getStackTrace());
         }
 
         setDefaultCommand(idle());
@@ -241,14 +280,14 @@ public class Drivetrain extends SubsystemBase {
     }
 
     private void updateOdometry() {
-            ArrayList<VisionMeasurement> visionMeasurements = VISION
-                    .getVisionMeasurements(
-                            _swerve.getPigeon2().getRotation2d().plus(_swerve.getOperatorForwardDirection()));
+        ArrayList<VisionMeasurement> visionMeasurements = VISION
+                .getVisionMeasurements(
+                        _swerve.getPigeon2().getRotation2d().plus(_swerve.getOperatorForwardDirection()));
 
-            _swerve.setVisionMeasurementStdDevs(VecBuilder.fill(.7, .7, Math.PI));
-            for (VisionMeasurement visionMeasurement : visionMeasurements) {
-                _swerve.addVisionMeasurement(
-                        visionMeasurement.pose, Utils.fpgaToCurrentTime(visionMeasurement.timestamp));
+        _swerve.setVisionMeasurementStdDevs(VecBuilder.fill(.7, .7, Math.PI));
+        for (VisionMeasurement visionMeasurement : visionMeasurements) {
+            _swerve.addVisionMeasurement(
+                    visionMeasurement.pose, Utils.fpgaToCurrentTime(visionMeasurement.timestamp));
         }
         publisher.set(getPose());
         m_field.setRobotPose(getPose());
@@ -379,6 +418,8 @@ public class Drivetrain extends SubsystemBase {
                                                                                            // with negative X (left)
                     );
                 }
+                break;
+            case AUTO:
                 break;
             default:
                 _swerve.setControl(BRAKE);

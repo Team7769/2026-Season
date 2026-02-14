@@ -8,8 +8,12 @@ import static edu.wpi.first.units.Units.*;
 
 import com.ctre.phoenix6.swerve.SwerveModule.DriveRequestType;
 import com.ctre.phoenix6.swerve.SwerveRequest;
+import com.pathplanner.lib.auto.AutoBuilder;
+import com.pathplanner.lib.auto.NamedCommands;
+import com.pathplanner.lib.path.EventMarker;
 
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
@@ -24,18 +28,46 @@ import frc.robot.states.DrivetrainState;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.states.ShooterState;
 import frc.robot.subsystems.Shooter;
+import frc.robot.states.IntakeState;
+import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Vision;
 import frc.robot.utilities.GeometryUtil;
 
 public class RobotContainer {
 
+    private final SendableChooser<Command> autoChooser;
     private final CommandXboxController DRIVER_CONTROLLER = new CommandXboxController(0);
 
     public final Vision VISION = new Vision();
     public final Drivetrain DRIVETRAIN = new Drivetrain(DRIVER_CONTROLLER, VISION);
     public final Shooter SHOOTER = new Shooter();
+    public final Intake INTAKE = new Intake();
 
     public RobotContainer() {
+        NamedCommands.registerCommand("Auto Climb", 
+          Commands.sequence( 
+            Commands.runOnce(() ->DRIVETRAIN.setTargetEngageLeftClimb(GeometryUtil::isRedAlliance)),
+            Commands.runOnce(() ->DRIVETRAIN.setWantedState(DrivetrainState.CLIMB_ENGAGE))
+            ));
+
+        NamedCommands.registerCommand("Start Shooting", 
+            Commands.runOnce(() -> SHOOTER.setWantedState(ShooterState.SHOOT))
+            );
+
+        NamedCommands.registerCommand("Stop Shooting", 
+            Commands.runOnce(() -> SHOOTER.setWantedState(ShooterState.IDLE))
+            );
+        
+        NamedCommands.registerCommand("Intake", 
+            Commands.runOnce(() -> SHOOTER.setWantedState(ShooterState.INTAKE))
+            );
+
+        autoChooser = AutoBuilder.buildAutoChooser();
+
+        // Another option that allows you to specify the default auto by its name
+        // autoChooser = AutoBuilder.buildAutoChooser("My Default Auto");
+
+        SmartDashboard.putData("Auto Chooser", autoChooser);
         configureBindings();
     }
 
@@ -44,6 +76,10 @@ public class RobotContainer {
         // neutral mode is applied to the drive motors while disabled.
         RobotModeTriggers.disabled().onTrue(
             Commands.runOnce(() -> DRIVETRAIN.setWantedState(DrivetrainState.IDLE))
+        );
+
+        RobotModeTriggers.autonomous().onTrue(
+          Commands.runOnce(() -> DRIVETRAIN.setWantedState(DrivetrainState.AUTO))
         );
 
         RobotModeTriggers.teleop().onTrue(
@@ -120,23 +156,6 @@ public class RobotContainer {
     }
 
     public Command getAutonomousCommand() {
-        // Simple drive forward auton
-        //final var idle = new SwerveRequest.Idle();
-        // return Commands.sequence(
-        //     // Reset our field centric heading to match the robot
-        //     // facing away from our alliance station wall (0 deg).
-        //     DRIVETRAIN.runOnce(() -> DRIVETRAIN.seedFieldCentric(Rotation2d.kZero)),
-        //     // Then slowly drive forward (away from us) for 5 seconds.
-        //     DRIVETRAIN.applyRequest(() ->
-        //         DRIVE.withVelocityX(0.5)
-        //             .withVelocityY(0)
-        //             .withRotationalRate(0)
-        //     )
-        //     .withTimeout(5.0),
-        //     // Finally idle for the rest of auton
-        //     DRIVETRAIN.applyRequest(() -> idle)
-        // );
-
-        return new InstantCommand();
+      return autoChooser.getSelected();
     }
 }
