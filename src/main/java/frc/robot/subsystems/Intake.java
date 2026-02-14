@@ -1,5 +1,6 @@
 package frc.robot.subsystems;
 
+import com.ctre.phoenix6.controls.PositionDutyCycle;
 import com.ctre.phoenix6.hardware.TalonFX;
 
 import edu.wpi.first.units.measure.Voltage;
@@ -13,12 +14,12 @@ public class Intake extends SubsystemBase {
     private IntakeState _currentState = IntakeState.IDLE;
     private TalonFX _intake;
     private TalonFX _slide;
+    private PositionDutyCycle intakeIn = new PositionDutyCycle(.1);
+    private PositionDutyCycle intakeOut = new PositionDutyCycle(.5);
 
-    // _swerve.getModule(0)
     public Intake() {
         _intake = new TalonFX(20);
         _slide = new TalonFX(21);
-        
     }
     public void startIntake() {
         _intake.set(-0.3);
@@ -29,11 +30,11 @@ public class Intake extends SubsystemBase {
     }
 
     public void intakeIn() {
-        _slide.set(.2);
+        _slide.setControl(intakeIn);
     }
 
     public void intakeOut() {
-        _slide.set(-.2);
+        _slide.setControl(intakeOut);
     }
 
     public void stopSlide() {
