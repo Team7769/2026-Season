@@ -13,7 +13,9 @@ import com.ctre.phoenix6.configs.MotionMagicConfigs;
 import com.ctre.phoenix6.configs.Slot0Configs;
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
 import com.ctre.phoenix6.signals.GravityTypeValue;
+import com.ctre.phoenix6.signals.MotorAlignmentValue;
 import com.ctre.phoenix6.signals.NeutralModeValue;
+import com.fasterxml.jackson.annotation.Nulls;
 
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.controller.SimpleMotorFeedforward;
@@ -24,6 +26,7 @@ import edu.wpi.first.wpilibj2.command.PrintCommand;
 import edu.wpi.first.wpilibj2.command.Subsystem;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.Servo;
 import frc.robot.states.ShooterState;
 
 
@@ -37,9 +40,10 @@ public class Shooter extends SubsystemBase {
     private VelocityVoltage _shooterVelocity = new VelocityVoltage(0);
     private DigitalInput _leftPhotoEye;
     private DigitalInput _rightPhotoEye;
+    private Servo _leftHood;
+    private Servo _rightHood;
 
     private SimpleMotorFeedforward _ff = new SimpleMotorFeedforward(0, 0);
-    private PIDController _hoodPID;
     private boolean _isReadyToShoot = false;
     private double _shooterPosition;
     private double _shooterTarget;
@@ -84,8 +88,8 @@ public class Shooter extends SubsystemBase {
         _rightShooter1.getConfigurator().apply(shooterConfig);
         _rightShooter2.getConfigurator().apply(shooterConfig);
 
-        _leftShooter2.setControl(new Follower(_leftShooter1, false));
-        _rightShooter2.setControl(new Follower(_rightShooter1, false));
+        _leftShooter2.setControl(new Follower(_leftShooter1.getDeviceID(), MotorAlignmentValue.Aligned));
+        _rightShooter2.setControl(new Follower(_rightShooter1.getDeviceID(), MotorAlignmentValue.Aligned));
 
     }
 
@@ -95,8 +99,8 @@ public class Shooter extends SubsystemBase {
     }
 
     private void configHood(){
-        _hoodPID = new PIDController(0.1,0,0.01);
-
+        _leftHood = new Servo(1);
+        _rightHood = new Servo(2);
     }
 
     private void prepShooter() {
