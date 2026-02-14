@@ -1,7 +1,5 @@
 package frc.robot.subsystems;
 
-
-
 import com.ctre.phoenix6.controls.PositionDutyCycle;
 
 import com.ctre.phoenix6.hardware.TalonFX;
@@ -31,9 +29,8 @@ public class Climb extends SubsystemBase {
     public void Extend() {
         // _climb.set(0.3);
         _climbTargetPosition.Position = ExtendedPosition; // https://v6.docs.ctr-electronics.com/en/stable/docs/migration/migration-guide/closed-loop-guide.html
-         _climb.setControl(_climbTargetPosition);
+        _climb.setControl(_climbTargetPosition);
     }
-
 
     public void Retract() {
         // _climb.set(-0.3);
@@ -51,7 +48,6 @@ public class Climb extends SubsystemBase {
         SmartDashboard.putNumber("TargetClimbPosition", _climbTargetPosition.Position);
     }
 
-    
     public void teleopInit() {
         Extend();
     }
@@ -68,8 +64,8 @@ public class Climb extends SubsystemBase {
                 Retract();
                 break;
             // case CLIMB_PREP:
-                
-            //     break;
+
+            // break;
             default:
                 Stop();
                 break;
