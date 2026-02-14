@@ -25,11 +25,11 @@ public class Intake extends SubsystemBase {
         _intake.set(0);
     }
 
-    public void slideIn() {
+    public void intakeIn() {
         _slide.set(.55);
     }
 
-    public void slideOut() {
+    public void intakeOut() {
         _slide.set(-.55);
     }
 
@@ -57,10 +57,10 @@ public class Intake extends SubsystemBase {
                 startIntake();
                 break;
             case OUT:
-                slideOut();
+                intakeOut();
                 break;
             case IN:
-                slideIn();
+                intakeIn();
                 break;
             case HOLD:
                 stopSlide();
