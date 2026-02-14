@@ -10,7 +10,7 @@ import frc.robot.states.ClimbState;
 
 public class Climb extends SubsystemBase {
     private ClimbState _currentState = ClimbState.IDLE;
-    private TalonFX _climb = new TalonFX(0); // Must find Talon ID
+    private TalonFX _climb = new TalonFX(23); // Must find Talon ID
     private PositionDutyCycle _climbTargetPosition = new PositionDutyCycle(0);
 
     public Float ExtendedPosition = 0f;

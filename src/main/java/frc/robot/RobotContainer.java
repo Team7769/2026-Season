@@ -133,6 +133,14 @@ public class RobotContainer {
           Commands.runOnce(() -> DRIVETRAIN.setWantedState(DrivetrainState.OPEN_LOOP))
         );
 
+        DRIVER_CONTROLLER.povDown().onTrue(
+         Commands.runOnce(() -> CLIMB.setWantedState(ClimbState.RETRACT))
+        );
+
+                DRIVER_CONTROLLER.povUp().onTrue(
+         Commands.runOnce(() -> CLIMB.setWantedState(ClimbState.EXTEND))
+        );
+
         new Trigger(DRIVETRAIN::isStagedForClimb).onTrue(
           Commands.sequence(
             Commands.runOnce(() -> DRIVETRAIN.setTargetEngageLeftClimb(GeometryUtil::isRedAlliance)),
