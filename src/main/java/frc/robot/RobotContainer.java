@@ -62,6 +62,10 @@ public class RobotContainer {
             Commands.runOnce(() -> SHOOTER.setWantedState(ShooterState.INTAKE))
             );
 
+        NamedCommands.registerCommand("floor", 
+            Commands.runOnce(() -> Hopper.setWantedState(HopperState.FLOOR_INTAKE))
+            );
+
         autoChooser = AutoBuilder.buildAutoChooser();
 
         // Another option that allows you to specify the default auto by its name
@@ -115,8 +119,14 @@ public class RobotContainer {
         );
 
         DRIVER_CONTROLLER.leftBumper().onTrue(
-          Commands.runOnce(() -> SHOOTER.setWantedState(ShooterState.IDLE))
-        );
+          Commands.sequence(
+          Commands.runOnce(() -> Hopper.setWantedState(HopperState.FLOOR_INTAKE)),
+          Commands.runOnce(() -> if(IntakeState != OUT) {
+        setWantedState(IntakeState.OUT);
+    } else {
+        setWantedState(IntakeState.IN);
+    })
+          ));
 
         DRIVER_CONTROLLER.back().onTrue(
           Commands.runOnce(() -> DRIVETRAIN.seedFieldCentric())

@@ -50,7 +50,7 @@ public class Intake extends SubsystemBase {
     public void periodic() {
         handleCurrentState();
     }
-
+    
     private void handleCurrentState() {
         switch (_currentState) {
             case STOP:
@@ -68,6 +68,7 @@ public class Intake extends SubsystemBase {
             case HOLD:
                 stopSlide();
                 break;
+            
             default:
                 stopIntake();
                 stopSlide();
