@@ -1,15 +1,13 @@
-package frc.robot.subsystems;
+package frc.robot.subsystems.Kitbot;
 
 
 import com.ctre.phoenix6.Orchestra;
 import com.ctre.phoenix6.hardware.TalonFX;
 
-import edu.wpi.first.units.measure.Voltage;
-import edu.wpi.first.wpilibj2.command.Subsystem;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.states.ShooterState;
 
-public class Shooter extends SubsystemBase {
+public class KitbotShooter extends SubsystemBase {
     private ShooterState _currentState = ShooterState.PAUSE;
     private Orchestra _orchestra;
     private TalonFX index = new TalonFX(16);
@@ -20,7 +18,7 @@ public class Shooter extends SubsystemBase {
     private TalonFX d = new TalonFX(6);
 
     // _swerve.getModule(0)
-    public Shooter() {
+    public KitbotShooter() {
         _orchestra = new Orchestra();
         _orchestra.loadMusic("heyYa.chrp");
         _orchestra.addInstrument(index);

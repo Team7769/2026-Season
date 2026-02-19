@@ -8,9 +8,7 @@ import java.util.function.Supplier;
 
 import com.ctre.phoenix6.SignalLogger;
 import com.ctre.phoenix6.Utils;
-import com.ctre.phoenix6.swerve.SwerveDrivetrainConstants;
 import com.ctre.phoenix6.swerve.SwerveModule.DriveRequestType;
-import com.ctre.phoenix6.swerve.SwerveModuleConstants;
 import com.ctre.phoenix6.swerve.SwerveRequest;
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.config.PIDConstants;
@@ -18,14 +16,11 @@ import com.pathplanner.lib.config.RobotConfig;
 import com.pathplanner.lib.controllers.PPHolonomicDriveController;
 
 import edu.wpi.first.math.MathUtil;
-import edu.wpi.first.math.Matrix;
 import edu.wpi.first.math.VecBuilder;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
-import edu.wpi.first.math.numbers.N1;
-import edu.wpi.first.math.numbers.N3;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.networktables.StructPublisher;
 import edu.wpi.first.wpilibj.DriverStation;
@@ -35,14 +30,12 @@ import edu.wpi.first.wpilibj.RobotController;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.Commands;
-import edu.wpi.first.wpilibj2.command.Subsystem;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 import frc.robot.configuration.FieldConstants;
-import frc.robot.generated.TunerConstants;
-import frc.robot.generated.TunerConstants.TunerSwerveDrivetrain;
+import frc.robot.generated.TunerConstantsKitbot;
+import frc.robot.generated.TunerConstantsKitbot.TunerSwerveDrivetrain;
 import frc.robot.states.DrivetrainState;
 import frc.robot.utilities.GeometryUtil;
 import frc.robot.utilities.VisionMeasurement;
@@ -56,7 +49,7 @@ import frc.robot.utilities.VisionMeasurement;
  */
 public class Drivetrain extends SubsystemBase {
 
-    private double _maxSpeed = 1.0 * TunerConstants.kSpeedAt12Volts.in(MetersPerSecond); // kSpeedAt12Volts desired top
+    private double _maxSpeed = 0.0; // kSpeedAt12Volts desired top
                                                                                          // speed
     private double _maxAngularRate = RotationsPerSecond.of(0.75).in(RadiansPerSecond); // 3/4 of a rotation per second
                                                                                        // max angular velocity
@@ -103,8 +96,15 @@ public class Drivetrain extends SubsystemBase {
     private final SwerveRequest.SysIdSwerveSteerGains m_steerCharacterization = new SwerveRequest.SysIdSwerveSteerGains();
     private final SwerveRequest.SysIdSwerveRotation m_rotationCharacterization = new SwerveRequest.SysIdSwerveRotation();
 
-    public Drivetrain(CommandXboxController controller, Vision vision) {
-        _swerve = TunerConstants.createDrivetrain();
+    public Drivetrain(CommandXboxController controller, Vision vision, boolean isComp) {
+        
+        if (isComp) {
+            // Use comp bot tuner constants
+        } else {
+            _maxSpeed = 1.0 * TunerConstantsKitbot.kSpeedAt12Volts.in(MetersPerSecond);
+            _swerve = TunerConstantsKitbot.createDrivetrain();
+        }
+
         CONTROLLER = controller;
         VISION = vision;
 
