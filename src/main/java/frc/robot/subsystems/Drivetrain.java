@@ -35,6 +35,7 @@ import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 import frc.robot.configuration.FieldConstants;
 import frc.robot.generated.TunerConstants;
+import frc.robot.generated.TunerConstantsKitbot;
 import frc.robot.generated.TunerConstants.TunerSwerveDrivetrain;
 import frc.robot.states.DrivetrainState;
 import frc.robot.utilities.GeometryUtil;
@@ -100,7 +101,10 @@ public class Drivetrain extends SubsystemBase {
         
         if (isComp) {
             // Use comp bot tuner constants
+            _maxSpeed = 1.0 * TunerConstants.kSpeedAt12Volts.in(MetersPerSecond);
+            _swerve = TunerConstants.createDrivetrain();
         } else {
+            //fix to kitbot later
             _maxSpeed = 1.0 * TunerConstants.kSpeedAt12Volts.in(MetersPerSecond);
             _swerve = TunerConstants.createDrivetrain();
         }
