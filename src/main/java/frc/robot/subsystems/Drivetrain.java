@@ -34,8 +34,8 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 import frc.robot.configuration.FieldConstants;
-import frc.robot.generated.TunerConstantsKitbot;
-import frc.robot.generated.TunerConstantsKitbot.TunerSwerveDrivetrain;
+import frc.robot.generated.TunerConstants;
+import frc.robot.generated.TunerConstants.TunerSwerveDrivetrain;
 import frc.robot.states.DrivetrainState;
 import frc.robot.utilities.GeometryUtil;
 import frc.robot.utilities.VisionMeasurement;
@@ -101,8 +101,8 @@ public class Drivetrain extends SubsystemBase {
         if (isComp) {
             // Use comp bot tuner constants
         } else {
-            _maxSpeed = 1.0 * TunerConstantsKitbot.kSpeedAt12Volts.in(MetersPerSecond);
-            _swerve = TunerConstantsKitbot.createDrivetrain();
+            _maxSpeed = 1.0 * TunerConstants.kSpeedAt12Volts.in(MetersPerSecond);
+            _swerve = TunerConstants.createDrivetrain();
         }
 
         CONTROLLER = controller;
