@@ -68,8 +68,6 @@ public class Shooter extends SubsystemBase {
         _leftShooter2 = new TalonFX(16);//follow
         _rightShooter1 = new TalonFX(17);
         _rightShooter2 = new TalonFX(18);//follow
-        _leftPhotoEye = new DigitalInput(0);
-        _rightPhotoEye = new DigitalInput(1);
 
         var slot0 = shooterConfig.Slot0;
 
@@ -99,8 +97,8 @@ public class Shooter extends SubsystemBase {
     }
 
     private void configHood(){
-        _leftHood = new Servo(1);
-        _rightHood = new Servo(2);
+        _leftHood = new Servo(0);
+        _rightHood = new Servo(1);
     }
 
     private void prepShooter() {
