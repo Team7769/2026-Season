@@ -2,56 +2,52 @@ package frc.robot.subsystems;
 
 import com.ctre.phoenix6.hardware.TalonFX;
 
-import edu.wpi.first.units.measure.Voltage;
-import edu.wpi.first.wpilibj2.command.Subsystem;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.generated.TunerConstants;
-import frc.states.HopperState;
+import frc.robot.states.HopperState;
 
 public class Hopper extends SubsystemBase {
     private HopperState _currentState = HopperState.IDLE;
     private TalonFX _floor;
-    
-public void setWantedState(HopperState wantedState) {
+
+    public void setWantedState(HopperState wantedState) {
         if (wantedState != _currentState) {
             _currentState = wantedState;
         }
     }
 
-    public Hopper (){
+    public Hopper() {
         _floor = new TalonFX(22);
-
-        public void startHopper(){
-            _floor.set(-0.3);
-        }
-         public void stopHopper(){
-            _floor.set(0);
-        }
     }
 
- @Override
+    public void startHopper() {
+        _floor.set(-0.3);
+    }
+
+    public void stopHopper() {
+        _floor.set(0);
+    }
+
+    @Override
     public void periodic() {
         handleCurrentState();
     }
 
     private void handleCurrentState() {
         switch (_currentState) {
-            case IDLE :
-            stopHopper();
-            break;
-            
-            case FLOOR_INTAKE :
-            startHopper();
-            break;
+            case IDLE:
+                stopHopper();
+                break;
 
-            case AUTO :
-            startHopper();
+            case FLOOR_INTAKE:
+                startHopper();
+                break;
 
-            default :
-            stopHopper()
-            break;
+            case AUTO:
+                startHopper();
 
+            default:
+                stopHopper();
+                break;
         }
-
-}
+    }
 }
