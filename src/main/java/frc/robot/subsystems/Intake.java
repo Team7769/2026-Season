@@ -15,7 +15,8 @@ public class Intake extends SubsystemBase {
     private TalonFX _intake;
     private TalonFX _slide;
     private PositionDutyCycle intakeIn = new PositionDutyCycle(.1);
-    private PositionDutyCycle intakeOut = new PositionDutyCycle(.5);
+    private PositionDutyCycle intakeOut = new PositionDutyCycle(14.25);
+    private PositionDutyCycle intakeShoot = new PositionDutyCycle(4.5);
 
     public Intake() {
         _intake = new TalonFX(20);
