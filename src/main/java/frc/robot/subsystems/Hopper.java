@@ -19,11 +19,11 @@ public class Hopper extends SubsystemBase {
         _floor = new TalonFX(22);
     }
 
-    public void startHopper() {
+    public void startFloor() {
         _floor.set(-0.3);
     }
 
-    public void stopHopper() {
+    public void stopFloor() {
         _floor.set(0);
     }
 
@@ -35,18 +35,18 @@ public class Hopper extends SubsystemBase {
     private void handleCurrentState() {
         switch (_currentState) {
             case IDLE:
-                stopHopper();
+                stopFloor();
                 break;
 
             case FLOOR_INTAKE:
-                startHopper();
+                startFloor();
                 break;
 
             case AUTO:
-                startHopper();
+                startFloor();
 
             default:
-                stopHopper();
+                stopFloor();
                 break;
         }
     }
