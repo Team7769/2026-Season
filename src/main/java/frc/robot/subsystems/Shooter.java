@@ -135,6 +135,7 @@ public class Shooter extends SubsystemBase {
     private void setIdle() {
         _leftShooter1.setControl(idleVelocityTorqueCurrentFOC);
         _rightShooter1.setControl(idleVelocityTorqueCurrentFOC);
+        hoodDown();
     }
 
     private void hoodUp() {
