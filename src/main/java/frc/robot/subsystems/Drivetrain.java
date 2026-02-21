@@ -35,7 +35,6 @@ import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 import frc.robot.configuration.FieldConstants;
 import frc.robot.generated.TunerConstants;
-import frc.robot.generated.TunerConstantsKitbot;
 import frc.robot.generated.TunerConstants.TunerSwerveDrivetrain;
 import frc.robot.states.DrivetrainState;
 import frc.robot.utilities.GeometryUtil;
@@ -139,7 +138,7 @@ public class Drivetrain extends SubsystemBase {
                                                     // for
                                                     // holonomic drive trains
                             new PIDConstants(2.5, 0.0, 0.0), // Translation PID constants
-                            new PIDConstants(2, 0.0, 0.0) // Rotation PID constants
+                            new PIDConstants(1, 0.0, 0.0) // Rotation PID constants
                     ),
                     RobotConfig.fromGUISettings(), // The robot configuration
                     () -> {
@@ -281,6 +280,7 @@ public class Drivetrain extends SubsystemBase {
         SmartDashboard.putBoolean("X Staged", isXStagedForClimb());
         SmartDashboard.putBoolean("Y Staged", isYStagedForClimb());
         SmartDashboard.putBoolean("Z Staged", isZStagedForClimb());
+        SmartDashboard.putNumber("Distance to Target", getDistanceToTarget());
     }
 
     private void updateOdometry() {
@@ -296,6 +296,10 @@ public class Drivetrain extends SubsystemBase {
         publisher.set(getPose());
         m_field.setRobotPose(getPose());
         m_field.getObject("targetPose").setPose(_target);
+    }
+
+    public double getDistanceToTarget(){
+        return _target.getTranslation().getDistance(_swerve.getState().Pose.getTranslation());
     }
 
     public void setWantedState(DrivetrainState wantedState) {

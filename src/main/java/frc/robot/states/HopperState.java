@@ -4,5 +4,6 @@ public enum HopperState {
     IDLE,
     FLOOR_INTAKE,
     INJECTING,
+    INJECTING_HOPPER_OUT,
     STOW
 }

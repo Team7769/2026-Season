@@ -130,23 +130,28 @@ public class RobotContainer {
   private void registerCompBindings() {
     // Register triggers/bindings for comp bot here
         DRIVER_CONTROLLER.rightBumper().onTrue(
-          Commands.runOnce(() -> SHOOTER.setWantedState(ShooterState.PREPSHOOTER))
-        ).onFalse(
+        Commands.runOnce(() ->{ 
+          SHOOTER.setWantedState(ShooterState.PREPSHOOTER);
+          DRIVETRAIN.setWantedState(DrivetrainState.AIM);
+        })).onFalse(
           Commands.runOnce(() -> {
             SHOOTER.setWantedState(ShooterState.IDLE);
             HOPPER.setWantedState(HopperState.STOW);
+            DRIVETRAIN.setWantedState(DrivetrainState.OPEN_LOOP);
           })
         );
 
         DRIVER_CONTROLLER.rightTrigger().onTrue(
           Commands.runOnce(() -> {
+            
             SHOOTER.setWantedState(ShooterState.SHOOT);
-            HOPPER.setWantedState(HopperState.INJECTING);
+            HOPPER.setWantedState(HopperState.INJECTING_HOPPER_OUT);
+
           })
         ).onFalse(
           Commands.runOnce(() -> {
-            SHOOTER.setWantedState(ShooterState.IDLE);
-            HOPPER.setWantedState(HopperState.STOW);
+            SHOOTER.setWantedState(ShooterState.SHOOT);
+            HOPPER.setWantedState(HopperState.INJECTING);
           })
         );
 
@@ -161,6 +166,33 @@ public class RobotContainer {
             HOPPER.setWantedState(HopperState.STOW);
           })
         );
+
+    DRIVER_CONTROLLER.y().onTrue(
+        Commands.runOnce(() -> DRIVETRAIN.setTargetHub(GeometryUtil::isRedAlliance)));
+
+    DRIVER_CONTROLLER.a().onTrue(
+        Commands.runOnce(() -> DRIVETRAIN.setTargetDepot(GeometryUtil::isRedAlliance)));
+
+    DRIVER_CONTROLLER.x().onTrue(
+        Commands.runOnce(() -> DRIVETRAIN.setTargetZoneA(GeometryUtil::isRedAlliance)));
+
+    DRIVER_CONTROLLER.b().onTrue(
+        Commands.runOnce(() -> DRIVETRAIN.setTargetZoneB(GeometryUtil::isRedAlliance)));
+    DRIVER_CONTROLLER.back().onTrue(
+        Commands.runOnce(() -> DRIVETRAIN.seedFieldCentric()));
+
+            DRIVER_CONTROLLER.start().onTrue(
+        Commands.runOnce(() -> {
+          DRIVETRAIN.setWantedState(DrivetrainState.CLIMB_STAGE);
+          DRIVETRAIN.setTargetStageLeftClimb(GeometryUtil::isRedAlliance);
+        })).onFalse(
+            Commands.runOnce(() -> DRIVETRAIN.setWantedState(DrivetrainState.OPEN_LOOP)));
+
+    new Trigger(DRIVETRAIN::isStagedForClimb).onTrue(
+        Commands.sequence(
+            Commands.runOnce(() -> DRIVETRAIN.setTargetEngageLeftClimb(GeometryUtil::isRedAlliance)),
+            Commands.runOnce(() -> DRIVETRAIN.setWantedState(DrivetrainState.CLIMB_ENGAGE))));
+
 
   }
 

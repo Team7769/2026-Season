@@ -81,6 +81,9 @@ public class Hopper extends SubsystemBase {
             case INJECTING:
                 handleInject();
                 break;
+            case INJECTING_HOPPER_OUT:
+                handleInjectHopperOut();
+                break;
             default:
                 handleStow();
                 break;
@@ -109,6 +112,13 @@ public class Hopper extends SubsystemBase {
 
     private void handleInject() {
         _slide.setControl(INTAKE_SHOOT);
+        _intake.setControl(INTAKE);
+        _floor.setControl(FLOOR_INJECT);
+        _injector.setControl(FLOOR_INJECT);
+    }
+
+    private void handleInjectHopperOut() {
+        _slide.setControl(INTAKE_OUT);
         _intake.setControl(INTAKE);
         _floor.setControl(FLOOR_INJECT);
         _injector.setControl(FLOOR_INJECT);
