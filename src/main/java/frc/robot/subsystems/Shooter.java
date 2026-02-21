@@ -13,6 +13,7 @@ import com.ctre.phoenix6.configs.MotionMagicConfigs;
 import com.ctre.phoenix6.configs.Slot0Configs;
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
 import com.ctre.phoenix6.signals.GravityTypeValue;
+import com.ctre.phoenix6.signals.InvertedValue;
 import com.ctre.phoenix6.signals.MotorAlignmentValue;
 import com.ctre.phoenix6.signals.NeutralModeValue;
 import com.fasterxml.jackson.annotation.Nulls;
@@ -31,6 +32,7 @@ public class Shooter extends SubsystemBase {
     private TalonFX _leftShooter2;
     private TalonFX _rightShooter2;
     private VelocityVoltage _shooterVelocity = new VelocityVoltage(0);
+    private final VoltageOut SHOOTER_VOLTAGE = new VoltageOut(6);
     private DigitalInput _leftPhotoEye;
     private DigitalInput _rightPhotoEye;
     private Servo _leftHood;
@@ -55,28 +57,38 @@ public class Shooter extends SubsystemBase {
     }
 
     private void configShooter(){
-        TalonFXConfiguration shooterConfig = new TalonFXConfiguration();
         _leftShooter1 = new TalonFX(15);
         _leftShooter2 = new TalonFX(16);//follow
         _rightShooter1 = new TalonFX(17);
         _rightShooter2 = new TalonFX(18);//follow
 
-        var slot0 = shooterConfig.Slot0;
+        TalonFXConfiguration rightShooterConfig = new TalonFXConfiguration();
+        var rightSlot0 = rightShooterConfig.Slot0;
 
-        slot0.kV = 0.2;
-        slot0.kP = 0.2;
-        slot0.kI = 0.0;
-        slot0.kD = 0.0;
+        rightSlot0.kV = 0.2;
+        rightSlot0.kP = 0.2;
+        rightSlot0.kI = 0.0;
+        rightSlot0.kD = 0.0;
+
+        TalonFXConfiguration leftShooterConfig = new TalonFXConfiguration();
+        leftShooterConfig.MotorOutput.Inverted = InvertedValue.Clockwise_Positive;
+
+        var leftSlot0 = rightShooterConfig.Slot0;
+
+        leftSlot0.kV = 0.2;
+        leftSlot0.kP = 0.2;
+        leftSlot0.kI = 0.0;
+        leftSlot0.kD = 0.0;
+
+        _leftShooter1.getConfigurator().apply(leftShooterConfig);
+        _leftShooter2.getConfigurator().apply(leftShooterConfig);
+        _rightShooter1.getConfigurator().apply(rightShooterConfig);
+        _rightShooter2.getConfigurator().apply(rightShooterConfig);
 
         _leftShooter1.setNeutralMode(NeutralModeValue.Coast);
         _leftShooter2.setNeutralMode(NeutralModeValue.Coast);
         _rightShooter1.setNeutralMode(NeutralModeValue.Coast);
         _rightShooter2.setNeutralMode(NeutralModeValue.Coast);
-
-        _leftShooter1.getConfigurator().apply(shooterConfig);
-        _leftShooter2.getConfigurator().apply(shooterConfig);
-        _rightShooter1.getConfigurator().apply(shooterConfig);
-        _rightShooter2.getConfigurator().apply(shooterConfig);
 
         _leftShooter2.setControl(new Follower(_leftShooter1.getDeviceID(), MotorAlignmentValue.Aligned));
         _rightShooter2.setControl(new Follower(_rightShooter1.getDeviceID(), MotorAlignmentValue.Aligned));
@@ -89,13 +101,13 @@ public class Shooter extends SubsystemBase {
     }
 
     private void prepShooter() {
-        _leftShooter1.setControl(_shooterVelocity.withVelocity(30));
-        _rightShooter1.setControl(_shooterVelocity.withVelocity(30));
+        _leftShooter1.setControl(SHOOTER_VOLTAGE);
+        _rightShooter1.setControl(SHOOTER_VOLTAGE);
     }
 
     private void shoot(double shot) {
-        _leftShooter1.setControl(_shooterVelocity.withVelocity(shot));
-        _rightShooter1.setControl(_shooterVelocity.withVelocity(shot));
+        _leftShooter1.setControl(SHOOTER_VOLTAGE);
+        _rightShooter1.setControl(SHOOTER_VOLTAGE);
     }
 
     private void stop() {
