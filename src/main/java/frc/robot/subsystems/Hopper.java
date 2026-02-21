@@ -4,6 +4,7 @@ import com.ctre.phoenix6.configs.CurrentLimitsConfigs;
 import com.ctre.phoenix6.configs.Slot0Configs;
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
 import com.ctre.phoenix6.controls.PositionDutyCycle;
+import com.ctre.phoenix6.controls.VoltageOut;
 import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.NeutralModeValue;
 
@@ -16,6 +17,10 @@ public class Hopper extends SubsystemBase {
     private TalonFX _injector;
     private TalonFX _intake;
     private TalonFX _slide;
+
+    private final VoltageOut HALT = new VoltageOut(0);
+    private final VoltageOut FLOOR_INJECT = new VoltageOut(11);
+    private final VoltageOut INTAKE = new VoltageOut(6);
 
     private final PositionDutyCycle INTAKE_IN = new PositionDutyCycle(.1);
     private final PositionDutyCycle INTAKE_OUT = new PositionDutyCycle(14.25);
@@ -54,8 +59,7 @@ public class Hopper extends SubsystemBase {
 
     private void configInjector(){
         _injector = new TalonFX(19);
-        _injector.setNeutralMode(NeutralModeValue.Brake);
-        
+        _injector.setNeutralMode(NeutralModeValue.Coast);
         _floor = new TalonFX(22);
     }
 
@@ -83,16 +87,28 @@ public class Hopper extends SubsystemBase {
 
     private void handleFloorIntake() {
         _slide.setControl(INTAKE_OUT);
+        _intake.setControl(INTAKE);
+        _floor.setControl(HALT);
+        _injector.setControl(HALT);
     }
 
     private void handleIdle() {
+        _intake.setControl(HALT);
+        _floor.setControl(HALT);
+        _injector.setControl(HALT);
     }
 
     private void handleStow() {
         _slide.setControl(INTAKE_IN);
+        _intake.setControl(HALT);
+        _floor.setControl(HALT);
+        _injector.setControl(HALT);
     }
 
     private void handleInject() {
         _slide.setControl(INTAKE_SHOOT);
+        _intake.setControl(INTAKE);
+        _floor.setControl(FLOOR_INJECT);
+        _injector.setControl(FLOOR_INJECT);
     }
 }
