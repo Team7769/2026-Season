@@ -103,6 +103,7 @@ public class Shooter extends SubsystemBase {
     private void prepShooter() {
         _leftShooter1.setControl(SHOOTER_VOLTAGE);
         _rightShooter1.setControl(SHOOTER_VOLTAGE);
+        hoodUp();
     }
 
     private void shoot(double shot) {
@@ -113,11 +114,23 @@ public class Shooter extends SubsystemBase {
     private void stop() {
         _leftShooter1.set(0);
         _rightShooter1.set(0);
+        hoodDown();
     }
 
     private void setIdle() {
         _leftShooter1.setControl(_shooterVelocity.withVelocity(10));
         _rightShooter1.setControl(_shooterVelocity.withVelocity(10));
+        hoodDown();
+    }
+
+    private void hoodUp() {
+        _leftHood.set(.5);
+        _rightHood.set(.5);
+    }
+
+    private void hoodDown() {
+        _leftHood.set(0);
+        _rightHood.set(0);
     }
 
     public boolean shooterReady(){

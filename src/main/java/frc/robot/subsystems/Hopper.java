@@ -6,6 +6,7 @@ import com.ctre.phoenix6.configs.TalonFXConfiguration;
 import com.ctre.phoenix6.controls.PositionDutyCycle;
 import com.ctre.phoenix6.controls.VoltageOut;
 import com.ctre.phoenix6.hardware.TalonFX;
+import com.ctre.phoenix6.signals.InvertedValue;
 import com.ctre.phoenix6.signals.NeutralModeValue;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -52,6 +53,7 @@ public class Hopper extends SubsystemBase {
 
         slideConfiguration.withSlot0(slideSlot0Configs);
         slideConfiguration.withCurrentLimits(currentLimits);
+        slideConfiguration.MotorOutput.Inverted= InvertedValue.Clockwise_Positive;
         
         _slide = new TalonFX(21);
         _slide.getConfigurator().apply(slideConfiguration);

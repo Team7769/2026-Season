@@ -27,7 +27,7 @@ import frc.robot.utilities.GeometryUtil;
 
 public class RobotContainer {
   // Set this to false to setup as Kitbot
-  private final boolean _isComp = false;
+  private final boolean _isComp = true;
 
   private final SendableChooser<Command> autoChooser;
   private final CommandXboxController DRIVER_CONTROLLER = new CommandXboxController(0);
@@ -161,6 +161,7 @@ public class RobotContainer {
             HOPPER.setWantedState(HopperState.STOW);
           })
         );
+
   }
 
   private void registerNamedCommands() {
