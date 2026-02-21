@@ -37,7 +37,7 @@ public class RobotContainer {
   public final KitbotShooter KITBOT_SHOOTER = _isComp ? null : new KitbotShooter();
   public final KitbotIntake KITBOT_INTAKE = _isComp ? null : new KitbotIntake();
   public final Hopper HOPPER = _isComp ? new Hopper() : null;
-  public final Shooter SHOOTER = _isComp ? new Shooter() : null;
+  public final Shooter SHOOTER = _isComp ? new Shooter(DRIVETRAIN) : null;
 
   public RobotContainer() {
 
@@ -167,17 +167,17 @@ public class RobotContainer {
           })
         );
 
-    DRIVER_CONTROLLER.y().onTrue(
-        Commands.runOnce(() -> DRIVETRAIN.setTargetHub(GeometryUtil::isRedAlliance)));
+    // DRIVER_CONTROLLER.y().onTrue(
+    //     Commands.runOnce(() -> DRIVETRAIN.setTargetHub(GeometryUtil::isRedAlliance)));
 
-    DRIVER_CONTROLLER.a().onTrue(
-        Commands.runOnce(() -> DRIVETRAIN.setTargetDepot(GeometryUtil::isRedAlliance)));
+    // DRIVER_CONTROLLER.a().onTrue(
+    //     Commands.runOnce(() -> DRIVETRAIN.setTargetDepot(GeometryUtil::isRedAlliance)));
 
-    DRIVER_CONTROLLER.x().onTrue(
-        Commands.runOnce(() -> DRIVETRAIN.setTargetZoneA(GeometryUtil::isRedAlliance)));
+    // DRIVER_CONTROLLER.x().onTrue(
+    //     Commands.runOnce(() -> DRIVETRAIN.setTargetZoneA(GeometryUtil::isRedAlliance)));
 
-    DRIVER_CONTROLLER.b().onTrue(
-        Commands.runOnce(() -> DRIVETRAIN.setTargetZoneB(GeometryUtil::isRedAlliance)));
+    // DRIVER_CONTROLLER.b().onTrue(
+    //     Commands.runOnce(() -> DRIVETRAIN.setTargetZoneB(GeometryUtil::isRedAlliance)));
     DRIVER_CONTROLLER.back().onTrue(
         Commands.runOnce(() -> DRIVETRAIN.seedFieldCentric()));
 
@@ -192,8 +192,6 @@ public class RobotContainer {
         Commands.sequence(
             Commands.runOnce(() -> DRIVETRAIN.setTargetEngageLeftClimb(GeometryUtil::isRedAlliance)),
             Commands.runOnce(() -> DRIVETRAIN.setWantedState(DrivetrainState.CLIMB_ENGAGE))));
-
-
   }
 
   private void registerNamedCommands() {

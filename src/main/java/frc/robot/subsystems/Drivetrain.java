@@ -271,6 +271,7 @@ public class Drivetrain extends SubsystemBase {
         }
 
         updateOdometry();
+        updateTarget();
         handleCurrentTarget();
         handleCurrentState();
         SmartDashboard.putString("Current State", _currentState.toString());
@@ -357,6 +358,31 @@ public class Drivetrain extends SubsystemBase {
             _target = new Pose2d(FieldConstants.kRedZoneB, new Rotation2d());
         } else {
             _target = new Pose2d(FieldConstants.kBlueZoneB, new Rotation2d());
+        }
+    }
+
+    private void updateTarget() {
+        var currentTranslation = _swerve.getState().Pose.getTranslation();
+        if (GeometryUtil.isRedAlliance()) {
+            if (currentTranslation.getX() >= 11.3) {
+                setTargetHub(GeometryUtil::isRedAlliance);
+            } else {
+                if (currentTranslation.getY() >= 4){
+                    setTargetZoneB(GeometryUtil::isRedAlliance);
+                } else {
+                    setTargetZoneA(GeometryUtil::isRedAlliance);
+                }
+            }
+        } else {
+            if (currentTranslation.getX() <= 5.1) {
+                setTargetHub(GeometryUtil::isRedAlliance);
+            } else {
+                if (currentTranslation.getY() >= 4){
+                    setTargetZoneA(GeometryUtil::isRedAlliance);
+                } else {
+                    setTargetZoneB(GeometryUtil::isRedAlliance);
+                }
+            }
         }
     }
 

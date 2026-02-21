@@ -1,6 +1,8 @@
 package frc.robot.subsystems;
 
 
+import java.util.function.Supplier;
+
 import com.ctre.phoenix6.Orchestra;
 import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.controls.Follower;
@@ -21,6 +23,7 @@ import com.fasterxml.jackson.annotation.Nulls;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.math.controller.SimpleMotorFeedforward;
+import edu.wpi.first.math.interpolation.InterpolatingDoubleTreeMap;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Servo;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -49,16 +52,26 @@ public class Shooter extends SubsystemBase {
     private double _shooterError = 0.1;
     private double _hoodPosition = .5;
     private double _hoodTarget;
-    private Vision VISION = new Vision();
+    private final Drivetrain DRIVETRAIN;
+    private InterpolatingDoubleTreeMap _hoodMap = new InterpolatingDoubleTreeMap();
+    private InterpolatingDoubleTreeMap _shooterMap = new InterpolatingDoubleTreeMap();
 
     private final double[] kDistanceIDs = {1.77, 2, 2.5, 3, 3.5, 4};
     private final double[] kHoodAngles = {4.5, 5.1, 5.55, 5.85, 6.2, 6.35};
     private final double[] kShooterSpeeds = {67, 67, 67, 67, 67, 67};
 
-    public Shooter() {
+    public Shooter(Drivetrain drivetrain) {
+        DRIVETRAIN = drivetrain;
+        _hoodMap.put(2.0, .3);
+        _hoodMap.put(3.5, .4);
+        _hoodMap.put(5.0, .6);
+
+        _shooterMap.put(2.0, 60.0);
+        _shooterMap.put(3.5, 60.0);
+        _shooterMap.put(5.0, 60.0);
+
         configShooter();
         configHood();
-
     }
 
     private void configShooter(){
@@ -147,13 +160,22 @@ public class Shooter extends SubsystemBase {
         }
     }
 
+    public void setShooterTargetSpeed(Supplier<Double> distanceSupplier){
+        var distance = distanceSupplier.get();
+        var targetSpeed = _shooterMap.get(distance);
+        shotVelocityTorqueCurrentFOC.Velocity = targetSpeed;
+        
+        _hoodPosition = _hoodMap.get(distance);
+    }
+
     @Override
     public void periodic() {
-        
+        setShooterTargetSpeed(DRIVETRAIN::getDistanceToTarget);
         SmartDashboard.putNumber("Right Hood", _rightHood.getPosition());
         SmartDashboard.putNumber("Left Hood", _leftHood.getPosition());
         SmartDashboard.putString("Shooter State", _currentState.name());
-        _hoodPosition = SmartDashboard.getNumber("Hood Position", 0);
+        //_hoodPosition = SmartDashboard.getNumber("Hood Position", 0);
+        SmartDashboard.putNumber("Shooter Target Velocity", shotVelocityTorqueCurrentFOC.Velocity);
         SmartDashboard.putBoolean("Shooter At Speed", _leftShooter1.getClosedLoopError().getValueAsDouble()<=1);
         handleCurrentState();
     }
