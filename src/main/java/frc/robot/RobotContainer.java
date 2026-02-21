@@ -15,13 +15,14 @@ import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.RobotModeTriggers;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.states.DrivetrainState;
+import frc.robot.states.HopperState;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Hopper;
+import frc.robot.subsystems.Shooter;
 import frc.robot.states.ShooterState;
 import frc.robot.subsystems.Vision;
 import frc.robot.subsystems.Kitbot.KitbotIntake;
 import frc.robot.subsystems.Kitbot.KitbotShooter;
-import frc.robot.subsystems.Kitbot.Shooter;
 import frc.robot.utilities.GeometryUtil;
 
 public class RobotContainer {
@@ -76,17 +77,6 @@ public class RobotContainer {
     DRIVER_CONTROLLER.x().onTrue(
         Commands.runOnce(() -> DRIVETRAIN.setTargetZoneA(GeometryUtil::isRedAlliance)));
 
-        DRIVER_CONTROLLER.rightBumper().onTrue(
-          Commands.runOnce(() -> SHOOTER.setWantedState(ShooterState.PREPSHOOTER))
-        ).onFalse(
-          Commands.runOnce(() -> SHOOTER.setWantedState(ShooterState.IDLE))
-        );
-
-        DRIVER_CONTROLLER.rightTrigger().onTrue(
-          Commands.runOnce(() -> SHOOTER.setWantedState(ShooterState.SHOOT))
-        ).onFalse(
-          Commands.runOnce(() -> SHOOTER.setWantedState(ShooterState.IDLE))
-        );
     DRIVER_CONTROLLER.b().onTrue(
         Commands.runOnce(() -> DRIVETRAIN.setTargetZoneB(GeometryUtil::isRedAlliance)));
     DRIVER_CONTROLLER.back().onTrue(
@@ -139,6 +129,35 @@ public class RobotContainer {
 
   private void registerCompBindings() {
     // Register triggers/bindings for comp bot here
+        DRIVER_CONTROLLER.rightBumper().onTrue(
+          Commands.runOnce(() -> SHOOTER.setWantedState(ShooterState.PREPSHOOTER))
+        ).onFalse(
+          Commands.runOnce(() -> SHOOTER.setWantedState(ShooterState.IDLE))
+        );
+
+        DRIVER_CONTROLLER.rightTrigger().onTrue(
+          Commands.runOnce(() -> {
+            SHOOTER.setWantedState(ShooterState.SHOOT);
+            HOPPER.setWantedState(HopperState.INJECTING);
+          })
+        ).onFalse(
+          Commands.runOnce(() -> {
+            SHOOTER.setWantedState(ShooterState.IDLE);
+            HOPPER.setWantedState(HopperState.STOW);
+          })
+        );
+
+        DRIVER_CONTROLLER.leftBumper().onTrue(
+          Commands.runOnce(() -> {
+            HOPPER.setWantedState(HopperState.FLOOR_INTAKE);
+          })
+        );
+        
+        DRIVER_CONTROLLER.leftTrigger().onTrue(
+          Commands.runOnce(() -> {
+            HOPPER.setWantedState(HopperState.STOW);
+          })
+        );
   }
 
   private void registerNamedCommands() {

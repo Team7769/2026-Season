@@ -1,6 +1,11 @@
 package frc.robot.subsystems;
 
+import com.ctre.phoenix6.configs.CurrentLimitsConfigs;
+import com.ctre.phoenix6.configs.Slot0Configs;
+import com.ctre.phoenix6.configs.TalonFXConfiguration;
+import com.ctre.phoenix6.controls.PositionDutyCycle;
 import com.ctre.phoenix6.hardware.TalonFX;
+import com.ctre.phoenix6.signals.NeutralModeValue;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.states.HopperState;
@@ -8,6 +13,13 @@ import frc.robot.states.HopperState;
 public class Hopper extends SubsystemBase {
     private HopperState _currentState = HopperState.IDLE;
     private TalonFX _floor;
+    private TalonFX _injector;
+    private TalonFX _intake;
+    private TalonFX _slide;
+
+    private final PositionDutyCycle INTAKE_IN = new PositionDutyCycle(.1);
+    private final PositionDutyCycle INTAKE_OUT = new PositionDutyCycle(14.25);
+    private final PositionDutyCycle INTAKE_SHOOT = new PositionDutyCycle(4.5);
 
     public void setWantedState(HopperState wantedState) {
         if (wantedState != _currentState) {
@@ -16,15 +28,35 @@ public class Hopper extends SubsystemBase {
     }
 
     public Hopper() {
+        configInjector();
+        configHopper();
+    }
+
+    private void configHopper() {
+        _intake = new TalonFX(20);
+
+        var slideConfiguration = new TalonFXConfiguration();
+        var currentLimits = new CurrentLimitsConfigs()
+                                .withStatorCurrentLimit(60)
+                                .withSupplyCurrentLimit(20)
+                                .withSupplyCurrentLowerTime(1)
+                                .withSupplyCurrentLowerLimit(10);
+        var slideSlot0Configs = new Slot0Configs()
+                                 .withKP(0.25)
+                                 .withKD(0.001);
+
+        slideConfiguration.withSlot0(slideSlot0Configs);
+        slideConfiguration.withCurrentLimits(currentLimits);
+        
+        _slide = new TalonFX(21);
+        _slide.getConfigurator().apply(slideConfiguration);
+    }
+
+    private void configInjector(){
+        _injector = new TalonFX(19);
+        _injector.setNeutralMode(NeutralModeValue.Brake);
+        
         _floor = new TalonFX(22);
-    }
-
-    public void startHopper() {
-        _floor.set(-0.3);
-    }
-
-    public void stopHopper() {
-        _floor.set(0);
     }
 
     @Override
@@ -35,19 +67,32 @@ public class Hopper extends SubsystemBase {
     private void handleCurrentState() {
         switch (_currentState) {
             case IDLE:
-                stopHopper();
+                handleIdle();
                 break;
-
             case FLOOR_INTAKE:
-                startHopper();
+                handleFloorIntake();
                 break;
-
-            case AUTO:
-                startHopper();
-
+            case INJECTING:
+                handleInject();
+                break;
             default:
-                stopHopper();
+                handleStow();
                 break;
         }
+    }
+
+    private void handleFloorIntake() {
+        _slide.setControl(INTAKE_OUT);
+    }
+
+    private void handleIdle() {
+    }
+
+    private void handleStow() {
+        _slide.setControl(INTAKE_IN);
+    }
+
+    private void handleInject() {
+        _slide.setControl(INTAKE_SHOOT);
     }
 }

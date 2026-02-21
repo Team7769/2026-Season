@@ -1,4 +1,4 @@
-package frc.robot.subsystems.Kitbot;
+package frc.robot.subsystems;
 
 
 import com.ctre.phoenix6.Orchestra;
@@ -22,7 +22,6 @@ import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Servo;
 import frc.robot.states.ShooterState;
-import frc.robot.subsystems.Vision;
 
 
 public class Shooter extends SubsystemBase {
@@ -31,7 +30,6 @@ public class Shooter extends SubsystemBase {
     private TalonFX _rightShooter1;
     private TalonFX _leftShooter2;
     private TalonFX _rightShooter2;
-    private TalonFX _injector;
     private VelocityVoltage _shooterVelocity = new VelocityVoltage(0);
     private DigitalInput _leftPhotoEye;
     private DigitalInput _rightPhotoEye;
@@ -53,7 +51,6 @@ public class Shooter extends SubsystemBase {
 
     public Shooter() {
         configShooter();
-        configInjector();
         configHood();
     }
 
@@ -86,11 +83,6 @@ public class Shooter extends SubsystemBase {
 
     }
 
-    private void configInjector(){
-        _injector = new TalonFX(19);
-        _injector.setNeutralMode(NeutralModeValue.Brake);
-    }
-
     private void configHood(){
         _leftHood = new Servo(0);
         _rightHood = new Servo(1);
@@ -99,33 +91,21 @@ public class Shooter extends SubsystemBase {
     private void prepShooter() {
         _leftShooter1.setControl(_shooterVelocity.withVelocity(30));
         _rightShooter1.setControl(_shooterVelocity.withVelocity(30));
-        injectorOff();
     }
 
     private void shoot(double shot) {
         _leftShooter1.setControl(_shooterVelocity.withVelocity(shot));
         _rightShooter1.setControl(_shooterVelocity.withVelocity(shot));
-        injectorOn();
     }
 
     private void stop() {
         _leftShooter1.set(0);
         _rightShooter1.set(0);
-        injectorOff();
     }
 
     private void setIdle() {
         _leftShooter1.setControl(_shooterVelocity.withVelocity(10));
         _rightShooter1.setControl(_shooterVelocity.withVelocity(10));
-        injectorOff();
-    }
-
-    private void injectorOn() {
-        _injector.set(0.3);
-    }
-
-        private void injectorOff() {
-        _injector.set(0);
     }
 
     public boolean shooterReady(){
