@@ -62,12 +62,16 @@ public class Shooter extends SubsystemBase {
 
     public Shooter(Drivetrain drivetrain) {
         DRIVETRAIN = drivetrain;
-        _hoodMap.put(2.0, .3);
-        _hoodMap.put(3.5, .4);
+        // _hoodMap.put(2.0, .3);
+        // _hoodMap.put(3.5, .4);
+        _hoodMap.put(2.0, .4);
+        _hoodMap.put(3.5, .56);
         _hoodMap.put(5.0, .6);
 
-        _shooterMap.put(2.0, 60.0);
-        _shooterMap.put(3.5, 60.0);
+        // _shooterMap.put(2.0, 60.0);
+        // _shooterMap.put(3.5, 60.0);
+        _shooterMap.put(2.0, 48.0);
+        _shooterMap.put(3.5, 52.0);
         _shooterMap.put(5.0, 60.0);
 
         configShooter();
@@ -130,6 +134,7 @@ public class Shooter extends SubsystemBase {
     private void stop() {
         _leftShooter1.set(0);
         _rightShooter1.set(0);
+        hoodDown();
     }
 
     private void setIdle() {
@@ -144,8 +149,8 @@ public class Shooter extends SubsystemBase {
     }
 
     private void hoodDown() {
-        _leftHood.set(0);
-        _rightHood.set(0);
+        _leftHood.set(0.2);
+        _rightHood.set(0.2);
     }
 
     public boolean shooterReady(){

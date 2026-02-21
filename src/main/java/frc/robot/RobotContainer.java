@@ -16,6 +16,7 @@ import edu.wpi.first.wpilibj2.command.button.RobotModeTriggers;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.states.DrivetrainState;
 import frc.robot.states.HopperState;
+import frc.robot.states.IntakeState;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Hopper;
 import frc.robot.subsystems.Shooter;
@@ -212,6 +213,8 @@ public class RobotContainer {
   }
 
   private void registerCompNamedCommands() {
+    NamedCommands.registerCommand("IntakeOut",
+            Commands.runOnce(() -> HOPPER.setWantedState(HopperState.FLOOR_INTAKE)));
 
   }
 }
