@@ -1,0 +1,71 @@
+{
+  "version": "2025.0",
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 4.017142970847064,
+        "y": 7.260083259398069
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 6.358975932354655,
+        "y": 7.657753007578604
+      },
+      "isLocked": false,
+      "linkedName": "Left Trench Aiming At Hub"
+    },
+    {
+      "anchor": {
+        "x": 7.640356232047488,
+        "y": 5.304873664177109
+      },
+      "prevControl": {
+        "x": 8.380463818939036,
+        "y": 6.895552656899246
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": "Close Mid"
+    }
+  ],
+  "rotationTargets": [
+    {
+      "waypointRelativePos": 0.3737913765926612,
+      "rotationDegrees": 108.57576319852087
+    }
+  ],
+  "constraintZones": [],
+  "pointTowardsZones": [],
+  "eventMarkers": [
+    {
+      "name": "IntakeOut",
+      "waypointRelativePos": 0.11908277328719516,
+      "endWaypointRelativePos": null,
+      "command": {
+        "type": "named",
+        "data": {
+          "name": "IntakeOut"
+        }
+      }
+    }
+  ],
+  "globalConstraints": {
+    "maxVelocity": 3.0,
+    "maxAcceleration": 3.0,
+    "maxAngularVelocity": 540.0,
+    "maxAngularAcceleration": 720.0,
+    "nominalVoltage": 12.0,
+    "unlimited": false
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": 92.86240522611169
+  },
+  "reversed": false,
+  "folder": null,
+  "idealStartingState": {
+    "velocity": 0,
+    "rotation": -79.99202019855862
+  },
+  "useDefaultConstraints": true
+}
