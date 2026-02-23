@@ -16,8 +16,8 @@ public class KitbotIntake extends SubsystemBase {
     private PositionDutyCycle intakeShoot = new PositionDutyCycle(4.5);
 
     public KitbotIntake() {
-        _intake = new TalonFX(20);
-        _slide = new TalonFX(21);
+        // _intake = new TalonFX(20);
+        // _slide = new TalonFX(21);
     }
     public void startIntake() {
         _intake.set(-0.3);

@@ -118,6 +118,9 @@ public class Shooter extends SubsystemBase {
     private void configHood(){
         _leftHood = new Servo(0);
         _rightHood = new Servo(1);
+         _leftHood.setSpeed(1);
+         _rightHood.setSpeed(1);
+        
     }
 
     private void prepShooter() {
@@ -144,17 +147,28 @@ public class Shooter extends SubsystemBase {
     }
 
     private void hoodUp() {
+        _leftHood.setSpeed(1);
+        _rightHood.setSpeed(1);
         _leftHood.set(_hoodPosition);
         _rightHood.set(_hoodPosition);
     }
 
     private void hoodDown() {
+        _leftHood.setSpeed(1);
+        _rightHood.setSpeed(1);
         _leftHood.set(0.2);
         _rightHood.set(0.2);
     }
 
     public boolean shooterReady(){
         if(_shooterPosition - _shooterTarget <= _shooterError){
+            return true;
+        }
+        return false;
+    }
+
+        public boolean hoodReady(){
+        if(_leftHood.getPosition() - _hoodTarget <= _shooterError){
             return true;
         }
         return false;
@@ -179,6 +193,7 @@ public class Shooter extends SubsystemBase {
         setShooterTargetSpeed(DRIVETRAIN::getDistanceToTarget);
         SmartDashboard.putNumber("Right Hood", _rightHood.getPosition());
         SmartDashboard.putNumber("Left Hood", _leftHood.getPosition());
+        SmartDashboard.putNumber("Left Hood Speed", _leftHood.getSpeed());
         SmartDashboard.putString("Shooter State", _currentState.name());
         //_hoodPosition = SmartDashboard.getNumber("Hood Position", 0);
         SmartDashboard.putNumber("Shooter Target Velocity", shotVelocityTorqueCurrentFOC.Velocity);

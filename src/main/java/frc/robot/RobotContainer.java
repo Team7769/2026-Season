@@ -65,9 +65,9 @@ public class RobotContainer {
     RobotModeTriggers.teleop().onTrue(
         Commands.runOnce(() -> DRIVETRAIN.setWantedState(DrivetrainState.OPEN_LOOP)));
 
-    DRIVER_CONTROLLER.leftTrigger().whileTrue(
-        Commands.runOnce(() -> DRIVETRAIN.setWantedState(DrivetrainState.AIM))).onFalse(
-            Commands.runOnce(() -> DRIVETRAIN.setWantedState(DrivetrainState.OPEN_LOOP)));
+    // DRIVER_CONTROLLER.leftTrigger().whileTrue(
+    //     Commands.runOnce(() -> DRIVETRAIN.setWantedState(DrivetrainState.AIM))).onFalse(
+    //         Commands.runOnce(() -> DRIVETRAIN.setWantedState(DrivetrainState.OPEN_LOOP)));
 
     DRIVER_CONTROLLER.y().onTrue(
         Commands.runOnce(() -> DRIVETRAIN.setTargetHub(GeometryUtil::isRedAlliance)));
@@ -213,8 +213,29 @@ public class RobotContainer {
   }
 
   private void registerCompNamedCommands() {
-    NamedCommands.registerCommand("IntakeOut",
-            Commands.runOnce(() -> HOPPER.setWantedState(HopperState.FLOOR_INTAKE)));
+  NamedCommands.registerCommand("IntakeOut",
+    Commands.runOnce(() -> HOPPER.setWantedState(HopperState.FLOOR_INTAKE)));
+
+  NamedCommands.registerCommand("IntakeIn",
+    Commands.runOnce(() -> HOPPER.setWantedState(HopperState.STOW)));
+
+  NamedCommands.registerCommand("Injecting",
+    Commands.runOnce(() -> HOPPER.setWantedState(HopperState.INJECTING)));
+
+  NamedCommands.registerCommand("Start Shooting",
+     Commands.runOnce(() -> SHOOTER.setWantedState(ShooterState.SHOOT)));
+
+  NamedCommands.registerCommand("Idle",
+     Commands.runOnce(() -> {
+      SHOOTER.setWantedState(ShooterState.IDLE);
+      HOPPER.setWantedState(HopperState.IDLE);
+     }));
+
+  NamedCommands.registerCommand("PrepShooter",
+     Commands.runOnce(() -> SHOOTER.setWantedState(ShooterState.PREPSHOOTER)));
+  
+  
 
   }
+  
 }
