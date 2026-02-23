@@ -3,5 +3,7 @@ package frc.robot.states;
 public enum HopperState {
     IDLE,
     FLOOR_INTAKE,
-    AUTO
+    INJECTING,
+    INJECTING_HOPPER_OUT,
+    STOW
 }

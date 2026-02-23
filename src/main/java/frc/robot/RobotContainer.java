@@ -15,8 +15,11 @@ import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.RobotModeTriggers;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.states.DrivetrainState;
+import frc.robot.states.HopperState;
+import frc.robot.states.IntakeState;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Hopper;
+import frc.robot.subsystems.Shooter;
 import frc.robot.states.ShooterState;
 import frc.robot.subsystems.Vision;
 import frc.robot.subsystems.Kitbot.KitbotIntake;
@@ -25,7 +28,7 @@ import frc.robot.utilities.GeometryUtil;
 
 public class RobotContainer {
   // Set this to false to setup as Kitbot
-  private final boolean _isComp = false;
+  private final boolean _isComp = true;
 
   private final SendableChooser<Command> autoChooser;
   private final CommandXboxController DRIVER_CONTROLLER = new CommandXboxController(0);
@@ -35,6 +38,7 @@ public class RobotContainer {
   public final KitbotShooter KITBOT_SHOOTER = _isComp ? null : new KitbotShooter();
   public final KitbotIntake KITBOT_INTAKE = _isComp ? null : new KitbotIntake();
   public final Hopper HOPPER = _isComp ? new Hopper() : null;
+  public final Shooter SHOOTER = _isComp ? new Shooter(DRIVETRAIN) : null;
 
   public RobotContainer() {
 
@@ -61,9 +65,9 @@ public class RobotContainer {
     RobotModeTriggers.teleop().onTrue(
         Commands.runOnce(() -> DRIVETRAIN.setWantedState(DrivetrainState.OPEN_LOOP)));
 
-    DRIVER_CONTROLLER.leftTrigger().whileTrue(
-        Commands.runOnce(() -> DRIVETRAIN.setWantedState(DrivetrainState.AIM))).onFalse(
-            Commands.runOnce(() -> DRIVETRAIN.setWantedState(DrivetrainState.OPEN_LOOP)));
+    // DRIVER_CONTROLLER.leftTrigger().whileTrue(
+    //     Commands.runOnce(() -> DRIVETRAIN.setWantedState(DrivetrainState.AIM))).onFalse(
+    //         Commands.runOnce(() -> DRIVETRAIN.setWantedState(DrivetrainState.OPEN_LOOP)));
 
     DRIVER_CONTROLLER.y().onTrue(
         Commands.runOnce(() -> DRIVETRAIN.setTargetHub(GeometryUtil::isRedAlliance)));
@@ -91,6 +95,12 @@ public class RobotContainer {
             Commands.runOnce(() -> DRIVETRAIN.setTargetEngageLeftClimb(GeometryUtil::isRedAlliance)),
             Commands.runOnce(() -> DRIVETRAIN.setWantedState(DrivetrainState.CLIMB_ENGAGE))));
 
+        // Run SysId routines when holding back/start and X/Y.
+        // Note that each routine should be run exactly once in a single log.
+        // DRIVER_CONTROLLER.back().and(DRIVER_CONTROLLER.y()).whileTrue(DRIVETRAIN.sysIdDynamic(Direction.kForward));
+        // DRIVER_CONTROLLER.back().and(DRIVER_CONTROLLER.x()).whileTrue(DRIVETRAIN.sysIdDynamic(Direction.kReverse));
+        // DRIVER_CONTROLLER.start().and(DRIVER_CONTROLLER.y()).whileTrue(DRIVETRAIN.sysIdQuasistatic(Direction.kForward));
+        // DRIVER_CONTROLLER.start().and(DRIVER_CONTROLLER.x()).whileTrue(DRIVETRAIN.sysIdQuasistatic(Direction.kReverse));
     new Trigger(DRIVETRAIN::isReadyToClimb).onTrue(
         Commands.runOnce(() -> {
           SmartDashboard.putBoolean("isClimbed", true);
@@ -115,14 +125,74 @@ public class RobotContainer {
   }
 
   private void registerKitbotBindings() {
-    DRIVER_CONTROLLER.rightBumper().onTrue(
-        Commands.runOnce(() -> KITBOT_SHOOTER.setWantedState(ShooterState.SHOOT))).onFalse(
-            Commands.runOnce(() -> KITBOT_SHOOTER.setWantedState(ShooterState.INTAKE)));
 
   }
 
   private void registerCompBindings() {
     // Register triggers/bindings for comp bot here
+        DRIVER_CONTROLLER.rightBumper().onTrue(
+        Commands.runOnce(() ->{ 
+          SHOOTER.setWantedState(ShooterState.PREPSHOOTER);
+          DRIVETRAIN.setWantedState(DrivetrainState.AIM);
+        })).onFalse(
+          Commands.runOnce(() -> {
+            SHOOTER.setWantedState(ShooterState.IDLE);
+            HOPPER.setWantedState(HopperState.STOW);
+            DRIVETRAIN.setWantedState(DrivetrainState.OPEN_LOOP);
+          })
+        );
+
+        DRIVER_CONTROLLER.rightTrigger().onTrue(
+          Commands.runOnce(() -> {
+            
+            SHOOTER.setWantedState(ShooterState.SHOOT);
+            HOPPER.setWantedState(HopperState.INJECTING_HOPPER_OUT);
+
+          })
+        ).onFalse(
+          Commands.runOnce(() -> {
+            SHOOTER.setWantedState(ShooterState.SHOOT);
+            HOPPER.setWantedState(HopperState.INJECTING);
+          })
+        );
+
+        DRIVER_CONTROLLER.leftBumper().onTrue(
+          Commands.runOnce(() -> {
+            HOPPER.setWantedState(HopperState.FLOOR_INTAKE);
+          })
+        );
+        
+        DRIVER_CONTROLLER.leftTrigger().onTrue(
+          Commands.runOnce(() -> {
+            HOPPER.setWantedState(HopperState.STOW);
+          })
+        );
+
+    // DRIVER_CONTROLLER.y().onTrue(
+    //     Commands.runOnce(() -> DRIVETRAIN.setTargetHub(GeometryUtil::isRedAlliance)));
+
+    // DRIVER_CONTROLLER.a().onTrue(
+    //     Commands.runOnce(() -> DRIVETRAIN.setTargetDepot(GeometryUtil::isRedAlliance)));
+
+    // DRIVER_CONTROLLER.x().onTrue(
+    //     Commands.runOnce(() -> DRIVETRAIN.setTargetZoneA(GeometryUtil::isRedAlliance)));
+
+    // DRIVER_CONTROLLER.b().onTrue(
+    //     Commands.runOnce(() -> DRIVETRAIN.setTargetZoneB(GeometryUtil::isRedAlliance)));
+    DRIVER_CONTROLLER.back().onTrue(
+        Commands.runOnce(() -> DRIVETRAIN.seedFieldCentric()));
+
+            DRIVER_CONTROLLER.start().onTrue(
+        Commands.runOnce(() -> {
+          DRIVETRAIN.setWantedState(DrivetrainState.CLIMB_STAGE);
+          DRIVETRAIN.setTargetStageLeftClimb(GeometryUtil::isRedAlliance);
+        })).onFalse(
+            Commands.runOnce(() -> DRIVETRAIN.setWantedState(DrivetrainState.OPEN_LOOP)));
+
+    new Trigger(DRIVETRAIN::isStagedForClimb).onTrue(
+        Commands.sequence(
+            Commands.runOnce(() -> DRIVETRAIN.setTargetEngageLeftClimb(GeometryUtil::isRedAlliance)),
+            Commands.runOnce(() -> DRIVETRAIN.setWantedState(DrivetrainState.CLIMB_ENGAGE))));
   }
 
   private void registerNamedCommands() {
@@ -139,17 +209,33 @@ public class RobotContainer {
   }
 
   private void registerKitbotNamedCommands() {
-    NamedCommands.registerCommand("Start Shooting",
-        Commands.runOnce(() -> KITBOT_SHOOTER.setWantedState(ShooterState.SHOOT)));
-
-    NamedCommands.registerCommand("Stop Shooting",
-        Commands.runOnce(() -> KITBOT_SHOOTER.setWantedState(ShooterState.IDLE)));
-
-    NamedCommands.registerCommand("Intake",
-        Commands.runOnce(() -> KITBOT_SHOOTER.setWantedState(ShooterState.INTAKE)));
+    
   }
 
   private void registerCompNamedCommands() {
+  NamedCommands.registerCommand("IntakeOut",
+    Commands.runOnce(() -> HOPPER.setWantedState(HopperState.FLOOR_INTAKE)));
+
+  NamedCommands.registerCommand("IntakeIn",
+    Commands.runOnce(() -> HOPPER.setWantedState(HopperState.STOW)));
+
+  NamedCommands.registerCommand("Injecting",
+    Commands.runOnce(() -> HOPPER.setWantedState(HopperState.INJECTING)));
+
+  NamedCommands.registerCommand("Start Shooting",
+     Commands.runOnce(() -> SHOOTER.setWantedState(ShooterState.SHOOT)));
+
+  NamedCommands.registerCommand("Idle",
+     Commands.runOnce(() -> {
+      SHOOTER.setWantedState(ShooterState.IDLE);
+      HOPPER.setWantedState(HopperState.IDLE);
+     }));
+
+  NamedCommands.registerCommand("PrepShooter",
+     Commands.runOnce(() -> SHOOTER.setWantedState(ShooterState.PREPSHOOTER)));
+  
+  
 
   }
+  
 }
