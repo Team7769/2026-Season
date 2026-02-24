@@ -337,6 +337,22 @@ public class Drivetrain extends SubsystemBase {
         }
     }
 
+        public void setTargetStageRightClimb(Supplier<Boolean> isRedAlliance) {
+        if (isRedAlliance.get()) {
+            _target = FieldConstants.kRedClimbStageRightFront;
+        } else {
+            _target = FieldConstants.kBlueClimbStageRightFront;
+        }
+    }
+
+    public void setTargetEngageRightClimb(Supplier<Boolean> isRedAlliance) {
+        if (isRedAlliance.get()) {
+            _target = FieldConstants.kRedClimbEngageRightFront;
+        } else {
+            _target = FieldConstants.kBlueClimbEngageRightFront;
+        }
+    }
+
     public void setTargetDepot(Supplier<Boolean> isRedAlliance) {
         if (isRedAlliance.get()) {
             _target = new Pose2d(FieldConstants.kRedDepot, new Rotation2d());
