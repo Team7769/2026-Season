@@ -50,7 +50,7 @@ import frc.robot.utilities.VisionMeasurement;
 public class Drivetrain extends SubsystemBase {
 
     private double _maxSpeed = 0.0; // kSpeedAt12Volts desired top
-                                                                                         // speed
+                                    // speed
     private double _maxAngularRate = RotationsPerSecond.of(0.75).in(RadiansPerSecond); // 3/4 of a rotation per second
                                                                                        // max angular velocity
 
@@ -97,13 +97,13 @@ public class Drivetrain extends SubsystemBase {
     private final SwerveRequest.SysIdSwerveRotation m_rotationCharacterization = new SwerveRequest.SysIdSwerveRotation();
 
     public Drivetrain(CommandXboxController controller, Vision vision, boolean isComp) {
-        
+
         if (isComp) {
             // Use comp bot tuner constants
             _maxSpeed = 1.0 * TunerConstants.kSpeedAt12Volts.in(MetersPerSecond);
             _swerve = TunerConstants.createDrivetrain();
         } else {
-            //fix to kitbot later
+            // fix to kitbot later
             _maxSpeed = 1.0 * TunerConstants.kSpeedAt12Volts.in(MetersPerSecond);
             _swerve = TunerConstants.createDrivetrain();
         }
@@ -299,7 +299,7 @@ public class Drivetrain extends SubsystemBase {
         m_field.getObject("targetPose").setPose(_target);
     }
 
-    public double getDistanceToTarget(){
+    public double getDistanceToTarget() {
         return _target.getTranslation().getDistance(_swerve.getState().Pose.getTranslation());
     }
 
@@ -378,25 +378,27 @@ public class Drivetrain extends SubsystemBase {
     }
 
     private void updateTarget() {
-        var currentTranslation = _swerve.getState().Pose.getTranslation();
-        if (GeometryUtil.isRedAlliance()) {
-            if (currentTranslation.getX() >= 11.3) {
-                setTargetHub(GeometryUtil::isRedAlliance);
-            } else {
-                if (currentTranslation.getY() >= 4){
-                    setTargetZoneB(GeometryUtil::isRedAlliance);
+        if (_currentState != DrivetrainState.CLIMB_ENGAGE && _currentState != DrivetrainState.CLIMB_STAGE) {
+            var currentTranslation = _swerve.getState().Pose.getTranslation();
+            if (GeometryUtil.isRedAlliance()) {
+                if (currentTranslation.getX() >= 11.3) {
+                    setTargetHub(GeometryUtil::isRedAlliance);
                 } else {
-                    setTargetZoneA(GeometryUtil::isRedAlliance);
+                    if (currentTranslation.getY() >= 4) {
+                        setTargetZoneB(GeometryUtil::isRedAlliance);
+                    } else {
+                        setTargetZoneA(GeometryUtil::isRedAlliance);
+                    }
                 }
-            }
-        } else {
-            if (currentTranslation.getX() <= 5.1) {
-                setTargetHub(GeometryUtil::isRedAlliance);
             } else {
-                if (currentTranslation.getY() >= 4){
-                    setTargetZoneA(GeometryUtil::isRedAlliance);
+                if (currentTranslation.getX() <= 5.1) {
+                    setTargetHub(GeometryUtil::isRedAlliance);
                 } else {
-                    setTargetZoneB(GeometryUtil::isRedAlliance);
+                    if (currentTranslation.getY() >= 4) {
+                        setTargetZoneA(GeometryUtil::isRedAlliance);
+                    } else {
+                        setTargetZoneB(GeometryUtil::isRedAlliance);
+                    }
                 }
             }
         }
