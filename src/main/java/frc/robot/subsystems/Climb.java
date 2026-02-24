@@ -3,6 +3,7 @@ package frc.robot.subsystems;
 import com.ctre.phoenix6.controls.PositionDutyCycle;
 
 import com.ctre.phoenix6.hardware.TalonFX;
+import com.fasterxml.jackson.annotation.JsonTypeInfo.None;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -11,11 +12,10 @@ import frc.robot.states.ClimbState;
 public class Climb extends SubsystemBase {
     private ClimbState _currentState = ClimbState.IDLE;
     private TalonFX _climb = new TalonFX(23); // Must find Talon ID
-    private PositionDutyCycle _climbTargetPosition = new PositionDutyCycle(0);
+    private PositionDutyCycle _ClosedPosition = new PositionDutyCycle(0);
+    private PositionDutyCycle _OpenPosition = new PositionDutyCycle(85.5);
+    private String _TargetPosition = "None";
 
-    public Float ExtendedPosition = 0f;
-
-    public Float RetractedPosition = 0f;
 
     public Climb() {
     }
@@ -27,15 +27,13 @@ public class Climb extends SubsystemBase {
     }
 
     public void Extend() {
-        // _climb.set(0.3);
-        _climbTargetPosition.Position = ExtendedPosition; // https://v6.docs.ctr-electronics.com/en/stable/docs/migration/migration-guide/closed-loop-guide.html
-        _climb.setControl(_climbTargetPosition);
+        _climb.setControl(_OpenPosition);
+        _TargetPosition = "Open";
     }
 
     public void Retract() {
-        // _climb.set(-0.3);
-        _climbTargetPosition.Position = RetractedPosition;
-        _climb.setControl(_climbTargetPosition);
+        _climb.setControl(_ClosedPosition);
+                _TargetPosition = "Closed";
     }
 
     public void Stop() {
@@ -45,7 +43,7 @@ public class Climb extends SubsystemBase {
     public void periodic() {
         handleCurrentState();
         SmartDashboard.putNumber("ClimbPosition", _climb.getPosition().getValueAsDouble());
-        SmartDashboard.putNumber("TargetClimbPosition", _climbTargetPosition.Position);
+        SmartDashboard.putString("TargetClimbPosition", _TargetPosition);
     }
 
     public void teleopInit() {
