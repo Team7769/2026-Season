@@ -465,6 +465,10 @@ public class Drivetrain extends SubsystemBase {
         return _swerve.getStateCopy().Pose;
     }
 
+    public String getCurrentState() {
+        return _currentState.toString();
+    }
+
     public boolean isReadyToClimb() {
         // If position is at the ready position
         return _currentState == DrivetrainState.CLIMB_ENGAGE

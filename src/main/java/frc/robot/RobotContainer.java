@@ -95,6 +95,10 @@ public class RobotContainer {
             Commands.runOnce(() -> DRIVETRAIN.setTargetEngageLeftClimb(GeometryUtil::isRedAlliance)),
             Commands.runOnce(() -> DRIVETRAIN.setWantedState(DrivetrainState.CLIMB_ENGAGE))));
 
+        // new Trigger(HOPPER.isMiddleEmpty() && DRIVETRAIN.getCurrentState() == "SHOOT").onTrue(
+        //     Commands.runOnce(() -> HOPPER.setWantedState(HopperState.INJECTING)));
+
+
         // Run SysId routines when holding back/start and X/Y.
         // Note that each routine should be run exactly once in a single log.
         // DRIVER_CONTROLLER.back().and(DRIVER_CONTROLLER.y()).whileTrue(DRIVETRAIN.sysIdDynamic(Direction.kForward));
@@ -144,7 +148,7 @@ public class RobotContainer {
 
         DRIVER_CONTROLLER.rightTrigger().onTrue(
           Commands.runOnce(() -> {
-            
+          
             SHOOTER.setWantedState(ShooterState.SHOOT);
             HOPPER.setWantedState(HopperState.INJECTING_HOPPER_OUT);
 
@@ -168,6 +172,11 @@ public class RobotContainer {
           })
         );
 
+        DRIVER_CONTROLLER.pov(90).onTrue(
+          Commands.runOnce(() -> DRIVETRAIN.setWantedState(DrivetrainState.IDLE))
+        ).onFalse(
+          Commands.runOnce(() -> DRIVETRAIN.setWantedState(DrivetrainState.OPEN_LOOP))
+        );
     // DRIVER_CONTROLLER.y().onTrue(
     //     Commands.runOnce(() -> DRIVETRAIN.setTargetHub(GeometryUtil::isRedAlliance)));
 
@@ -182,7 +191,7 @@ public class RobotContainer {
     DRIVER_CONTROLLER.back().onTrue(
         Commands.runOnce(() -> DRIVETRAIN.seedFieldCentric()));
 
-            DRIVER_CONTROLLER.start().onTrue(
+    DRIVER_CONTROLLER.start().onTrue(
         Commands.runOnce(() -> {
           DRIVETRAIN.setWantedState(DrivetrainState.CLIMB_STAGE);
           DRIVETRAIN.setTargetStageLeftClimb(GeometryUtil::isRedAlliance);
