@@ -147,8 +147,6 @@ public class Shooter extends SubsystemBase {
     }
 
     private void hoodUp() {
-        _leftHood.setSpeed(1);
-        _rightHood.setSpeed(1);
         _leftHood.set(_hoodPosition);
         _rightHood.set(_hoodPosition);
     }
