@@ -323,33 +323,33 @@ public class Drivetrain extends SubsystemBase {
 
     public void setTargetStageLeftClimb(Supplier<Boolean> isRedAlliance) {
         if (isRedAlliance.get()) {
-            _target = FieldConstants.kRedClimbStageLeftFront;
+            _target = FieldConstants.kRedClimbStageLeftSide;
         } else {
-            _target = FieldConstants.kBlueClimbStageLeftFront;
+            _target = FieldConstants.kBlueClimbStageLeftSide;
         }
     }
 
     public void setTargetEngageLeftClimb(Supplier<Boolean> isRedAlliance) {
         if (isRedAlliance.get()) {
-            _target = FieldConstants.kRedClimbEngageLeftFront;
+            _target = FieldConstants.kRedClimbEngageLeftSide;
         } else {
-            _target = FieldConstants.kBlueClimbEngageLeftFront;
+            _target = FieldConstants.kBlueClimbEngageLeftSide;
         }
     }
 
         public void setTargetStageRightClimb(Supplier<Boolean> isRedAlliance) {
         if (isRedAlliance.get()) {
-            _target = FieldConstants.kRedClimbStageRightFront;
+            _target = FieldConstants.kRedClimbStageRightSide;
         } else {
-            _target = FieldConstants.kBlueClimbStageRightFront;
+            _target = FieldConstants.kBlueClimbStageRightSide;
         }
     }
 
     public void setTargetEngageRightClimb(Supplier<Boolean> isRedAlliance) {
         if (isRedAlliance.get()) {
-            _target = FieldConstants.kRedClimbEngageRightFront;
+            _target = FieldConstants.kRedClimbEngageRightSide;
         } else {
-            _target = FieldConstants.kBlueClimbEngageRightFront;
+            _target = FieldConstants.kBlueClimbEngageRightSide;
         }
     }
 
