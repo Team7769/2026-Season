@@ -29,6 +29,11 @@ public final class FieldConstants {
     public static final Pose2d kBlueClimbEngageRightFront = new Pose2d(1.127 + kRobotWidth / 2, 2.814, Rotation2d.fromDegrees(180));
     public static final Pose2d kBlueClimbStageLeftFront = new Pose2d(1.127 + 2 * kRobotWidth, 3.22, Rotation2d.fromDegrees(180));
     public static final Pose2d kBlueClimbStageRightFront = new Pose2d(1.127 + 2 * kRobotWidth, 2.814, Rotation2d.fromDegrees(180));
+    
+    public static final Pose2d kBlueClimbStageRightSide = new Pose2d(1.127, 2.000, Rotation2d.fromDegrees(180));
+    public static final Pose2d kBlueClimbEngageRightSide = new Pose2d(1.127, 2.814, Rotation2d.fromDegrees(180));
+    public static final Pose2d kBlueClimbStageLeftSide = new Pose2d(1.127, 5.429, Rotation2d.fromDegrees(180));
+    public static final Pose2d kBlueClimbEngageLeftSide = new Pose2d(1.127, 4.615, Rotation2d.fromDegrees(180));
 
     public static final Translation2d kRedHub = GeometryUtil.rotateTranslationForRedAlliance(kBlueHub);
     public static final Translation2d kRedZoneA = GeometryUtil.rotateTranslationForRedAlliance(kBlueZoneA);
@@ -39,4 +44,9 @@ public final class FieldConstants {
     public static final Pose2d kRedClimbEngageRightFront = GeometryUtil.rotatePoseForRedAlliance(kBlueClimbEngageRightFront);
     public static final Pose2d kRedClimbStageLeftFront = GeometryUtil.rotatePoseForRedAlliance(kBlueClimbStageLeftFront);
     public static final Pose2d kRedClimbStageRightFront = GeometryUtil.rotatePoseForRedAlliance(kBlueClimbStageRightFront);
+
+    public static final Pose2d kRedClimbStageRightSide = GeometryUtil.rotatePoseForRedAlliance(kBlueClimbStageLeftFront);
+    public static final Pose2d kRedClimbEngageRightSide = GeometryUtil.rotatePoseForRedAlliance(kBlueClimbStageRightFront);
+    public static final Pose2d kRedClimbStageLeftSide = GeometryUtil.rotatePoseForRedAlliance(kBlueClimbStageLeftFront);
+    public static final Pose2d kRedClimbEngageLeftSide = GeometryUtil.rotatePoseForRedAlliance(kBlueClimbStageRightFront);
   }
