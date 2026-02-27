@@ -45,8 +45,8 @@ public final class FieldConstants {
     public static final Pose2d kRedClimbStageLeftFront = GeometryUtil.rotatePoseForRedAlliance(kBlueClimbStageLeftFront);
     public static final Pose2d kRedClimbStageRightFront = GeometryUtil.rotatePoseForRedAlliance(kBlueClimbStageRightFront);
 
-    public static final Pose2d kRedClimbStageRightSide = GeometryUtil.rotatePoseForRedAlliance(kBlueClimbStageLeftFront);
-    public static final Pose2d kRedClimbEngageRightSide = GeometryUtil.rotatePoseForRedAlliance(kBlueClimbStageRightFront);
-    public static final Pose2d kRedClimbStageLeftSide = GeometryUtil.rotatePoseForRedAlliance(kBlueClimbStageLeftFront);
-    public static final Pose2d kRedClimbEngageLeftSide = GeometryUtil.rotatePoseForRedAlliance(kBlueClimbStageRightFront);
+    public static final Pose2d kRedClimbStageRightSide = GeometryUtil.rotatePoseForRedAlliance(kBlueClimbStageLeftSide);
+    public static final Pose2d kRedClimbEngageRightSide = GeometryUtil.rotatePoseForRedAlliance(kBlueClimbStageRightSide);
+    public static final Pose2d kRedClimbStageLeftSide = GeometryUtil.rotatePoseForRedAlliance(kBlueClimbStageLeftSide);
+    public static final Pose2d kRedClimbEngageLeftSide = GeometryUtil.rotatePoseForRedAlliance(kBlueClimbStageRightSide);
   }
