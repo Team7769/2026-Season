@@ -3,37 +3,32 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 3.619024590163934,
-        "y": 4.027811475409836
+        "x": 8.634530602498824,
+        "y": 0.6874860325253485
       },
       "prevControl": null,
       "nextControl": {
-        "x": 3.3255506953121823,
-        "y": 3.81707568831213
+        "x": 8.640474688604737,
+        "y": 1.8008852445413186
       },
       "isLocked": false,
-      "linkedName": "Hub Center"
+      "linkedName": "Far Right Mid Prep"
     },
     {
       "anchor": {
-        "x": 2.5369277970639637,
-        "y": 5.106038790086841
+        "x": 8.634530602498824,
+        "y": 3.139782812971978
       },
       "prevControl": {
-        "x": 3.4189773615201533,
-        "y": 5.267543290459116
+        "x": 8.632287243221086,
+        "y": 1.5632700206943018
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "Prep climb"
+      "linkedName": "Right Far Center"
     }
   ],
-  "rotationTargets": [
-    {
-      "waypointRelativePos": 0.436385422863792,
-      "rotationDegrees": 0.0
-    }
-  ],
+  "rotationTargets": [],
   "constraintZones": [],
   "pointTowardsZones": [],
   "eventMarkers": [],
@@ -47,13 +42,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -33.465379346355256
+    "rotation": -74.0546040990775
   },
   "reversed": false,
   "folder": null,
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 0.0
+    "rotation": -73.61045966596531
   },
   "useDefaultConstraints": true
 }

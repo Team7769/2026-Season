@@ -1,0 +1,91 @@
+{
+  "version": "2025.0",
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 8.634530602498824,
+        "y": 3.139782812971978
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 8.937374122621373,
+        "y": 2.0913012653278606
+      },
+      "isLocked": false,
+      "linkedName": "Right Far Center"
+    },
+    {
+      "anchor": {
+        "x": 8.44674211030246,
+        "y": 1.5270110564620336
+      },
+      "prevControl": {
+        "x": 8.675014845578742,
+        "y": 1.628950049636794
+      },
+      "nextControl": {
+        "x": 6.501689482484417,
+        "y": 0.6584153991150726
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 5.397940707585031,
+        "y": 0.7758570876765793
+      },
+      "prevControl": {
+        "x": 5.646530876999523,
+        "y": 0.8023698708287538
+      },
+      "nextControl": {
+        "x": 5.0106577054315125,
+        "y": 0.7345523559617108
+      },
+      "isLocked": false,
+      "linkedName": "Right Prep Trench"
+    },
+    {
+      "anchor": {
+        "x": 4.215977844937331,
+        "y": 0.7758570876765793
+      },
+      "prevControl": {
+        "x": 5.239056709338115,
+        "y": 0.7717285049901786
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": "Right Trench Shoot"
+    }
+  ],
+  "rotationTargets": [
+    {
+      "waypointRelativePos": 2,
+      "rotationDegrees": 90.0
+    }
+  ],
+  "constraintZones": [],
+  "pointTowardsZones": [],
+  "eventMarkers": [],
+  "globalConstraints": {
+    "maxVelocity": 3.9,
+    "maxAcceleration": 3.5,
+    "maxAngularVelocity": 540.0,
+    "maxAngularAcceleration": 720.0,
+    "nominalVoltage": 12.0,
+    "unlimited": false
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": 82.7249950421107
+  },
+  "reversed": false,
+  "folder": null,
+  "idealStartingState": {
+    "velocity": 0,
+    "rotation": -74.0546040990775
+  },
+  "useDefaultConstraints": true
+}

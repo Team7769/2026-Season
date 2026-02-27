@@ -3,45 +3,29 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 4.395618229556311,
-        "y": 7.361037453625268
+        "x": 4.215977844937331,
+        "y": 0.7758570876765793
       },
       "prevControl": null,
       "nextControl": {
-        "x": 5.442201881813697,
-        "y": 7.361037453625268
+        "x": 3.636984991335424,
+        "y": 0.7827367992209299
       },
       "isLocked": false,
-      "linkedName": "Left Start"
+      "linkedName": "Right Trench Shoot"
     },
     {
       "anchor": {
-        "x": 8.292092763787808,
-        "y": 7.361037453625268
+        "x": 0.9793879500235376,
+        "y": 0.6322541230558307
       },
       "prevControl": {
-        "x": 7.49675326742674,
-        "y": 7.372083835519171
-      },
-      "nextControl": {
-        "x": 9.091441755358147,
-        "y": 7.349935384297902
-      },
-      "isLocked": false,
-      "linkedName": null
-    },
-    {
-      "anchor": {
-        "x": 8.601391456817113,
-        "y": 4.432209494558714
-      },
-      "prevControl": {
-        "x": 8.402556582731911,
-        "y": 6.475790144932439
+        "x": 0.7154713939905772,
+        "y": 0.6300273552252144
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "Left Far Mid"
+      "linkedName": "Outpost"
     }
   ],
   "rotationTargets": [],
@@ -50,7 +34,7 @@
   "eventMarkers": [
     {
       "name": "IntakeOut",
-      "waypointRelativePos": 0.55,
+      "waypointRelativePos": 0.6059805339734801,
       "endWaypointRelativePos": null,
       "command": {
         "type": "named",
@@ -70,13 +54,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 85.36453657240948
+    "rotation": 0.0
   },
   "reversed": false,
   "folder": null,
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 0.0
+    "rotation": 82.7249950421107
   },
   "useDefaultConstraints": true
 }
