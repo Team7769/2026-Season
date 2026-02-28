@@ -40,7 +40,6 @@ public class Hopper extends SubsystemBase {
     public Hopper() {
         configInjector();
         configHopper();
-
     }
 
     private void configHopper() {
