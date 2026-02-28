@@ -30,6 +30,7 @@ import edu.wpi.first.wpilibj.Servo;
 import edu.wpi.first.wpilibj.motorcontrol.Talon;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.states.ShooterState;
+import frc.robot.configuration.FieldConstants;
 
 
 public class Shooter extends SubsystemBase {
@@ -50,6 +51,7 @@ public class Shooter extends SubsystemBase {
     private TalonFX _hoodMotor;
     private double _manualHood = 0;
         private double hoodTest = 0.6;
+        public double drivetrainX;
 
 
     private SimpleMotorFeedforward _ff = new SimpleMotorFeedforward(0, 0);
@@ -59,6 +61,7 @@ public class Shooter extends SubsystemBase {
     private double _shooterError = 0.1;
     // private double _hoodPosition = .5;
     private double _hoodTarget;
+    
     private final Drivetrain DRIVETRAIN;
     private InterpolatingDoubleTreeMap _hoodMap = new InterpolatingDoubleTreeMap();
     private InterpolatingDoubleTreeMap _shooterMap = new InterpolatingDoubleTreeMap();
@@ -92,6 +95,7 @@ public class Shooter extends SubsystemBase {
 
         configShooter();
         configHood();
+        
     }
 
     private void configShooter(){
@@ -208,6 +212,8 @@ public class Shooter extends SubsystemBase {
         SmartDashboard.putNumber("Shooter Target Velocity", shotVelocityTorqueCurrentFOC.Velocity);
         SmartDashboard.putBoolean("Shooter At Speed", _leftShooter1.getClosedLoopError().getValueAsDouble()<=1);
         handleCurrentState();
+        drivetrainX = DRIVETRAIN.getPose().getTranslation().getX();
+
     }
 
     private void handleCurrentState() {
@@ -219,7 +225,11 @@ public class Shooter extends SubsystemBase {
                 shoot(_shooterPosition);
                 break;
             case PREPSHOOTER:
+                    if(drivetrainX > FieldConstants.closeTrench && drivetrainX < FieldConstants.farTrench){
+            _hoodMotor.setControl(HOOD_DOWN);
+        }else{
                 prepShooter();
+        }
                 break;
             case STOP:
                 stop();

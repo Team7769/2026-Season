@@ -14,6 +14,8 @@ public final class FieldConstants {
     public static final double kQuarterFieldWidth = kFieldWidth / 4;
     public static final double kHalfFieldLength = kFieldLength / 2;
     public static final Translation2d kFieldCenter = new Translation2d(kHalfFieldLength, kHalfFieldWidth);
+    public static final double closeTrench = 4.27;
+    public static final double farTrench = 4.982;
 
     // Coral Source Coordinates:
     public static final int[] kRedTagIDs = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16};
