@@ -5,10 +5,12 @@ import com.ctre.phoenix6.configs.Slot0Configs;
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
 import com.ctre.phoenix6.controls.PositionDutyCycle;
 import com.ctre.phoenix6.controls.VoltageOut;
+import com.ctre.phoenix6.hardware.CANdi;
 import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.InvertedValue;
 import com.ctre.phoenix6.signals.NeutralModeValue;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.states.HopperState;
 
@@ -18,10 +20,12 @@ public class Hopper extends SubsystemBase {
     private TalonFX _injector;
     private TalonFX _intake;
     private TalonFX _slide;
+    private CANdi _candiRight;
 
     private final VoltageOut HALT = new VoltageOut(0);
     private final VoltageOut FLOOR_INJECT = new VoltageOut(11);
-    private final VoltageOut INTAKE = new VoltageOut(6);
+    private final VoltageOut INTAKE = new VoltageOut(9);//7
+
 
     private final PositionDutyCycle INTAKE_IN = new PositionDutyCycle(.1);
     private final PositionDutyCycle INTAKE_OUT = new PositionDutyCycle(14.25);
@@ -57,6 +61,7 @@ public class Hopper extends SubsystemBase {
         
         _slide = new TalonFX(21);
         _slide.getConfigurator().apply(slideConfiguration);
+        _candiRight = new CANdi(33);
     }
 
     private void configInjector(){
@@ -65,9 +70,14 @@ public class Hopper extends SubsystemBase {
         _floor = new TalonFX(22);
     }
 
+    public boolean isMiddleEmpty(){
+        return _candiRight.getS2Closed().getValue();
+    }
+
     @Override
     public void periodic() {
         handleCurrentState();
+        SmartDashboard.putBoolean("Middle Sensor", isMiddleEmpty());
     }
 
     private void handleCurrentState() {
@@ -111,10 +121,17 @@ public class Hopper extends SubsystemBase {
     }
 
     private void handleInject() {
+        // if(_candiRight.getS2Closed().getValue()){
+        // _slide.setControl(INTAKE_OUT);
+        // _intake.setControl(INTAKE);
+        // _floor.setControl(FLOOR_INJECT);
+        // _injector.setControl(FLOOR_INJECT);
+        // } else {
         _slide.setControl(INTAKE_SHOOT);
         _intake.setControl(INTAKE);
         _floor.setControl(FLOOR_INJECT);
-        _injector.setControl(FLOOR_INJECT);
+        _injector.setControl(FLOOR_INJECT);  
+        // }
     }
 
     private void handleInjectHopperOut() {

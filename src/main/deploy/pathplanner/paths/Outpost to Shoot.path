@@ -3,25 +3,25 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 3.972,
-        "y": 7.134080623869034
+        "x": 0.8533260429682741,
+        "y": 0.78
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.469692062429093,
-        "y": 6.614900674855558
+        "x": 1.1515452935797796,
+        "y": 0.9124353170771333
       },
       "isLocked": false,
-      "linkedName": "Left Trench Aiming At Hub"
+      "linkedName": "Outpost"
     },
     {
       "anchor": {
-        "x": 1.211361969795516,
-        "y": 4.9734822073599965
+        "x": 1.2011767478206834,
+        "y": 1.009423570574827
       },
       "prevControl": {
-        "x": 1.3660113163101681,
-        "y": 6.0007957234930425
+        "x": 0.9428972854784574,
+        "y": 0.7801830245128516
       },
       "nextControl": null,
       "isLocked": false,
@@ -42,13 +42,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -88.26429541107161
+    "rotation": 34.77783136636393
   },
   "reversed": false,
   "folder": null,
   "idealStartingState": {
     "velocity": 0,
-    "rotation": -74.04672489010737
+    "rotation": 0.0
   },
   "useDefaultConstraints": true
 }

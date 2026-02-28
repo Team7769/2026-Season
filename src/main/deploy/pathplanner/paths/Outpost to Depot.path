@@ -3,29 +3,45 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 3.972,
-        "y": 7.134080623869034
+        "x": 0.8533260429682741,
+        "y": 0.78
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.469692062429093,
-        "y": 6.614900674855558
+        "x": 2.182612665082838,
+        "y": 1.0657345075573357
       },
       "isLocked": false,
-      "linkedName": "Left Trench Aiming At Hub"
+      "linkedName": "Outpost"
     },
     {
       "anchor": {
-        "x": 1.211361969795516,
-        "y": 4.9734822073599965
+        "x": 2.2165827221407555,
+        "y": 5.503708538267376
       },
       "prevControl": {
-        "x": 1.3660113163101681,
-        "y": 6.0007957234930425
+        "x": 2.9259066625273906,
+        "y": 4.274537662808231
+      },
+      "nextControl": {
+        "x": 1.8654963943196152,
+        "y": 6.112097828912807
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 0.7787866062141864,
+        "y": 5.953872875262644
+      },
+      "prevControl": {
+        "x": 1.132270826819106,
+        "y": 5.942826493368741
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "Comp Depot"
     }
   ],
   "rotationTargets": [],
@@ -42,13 +58,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -88.26429541107161
+    "rotation": 0.0
   },
   "reversed": false,
   "folder": null,
   "idealStartingState": {
     "velocity": 0,
-    "rotation": -74.04672489010737
+    "rotation": 0.0
   },
   "useDefaultConstraints": true
 }
