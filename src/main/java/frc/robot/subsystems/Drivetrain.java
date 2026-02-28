@@ -511,8 +511,10 @@ public class Drivetrain extends SubsystemBase {
         if (_currentState == DrivetrainState.AIM) {
             var angleToTarget = GeometryUtil.getAngleToTarget(_target.getTranslation(), this::getPose, true);
             _targetFollowControllerZ.setSetpoint(angleToTarget);
-        } else if (_currentState == DrivetrainState.CLIMB_STAGE || _currentState == DrivetrainState.CLIMB_ENGAGE) {
-            _targetFollowControllerZ.setSetpoint(_target.getRotation().getDegrees());
+        } else if (_currentState == DrivetrainState.CLIMB_STAGE) {
+            _targetFollowControllerZ.setSetpoint(_climbTargetStage.getRotation().getDegrees());
+        } else if (_currentState == DrivetrainState.CLIMB_ENGAGE) {
+            _targetFollowControllerZ.setSetpoint(_climbTargetEngage.getRotation().getDegrees());
         }
 
         var currentPose = this.getPose();
@@ -523,8 +525,16 @@ public class Drivetrain extends SubsystemBase {
         // var xDifference = GeometryUtil.getXDifference(_target, this::getPose);
         // var yDifference = GeometryUtil.getYDifference(_target, this::getPose);
 
+        if (_currentState == DrivetrainState.CLIMB_ENGAGE) {
+        _targetFollowControllerX.setSetpoint(_climbTargetEngage.getX());
+        _targetFollowControllerY.setSetpoint(_climbTargetEngage.getY());
+        } else if (_currentState == DrivetrainState.CLIMB_STAGE) {
+        _targetFollowControllerX.setSetpoint(_climbTargetStage.getX());
+        _targetFollowControllerY.setSetpoint(_climbTargetStage.getY());
+        } else {
         _targetFollowControllerX.setSetpoint(_target.getX());
         _targetFollowControllerY.setSetpoint(_target.getY());
+        }
         _xFollow = _targetFollowControllerX.calculate(currentPose.getX());
         _yFollow = _targetFollowControllerY.calculate(currentPose.getY());
         _xFollow = MathUtil.clamp(_xFollow, -_targetFollowLimit, _targetFollowLimit);
