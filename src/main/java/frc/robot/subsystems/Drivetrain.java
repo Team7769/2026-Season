@@ -39,6 +39,8 @@ import frc.robot.generated.TunerConstants.TunerSwerveDrivetrain;
 import frc.robot.states.DrivetrainState;
 import frc.robot.utilities.GeometryUtil;
 import frc.robot.utilities.VisionMeasurement;
+import frc.robot.states.ClimbState;
+import frc.robot.states.ClimbType;
 
 /**
  * Class that extends the Phoenix 6 SwerveDrivetrain class and implements
@@ -48,12 +50,13 @@ import frc.robot.utilities.VisionMeasurement;
  * https://v6.docs.ctr-electronics.com/en/stable/docs/tuner/tuner-swerve/index.html
  */
 public class Drivetrain extends SubsystemBase {
-
+    
     private double _maxSpeed = 0.0; // kSpeedAt12Volts desired top
                                     // speed
     private double _maxAngularRate = RotationsPerSecond.of(0.75).in(RadiansPerSecond); // 3/4 of a rotation per second
                                                                                        // max angular velocity
-
+    public ClimbType _currentClimb = ClimbType.IDLE;
+    
     /* Setting up bindings for necessary control of the swerve drive platform */
     private final SwerveRequest.FieldCentric DRIVE = new SwerveRequest.FieldCentric()
             .withDeadband(_maxSpeed * 0.1).withRotationalDeadband(_maxAngularRate * 0.1) // Add a 10% deadband
@@ -71,6 +74,8 @@ public class Drivetrain extends SubsystemBase {
     private final Vision VISION;
     private double _targetRotation = 0.0;
     private Pose2d _target = new Pose2d();
+    private Pose2d _climbTargetStage = new Pose2d();
+    private Pose2d _climbTargetEngage = new Pose2d();
     private PIDController _targetFollowControllerX;
     private PIDController _targetFollowControllerY;
     private PIDController _targetFollowControllerZ;
@@ -247,6 +252,24 @@ public class Drivetrain extends SubsystemBase {
         return m_sysIdRoutineToApply.dynamic(direction);
     }
 
+    private void handleCurrentClimbType() {
+        switch (_currentClimb) {
+            case IDLE:
+                break;
+            case FRONT:
+                break;
+            case SIDE:
+                break;
+            default:
+                break;
+        }
+    }
+            public void setWantedClimb(ClimbType wantedClimb) {
+        if (wantedClimb != _currentClimb) {
+            _currentClimb = wantedClimb;
+        }
+    }
+
     @Override
     public void periodic() {
         /*
@@ -260,6 +283,8 @@ public class Drivetrain extends SubsystemBase {
          * This ensures driving behavior doesn't change until an explicit disable event
          * occurs during testing.
          */
+        handleCurrentClimbType();
+
         if (!m_hasAppliedOperatorPerspective || DriverStation.isDisabled()) {
             DriverStation.getAlliance().ifPresent(allianceColor -> {
                 _swerve.setOperatorPerspectiveForward(
@@ -272,6 +297,7 @@ public class Drivetrain extends SubsystemBase {
 
         updateOdometry();
         updateTarget();
+        updateClimbTarget();
         handleCurrentTarget();
         handleCurrentState();
         SmartDashboard.putString("Current State", _currentState.toString());
@@ -297,6 +323,8 @@ public class Drivetrain extends SubsystemBase {
         publisher.set(getPose());
         m_field.setRobotPose(getPose());
         m_field.getObject("targetPose").setPose(_target);
+        m_field.getObject("climbPose").setPose(_climbTargetStage);
+                m_field.getObject("climbPose").setPose(_climbTargetStage);
     }
 
     public double getDistanceToTarget() {
@@ -309,6 +337,7 @@ public class Drivetrain extends SubsystemBase {
         }
     }
 
+
     public void setWantedTarget(Translation2d target) {
         _target = new Pose2d(target, new Rotation2d());
     }
@@ -320,20 +349,77 @@ public class Drivetrain extends SubsystemBase {
             _target = new Pose2d(FieldConstants.kBlueHub, new Rotation2d());
         }
     }
+     public void setTargetClimbRight(boolean isRedAlliance) {
+        if (isRedAlliance) {
+                    if (_currentClimb == ClimbType.FRONT) {
+                        _climbTargetStage = FieldConstants.kRedClimbStageRightFront;
+                        _climbTargetEngage = FieldConstants.kRedClimbEngageRightFront;
+                    } else {
+                        _climbTargetStage = FieldConstants.kRedClimbStageRightSide;
+                        _climbTargetEngage = FieldConstants.kRedClimbEngageRightSide;
+                        
+                    }
+        } else {
+             if (_currentClimb == ClimbType.FRONT) {
+                        _climbTargetStage = FieldConstants.kBlueClimbStageRightFront;
+                        _climbTargetEngage = FieldConstants.kBlueClimbEngageRightFront;
+                    } else {
+                        _climbTargetStage = FieldConstants.kBlueClimbStageRightSide;
+                        _climbTargetEngage = FieldConstants.kBlueClimbEngageRightSide;
+                    }
+                }
+        }
+
+                  public void setTargetClimbLeft(boolean isRedAlliance) {
+        if (isRedAlliance) {
+                    if (_currentClimb == ClimbType.FRONT) {
+                        _climbTargetStage = FieldConstants.kRedClimbStageLeftFront;
+                        _climbTargetEngage = FieldConstants.kRedClimbEngageLeftFront;
+                    } else {
+                        _climbTargetStage = FieldConstants.kRedClimbStageLeftSide;
+                        _climbTargetEngage = FieldConstants.kRedClimbEngageLeftSide;
+                    }
+        } else {
+             if (_currentClimb == ClimbType.FRONT) {
+                        _climbTargetStage = FieldConstants.kBlueClimbStageLeftFront;
+                        _climbTargetEngage = FieldConstants.kBlueClimbEngageLeftFront;
+                    } else {
+                        _climbTargetStage = FieldConstants.kBlueClimbStageLeftSide;
+                        _climbTargetEngage = FieldConstants.kBlueClimbEngageLeftSide;
+                    }
+                }
+        }
 
     public void setTargetStageLeftClimb(Supplier<Boolean> isRedAlliance) {
+
         if (isRedAlliance.get()) {
-            _target = FieldConstants.kRedClimbStageLeftSide;
+            if (_currentClimb == ClimbType.FRONT) {
+            _target = FieldConstants.kRedClimbStageLeftFront;
+            } else {
+            _target = FieldConstants.kRedClimbStageLeftSide; 
+            }
         } else {
+            if (_currentClimb == ClimbType.FRONT) {
+            _target = FieldConstants.kBlueClimbStageLeftFront;
+            } else {
             _target = FieldConstants.kBlueClimbStageLeftSide;
+            }
         }
     }
 
     public void setTargetEngageLeftClimb(Supplier<Boolean> isRedAlliance) {
         if (isRedAlliance.get()) {
+            if (_currentClimb == ClimbType.FRONT) {
+            _target = FieldConstants.kRedClimbEngageLeftFront;
+            } else {
             _target = FieldConstants.kRedClimbEngageLeftSide;
+            }
         } else {
-            _target = FieldConstants.kBlueClimbEngageLeftSide;
+            if (_currentClimb == ClimbType.FRONT) {
+            _target = FieldConstants.kBlueClimbEngageLeftFront;
+            } else {
+            _target = FieldConstants.kBlueClimbEngageLeftSide; 
+            }
         }
     }
 
@@ -402,6 +488,22 @@ public class Drivetrain extends SubsystemBase {
                 }
             }
         }
+    }
+    private void updateClimbTarget() {
+    var currentTranslation = _swerve.getState().Pose.getTranslation();
+     if (GeometryUtil.isRedAlliance()) {
+                if (currentTranslation.getY() <= 6) {
+                    setTargetClimbRight(true);
+                } else {
+                    setTargetClimbLeft(true);
+                }
+    } else {
+                if (currentTranslation.getY() >= 6) {
+                    setTargetClimbRight(false);
+                } else {
+                    setTargetClimbLeft(false);
+                }
+    }
     }
 
     private void handleCurrentTarget() {

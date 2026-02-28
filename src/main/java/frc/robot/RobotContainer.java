@@ -18,9 +18,10 @@ import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine.Direction;
 import frc.robot.configuration.FieldConstants;
 import frc.robot.generated.TunerConstants;
 import frc.robot.states.ClimbState;
+import frc.robot.states.ClimbType;
 import frc.robot.states.DrivetrainState;
 import frc.robot.subsystems.Climb;
-import frc.robot.states.DrivetrainState;
+import frc.robot.states.ClimbType;
 import frc.robot.states.HopperState;
 import frc.robot.states.IntakeState;
 import frc.robot.subsystems.Drivetrain;
@@ -37,6 +38,7 @@ public class RobotContainer {
   private final boolean _isComp = true;
 
   private final SendableChooser<Command> autoChooser;
+    private final SendableChooser<Command> climbChooser;
   private final CommandXboxController DRIVER_CONTROLLER = new CommandXboxController(0);
 
   public final Climb CLIMB = new Climb();
@@ -52,10 +54,14 @@ public class RobotContainer {
     registerNamedCommands();
 
     autoChooser = AutoBuilder.buildAutoChooser();
+    climbChooser = new SendableChooser<>();
+    climbChooser.addOption("Front Climb",  Commands.runOnce(() ->  DRIVETRAIN.setWantedClimb(ClimbType.FRONT)));
+    climbChooser.addOption("Side Climb", Commands.runOnce(() -> DRIVETRAIN.setWantedClimb(ClimbType.SIDE)));
 
     // Another option that allows you to specify the default auto by its name
     // autoChooser = AutoBuilder.buildAutoChooser("My Default Auto");
 
+    SmartDashboard.putData("Climb Chooser", climbChooser);
     SmartDashboard.putData("Auto Chooser", autoChooser);
     configureBindings();
   }
@@ -120,6 +126,8 @@ public class RobotContainer {
     // DRIVER_CONTROLLER.start().and(DRIVER_CONTROLLER.y()).whileTrue(DRIVETRAIN.sysIdQuasistatic(Direction.kForward));
     // DRIVER_CONTROLLER.start().and(DRIVER_CONTROLLER.x()).whileTrue(DRIVETRAIN.sysIdQuasistatic(Direction.kReverse));
   }
+
+
 
   public Command getAutonomousCommand() {
     return autoChooser.getSelected();
