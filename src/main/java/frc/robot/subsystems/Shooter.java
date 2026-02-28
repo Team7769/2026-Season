@@ -38,6 +38,7 @@ public class Shooter extends SubsystemBase {
     private TalonFX _rightShooter1;
     private TalonFX _leftShooter2;
     private TalonFX _rightShooter2;
+    private double _hoodPosition = .5;
     private VelocityVoltage _shooterVelocity = new VelocityVoltage(0);
     private final VelocityTorqueCurrentFOC shotVelocityTorqueCurrentFOC = new VelocityTorqueCurrentFOC(60);
     private final VelocityTorqueCurrentFOC idleVelocityTorqueCurrentFOC = new VelocityTorqueCurrentFOC(35);
@@ -56,7 +57,7 @@ public class Shooter extends SubsystemBase {
     private double _shooterPosition;
     private double _shooterTarget;
     private double _shooterError = 0.1;
-    private double _hoodPosition = .5;
+    // private double _hoodPosition = .5;
     private double _hoodTarget;
     private final Drivetrain DRIVETRAIN;
     private InterpolatingDoubleTreeMap _hoodMap = new InterpolatingDoubleTreeMap();
@@ -70,15 +71,22 @@ public class Shooter extends SubsystemBase {
         DRIVETRAIN = drivetrain;
         // _hoodMap.put(2.0, .3);
         // _hoodMap.put(3.5, .4);
-        _hoodMap.put(2.0, .4);
-        _hoodMap.put(3.5, .56);
-        _hoodMap.put(5.0, .6);
+        // _hoodMap.put(2.0, .4);
+        // _hoodMap.put(3.5, .56);
+        // _hoodMap.put(5.0, .6);
+
+        _hoodMap.put(1.0, .2);
+        _hoodMap.put(2.54, .9);
+        _hoodMap.put(3.1, .95);
+        //_hoodMap.put(5.0, .);
+
 
         // _shooterMap.put(2.0, 60.0);
+
         // _shooterMap.put(3.5, 60.0);
-        _shooterMap.put(2.0, 48.0);
-        _shooterMap.put(3.5, 52.0);
-        _shooterMap.put(5.0, 60.0);
+        _shooterMap.put(1.0, 52.0);
+        _shooterMap.put(2.54, 52.0);
+        _shooterMap.put(3.1, 52.0);
 
         configShooter();
         configHood();
@@ -167,12 +175,12 @@ public class Shooter extends SubsystemBase {
         return false;
     }
 
-        public boolean hoodReady(){
-        if(_hoodPosition - _hoodTarget <= _shooterError){
-            return true;
-        }
-        return false;
-    }
+    //     public boolean hoodReady(){
+    //     if(_hoodPosition - _hoodTarget <= _shooterError){
+    //         return true;
+    //     }
+    //     return false;
+    // }
 
     public void setWantedState(ShooterState wantedState) {
         if (wantedState != _currentState) {
@@ -185,7 +193,7 @@ public class Shooter extends SubsystemBase {
         var targetSpeed = _shooterMap.get(distance);
         shotVelocityTorqueCurrentFOC.Velocity = targetSpeed;
         
-        _hoodPosition = _hoodMap.get(distance);
+        HOOD_MOVE.Position = _hoodMap.get(distance);
     }
 
     @Override
@@ -194,7 +202,7 @@ public class Shooter extends SubsystemBase {
         // SmartDashboard.putNumber("Left Hood", _leftHood.getPosition());
         // SmartDashboard.putNumber("Left Hood Speed", _leftHood.getSpeed());
         SmartDashboard.putString("Shooter State", _currentState.name());
-        //_manualHood = SmartDashboard.getNumber("Set Hood Position", 0);
+        SmartDashboard.putNumber("Set Hood Position", _hoodPosition);
         SmartDashboard.putNumber("Shooter Target Velocity", shotVelocityTorqueCurrentFOC.Velocity);
         SmartDashboard.putBoolean("Shooter At Speed", _leftShooter1.getClosedLoopError().getValueAsDouble()<=1);
         handleCurrentState();
