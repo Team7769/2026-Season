@@ -7,19 +7,13 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Right Trench Start to Far Right Mid Prep"
+            "pathName": "Left Trench Start to Carry Mid"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "Far Right Mid Prep to Right mid"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "Right Center Mid to Right Trench Shoot"
+            "pathName": "Carry Left Mid to Left Trench Shoot"
           }
         },
         {
@@ -29,21 +23,15 @@
           }
         },
         {
-          "type": "wait",
-          "data": {
-            "waitTime": 0.2
-          }
-        },
-        {
           "type": "named",
           "data": {
-            "name": "Start Shooting"
+            "name": "Shoot"
           }
         },
         {
           "type": "wait",
           "data": {
-            "waitTime": 0.2
+            "waitTime": 0.4
           }
         },
         {
@@ -67,19 +55,19 @@
         {
           "type": "wait",
           "data": {
-            "waitTime": 0.2
+            "waitTime": 0.125
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "Right Shoot to Outpost"
+            "pathName": "Left Trench to Close Mid"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "Outpost to Depot"
+            "pathName": "Close Left Mid to Depot"
           }
         },
         {
@@ -95,21 +83,15 @@
           }
         },
         {
-          "type": "wait",
-          "data": {
-            "waitTime": 0.2
-          }
-        },
-        {
           "type": "named",
           "data": {
-            "name": "Start Shooting"
+            "name": "Shoot"
           }
         },
         {
           "type": "wait",
           "data": {
-            "waitTime": 0.3
+            "waitTime": 0.4
           }
         },
         {
@@ -121,7 +103,7 @@
         {
           "type": "wait",
           "data": {
-            "waitTime": 2.5
+            "waitTime": 1.5
           }
         },
         {
@@ -131,9 +113,9 @@
           }
         },
         {
-          "type": "named",
+          "type": "wait",
           "data": {
-            "name": "Auto Climb"
+            "waitTime": 0.125
           }
         }
       ]

@@ -43,7 +43,7 @@ public class Shooter extends SubsystemBase {
     private final VelocityTorqueCurrentFOC shotVelocityTorqueCurrentFOC = new VelocityTorqueCurrentFOC(60);
     private final VelocityTorqueCurrentFOC idleVelocityTorqueCurrentFOC = new VelocityTorqueCurrentFOC(35);
     private final PositionDutyCycle HOOD_DOWN = new PositionDutyCycle(.38);
-    private PositionDutyCycle HOOD_MOVE = new PositionDutyCycle(.9);
+    private final PositionDutyCycle HOOD_MOVE = new PositionDutyCycle(.9);
     private final VoltageOut SHOOTER_VOLTAGE = new VoltageOut(3);
     private DigitalInput _leftPhotoEye;
     private DigitalInput _rightPhotoEye;
@@ -75,9 +75,10 @@ public class Shooter extends SubsystemBase {
         // _hoodMap.put(3.5, .56);
         // _hoodMap.put(5.0, .6);
 
-        _hoodMap.put(1.0, .2);
-        _hoodMap.put(2.54, .9);
-        _hoodMap.put(3.1, .95);
+        _hoodMap.put(1.0, .4);
+        _hoodMap.put(2.54, .7);
+        _hoodMap.put(3.1, .9);
+        _hoodMap.put(4.0, 1.15);
         //_hoodMap.put(5.0, .);
 
 
@@ -87,6 +88,7 @@ public class Shooter extends SubsystemBase {
         _shooterMap.put(1.0, 52.0);
         _shooterMap.put(2.54, 52.0);
         _shooterMap.put(3.1, 52.0);
+        _shooterMap.put(4.0, 58.0);
 
         configShooter();
         configHood();

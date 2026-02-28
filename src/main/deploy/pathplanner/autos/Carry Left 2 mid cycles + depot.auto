@@ -7,25 +7,19 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Comp Left Trench Start to Left Far Mid"
+            "pathName": "Left Trench Start to Carry Mid"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "Comp Left Far Mid to Left Trench Shoot"
+            "pathName": "Carry Left Mid to Left Trench Shoot"
           }
         },
         {
           "type": "named",
           "data": {
             "name": "PrepShooter"
-          }
-        },
-        {
-          "type": "wait",
-          "data": {
-            "waitTime": 0.2
           }
         },
         {
@@ -61,7 +55,7 @@
         {
           "type": "wait",
           "data": {
-            "waitTime": 0.4
+            "waitTime": 0.125
           }
         },
         {
@@ -73,19 +67,19 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Close Left Mid to Left Trench"
+            "pathName": "Close Left Mid to Depot"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Depot to Prep Shoot"
           }
         },
         {
           "type": "named",
           "data": {
             "name": "PrepShooter"
-          }
-        },
-        {
-          "type": "wait",
-          "data": {
-            "waitTime": 0.3
           }
         },
         {
@@ -109,13 +103,19 @@
         {
           "type": "wait",
           "data": {
-            "waitTime": 2.5
+            "waitTime": 1.5
           }
         },
         {
-          "type": "path",
+          "type": "named",
           "data": {
-            "pathName": "Left Trench to Left Mid"
+            "name": "Idle"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 0.125
           }
         }
       ]

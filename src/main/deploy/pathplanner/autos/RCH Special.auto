@@ -7,13 +7,19 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Comp Left Trench Start to Left Far Mid"
+            "pathName": "Right Trench Start to Far Right Mid Prep"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "Comp Left Far Mid to Left Trench Shoot"
+            "pathName": "Far Right Mid Prep to Right mid"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Right Center Mid to Right Trench Shoot"
           }
         },
         {
@@ -25,19 +31,19 @@
         {
           "type": "wait",
           "data": {
-            "waitTime": 0.3
+            "waitTime": 0.15
           }
         },
         {
           "type": "named",
           "data": {
-            "name": "Shoot"
+            "name": "Start Shooting"
           }
         },
         {
           "type": "wait",
           "data": {
-            "waitTime": 0.4
+            "waitTime": 0.2
           }
         },
         {
@@ -49,7 +55,7 @@
         {
           "type": "wait",
           "data": {
-            "waitTime": 3.0
+            "waitTime": 2.5
           }
         },
         {
@@ -61,19 +67,31 @@
         {
           "type": "wait",
           "data": {
-            "waitTime": 0.4
+            "waitTime": 0.15
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "Left Trench to Close Mid"
+            "pathName": "Close Right to Outpost"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 1.5
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "Close Left Mid to Left Trench"
+            "pathName": "Outpost to Depot"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Depot to Prep Shoot"
           }
         },
         {
@@ -85,19 +103,19 @@
         {
           "type": "wait",
           "data": {
-            "waitTime": 0.4
+            "waitTime": 0.15
           }
         },
         {
           "type": "named",
           "data": {
-            "name": "Shoot"
+            "name": "Start Shooting"
           }
         },
         {
           "type": "wait",
           "data": {
-            "waitTime": 0.4
+            "waitTime": 0.3
           }
         },
         {
@@ -109,13 +127,19 @@
         {
           "type": "wait",
           "data": {
-            "waitTime": 3.0
+            "waitTime": 2.0
           }
         },
         {
-          "type": "path",
+          "type": "named",
           "data": {
-            "pathName": "Left Trench to Prep Climb"
+            "name": "Idle"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 0.15
           }
         }
       ]

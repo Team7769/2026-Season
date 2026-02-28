@@ -3,47 +3,35 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 4.215977844937331,
-        "y": 0.7758570876765793
+        "x": 0.8533260429682741,
+        "y": 0.78
       },
       "prevControl": null,
       "nextControl": {
-        "x": 3.636984991335424,
-        "y": 0.7827367992209299
+        "x": 1.1515452935797796,
+        "y": 0.9124353170771333
       },
       "isLocked": false,
-      "linkedName": "Right Trench Shoot"
+      "linkedName": "Outpost"
     },
     {
       "anchor": {
-        "x": 0.9793879500235376,
-        "y": 0.6322541230558307
+        "x": 1.2011767478206834,
+        "y": 1.009423570574827
       },
       "prevControl": {
-        "x": 0.7154713939905772,
-        "y": 0.6300273552252144
+        "x": 0.9428972854784574,
+        "y": 0.7801830245128516
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "Outpost"
+      "linkedName": null
     }
   ],
   "rotationTargets": [],
   "constraintZones": [],
   "pointTowardsZones": [],
-  "eventMarkers": [
-    {
-      "name": "IntakeOut",
-      "waypointRelativePos": 0.6059805339734801,
-      "endWaypointRelativePos": null,
-      "command": {
-        "type": "named",
-        "data": {
-          "name": "IntakeOut"
-        }
-      }
-    }
-  ],
+  "eventMarkers": [],
   "globalConstraints": {
     "maxVelocity": 3.9,
     "maxAcceleration": 3.5,
@@ -54,13 +42,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 0.0
+    "rotation": 34.77783136636393
   },
   "reversed": false,
   "folder": null,
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 82.7249950421107
+    "rotation": 0.0
   },
   "useDefaultConstraints": true
 }

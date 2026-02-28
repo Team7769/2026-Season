@@ -32,22 +32,42 @@
     },
     {
       "anchor": {
-        "x": 3.972,
-        "y": 7.134080623869034
+        "x": 3.996405626098972,
+        "y": 7.270736257918194
       },
       "prevControl": {
-        "x": 4.696657022792784,
-        "y": 7.182003340766202
+        "x": 4.252837057049123,
+        "y": 7.23048248678067
+      },
+      "nextControl": {
+        "x": 1.8596084391484582,
+        "y": 7.606163723311589
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 0.7787866062141864,
+        "y": 5.953872875262644
+      },
+      "prevControl": {
+        "x": 2.120496467787765,
+        "y": 6.015989072557718
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "Left Trench Aiming At Hub"
+      "linkedName": "Comp Depot"
     }
   ],
   "rotationTargets": [
     {
-      "waypointRelativePos": 1.7294669404413792,
-      "rotationDegrees": -89.16158502559776
+      "waypointRelativePos": 1.4028996845714208,
+      "rotationDegrees": -90.0
+    },
+    {
+      "waypointRelativePos": 1.9862685968323042,
+      "rotationDegrees": -90.0
     }
   ],
   "constraintZones": [],
@@ -55,7 +75,7 @@
   "eventMarkers": [
     {
       "name": "PrepShooter",
-      "waypointRelativePos": 2.0,
+      "waypointRelativePos": 3.0,
       "endWaypointRelativePos": null,
       "command": {
         "type": "named",
@@ -75,7 +95,7 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -74.04672489010737
+    "rotation": 0.0
   },
   "reversed": false,
   "folder": null,

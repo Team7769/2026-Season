@@ -3,13 +3,13 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 4.017142970847064,
-        "y": 7.260083259398069
+        "x": 3.972,
+        "y": 7.134080623869034
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.5148350332761567,
-        "y": 6.740903310384593
+        "x": 2.469692062429093,
+        "y": 6.614900674855558
       },
       "isLocked": false,
       "linkedName": "Left Trench Aiming At Hub"
@@ -48,7 +48,7 @@
   "folder": null,
   "idealStartingState": {
     "velocity": 0,
-    "rotation": -72.07208023799275
+    "rotation": -74.04672489010737
   },
   "useDefaultConstraints": true
 }
