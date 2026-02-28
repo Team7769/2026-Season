@@ -41,12 +41,14 @@ public class Shooter extends SubsystemBase {
     private VelocityVoltage _shooterVelocity = new VelocityVoltage(0);
     private final VelocityTorqueCurrentFOC shotVelocityTorqueCurrentFOC = new VelocityTorqueCurrentFOC(60);
     private final VelocityTorqueCurrentFOC idleVelocityTorqueCurrentFOC = new VelocityTorqueCurrentFOC(35);
-    private final PositionDutyCycle HOOD_DOWN = new PositionDutyCycle(0);
-    private PositionDutyCycle HOOD_MOVE = new PositionDutyCycle(0);
+    private final PositionDutyCycle HOOD_DOWN = new PositionDutyCycle(.38);
+    private PositionDutyCycle HOOD_MOVE = new PositionDutyCycle(.9);
     private final VoltageOut SHOOTER_VOLTAGE = new VoltageOut(3);
     private DigitalInput _leftPhotoEye;
     private DigitalInput _rightPhotoEye;
     private TalonFX _hoodMotor;
+    private double _manualHood = 0;
+        private double hoodTest = 0.6;
 
 
     private SimpleMotorFeedforward _ff = new SimpleMotorFeedforward(0, 0);
@@ -121,14 +123,24 @@ public class Shooter extends SubsystemBase {
 
     private void configHood(){
         _hoodMotor = new TalonFX(40);
+
+        TalonFXConfiguration hoodConfig = new TalonFXConfiguration();
+        hoodConfig.MotorOutput.Inverted = InvertedValue.Clockwise_Positive;
+
+        var hoodSlot0 = hoodConfig.Slot0;
+
+        hoodSlot0.kP = 1.5;
+        //raise
+        hoodSlot0.kD = 0.02;
         
+        _hoodMotor.getConfigurator().apply(hoodConfig);
         _hoodMotor.setNeutralMode(NeutralModeValue.Brake);
     }
 
     private void prepShooter() {
         _leftShooter1.setControl(shotVelocityTorqueCurrentFOC);
         _rightShooter1.setControl(shotVelocityTorqueCurrentFOC);
-        hoodUp();
+        _hoodMotor.setControl(HOOD_MOVE);
     }
 
     private void shoot(double shot) {
@@ -139,20 +151,12 @@ public class Shooter extends SubsystemBase {
     private void stop() {
         _leftShooter1.set(0);
         _rightShooter1.set(0);
-        hoodDown();
+        _hoodMotor.setControl(HOOD_DOWN);
     }
 
     private void setIdle() {
         _leftShooter1.setControl(idleVelocityTorqueCurrentFOC);
         _rightShooter1.setControl(idleVelocityTorqueCurrentFOC);
-        hoodDown();
-    }
-
-    private void hoodUp() {
-        _hoodMotor.setControl(new PositionDutyCycle(_hoodPosition));
-    }
-
-    private void hoodDown() {
         _hoodMotor.setControl(HOOD_DOWN);
     }
 
@@ -187,11 +191,10 @@ public class Shooter extends SubsystemBase {
     @Override
     public void periodic() {
         setShooterTargetSpeed(DRIVETRAIN::getDistanceToTarget);
-        // SmartDashboard.putNumber("Right Hood", _rightHood.getPosition());
         // SmartDashboard.putNumber("Left Hood", _leftHood.getPosition());
         // SmartDashboard.putNumber("Left Hood Speed", _leftHood.getSpeed());
         SmartDashboard.putString("Shooter State", _currentState.name());
-        //_hoodPosition = SmartDashboard.getNumber("Hood Position", 0);
+        //_manualHood = SmartDashboard.getNumber("Set Hood Position", 0);
         SmartDashboard.putNumber("Shooter Target Velocity", shotVelocityTorqueCurrentFOC.Velocity);
         SmartDashboard.putBoolean("Shooter At Speed", _leftShooter1.getClosedLoopError().getValueAsDouble()<=1);
         handleCurrentState();
