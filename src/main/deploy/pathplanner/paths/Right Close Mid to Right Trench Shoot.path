@@ -1,0 +1,91 @@
+{
+  "version": "2025.0",
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 6.81648098329529,
+        "y": 3.543764420213808
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 6.728390968053303,
+        "y": 2.8212817301180246
+      },
+      "isLocked": false,
+      "linkedName": "Right Close Mid"
+    },
+    {
+      "anchor": {
+        "x": 6.568016194114997,
+        "y": 1.1585024440830034
+      },
+      "prevControl": {
+        "x": 6.817419063339247,
+        "y": 1.5228111797142214
+      },
+      "nextControl": {
+        "x": 6.307390570355685,
+        "y": 0.7778003625063881
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 5.437501403344668,
+        "y": 0.82
+      },
+      "prevControl": {
+        "x": 5.851362597188787,
+        "y": 0.8212949762510344
+      },
+      "nextControl": {
+        "x": 4.863055371904805,
+        "y": 0.8182025520167618
+      },
+      "isLocked": false,
+      "linkedName": "Right Prep Trench"
+    },
+    {
+      "anchor": {
+        "x": 4.215977844937331,
+        "y": 0.7758570876765793
+      },
+      "prevControl": {
+        "x": 5.20145985362339,
+        "y": 0.7733820208535496
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": "Right Trench Shoot"
+    }
+  ],
+  "rotationTargets": [
+    {
+      "waypointRelativePos": 2,
+      "rotationDegrees": 90.0
+    }
+  ],
+  "constraintZones": [],
+  "pointTowardsZones": [],
+  "eventMarkers": [],
+  "globalConstraints": {
+    "maxVelocity": 3.9,
+    "maxAcceleration": 3.5,
+    "maxAngularVelocity": 540.0,
+    "maxAngularAcceleration": 720.0,
+    "nominalVoltage": 12.0,
+    "unlimited": false
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": 82.7249950421107
+  },
+  "reversed": false,
+  "folder": null,
+  "idealStartingState": {
+    "velocity": 0,
+    "rotation": -91.7357045889285
+  },
+  "useDefaultConstraints": true
+}

@@ -3,51 +3,51 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 6.468630278442881,
-        "y": 4.574893295312021
+        "x": 8.419078873508175,
+        "y": 2.5250587845746097
       },
       "prevControl": null,
       "nextControl": {
-        "x": 6.269795404356256,
-        "y": 6.077201232889734
+        "x": 8.16501208994839,
+        "y": 4.90003089176391
       },
       "isLocked": false,
-      "linkedName": "Close Mid"
+      "linkedName": "Selfish Left Mid"
     },
     {
       "anchor": {
-        "x": 4.812482467211774,
-        "y": 7.237990495617066
+        "x": 5.462347882262696,
+        "y": 7.260083259398069
       },
       "prevControl": {
-        "x": 6.554788815863109,
-        "y": 7.248061630580369
+        "x": 7.273954512862907,
+        "y": 7.061248385307802
       },
       "nextControl": {
-        "x": 2.901458399566429,
-        "y": 7.226944113723163
+        "x": 5.213840212925663,
+        "y": 7.287358491398475
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 1.1671764422235433,
-        "y": 5.459523010698565
+        "x": 3.972,
+        "y": 7.134080623869034
       },
       "prevControl": {
-        "x": 2.835180108203007,
-        "y": 6.77404245607311
+        "x": 4.21738685721915,
+        "y": 7.181885333931
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "Left Trench Aiming At Hub"
     }
   ],
   "rotationTargets": [
     {
-      "waypointRelativePos": 0.95,
-      "rotationDegrees": -89.16158502559776
+      "waypointRelativePos": 0.9691405966951576,
+      "rotationDegrees": -96.12336768766545
     }
   ],
   "constraintZones": [],
@@ -58,12 +58,24 @@
         "y": 4.03
       },
       "rotationOffset": 0.0,
-      "minWaypointRelativePos": 1.1876161799126308,
+      "minWaypointRelativePos": 1.5000422430196574,
       "maxWaypointRelativePos": 2.0,
       "name": "Point Towards Zone"
     }
   ],
-  "eventMarkers": [],
+  "eventMarkers": [
+    {
+      "name": "PrepShooter",
+      "waypointRelativePos": 2.0,
+      "endWaypointRelativePos": null,
+      "command": {
+        "type": "named",
+        "data": {
+          "name": "PrepShooter"
+        }
+      }
+    }
+  ],
   "globalConstraints": {
     "maxVelocity": 3.9,
     "maxAcceleration": 3.5,
@@ -74,13 +86,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -25.016893479307306
+    "rotation": -74.04672489010737
   },
   "reversed": false,
   "folder": null,
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 92.86240522611169
+    "rotation": 85.36453657240948
   },
   "useDefaultConstraints": true
 }

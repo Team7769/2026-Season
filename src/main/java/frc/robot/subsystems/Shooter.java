@@ -6,6 +6,7 @@ import java.util.function.Supplier;
 import com.ctre.phoenix6.Orchestra;
 import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.controls.Follower;
+import com.ctre.phoenix6.controls.PositionDutyCycle;
 import com.ctre.phoenix6.controls.VelocityDutyCycle;
 import com.ctre.phoenix6.controls.VelocityTorqueCurrentFOC;
 import com.ctre.phoenix6.controls.VelocityVoltage;
@@ -26,6 +27,7 @@ import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 import edu.wpi.first.math.interpolation.InterpolatingDoubleTreeMap;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Servo;
+import edu.wpi.first.wpilibj.motorcontrol.Talon;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.states.ShooterState;
 
@@ -36,21 +38,26 @@ public class Shooter extends SubsystemBase {
     private TalonFX _rightShooter1;
     private TalonFX _leftShooter2;
     private TalonFX _rightShooter2;
+    private double _hoodPosition = .5;
     private VelocityVoltage _shooterVelocity = new VelocityVoltage(0);
     private final VelocityTorqueCurrentFOC shotVelocityTorqueCurrentFOC = new VelocityTorqueCurrentFOC(60);
     private final VelocityTorqueCurrentFOC idleVelocityTorqueCurrentFOC = new VelocityTorqueCurrentFOC(35);
+    private final PositionDutyCycle HOOD_DOWN = new PositionDutyCycle(.38);
+    private final PositionDutyCycle HOOD_MOVE = new PositionDutyCycle(.9);
     private final VoltageOut SHOOTER_VOLTAGE = new VoltageOut(3);
     private DigitalInput _leftPhotoEye;
     private DigitalInput _rightPhotoEye;
-    private Servo _leftHood;
-    private Servo _rightHood;
+    private TalonFX _hoodMotor;
+    private double _manualHood = 0;
+        private double hoodTest = 0.6;
+
 
     private SimpleMotorFeedforward _ff = new SimpleMotorFeedforward(0, 0);
     private boolean _isReadyToShoot = false;
     private double _shooterPosition;
     private double _shooterTarget;
     private double _shooterError = 0.1;
-    private double _hoodPosition = .5;
+    // private double _hoodPosition = .5;
     private double _hoodTarget;
     private final Drivetrain DRIVETRAIN;
     private InterpolatingDoubleTreeMap _hoodMap = new InterpolatingDoubleTreeMap();
@@ -64,15 +71,24 @@ public class Shooter extends SubsystemBase {
         DRIVETRAIN = drivetrain;
         // _hoodMap.put(2.0, .3);
         // _hoodMap.put(3.5, .4);
-        _hoodMap.put(2.0, .4);
-        _hoodMap.put(3.5, .56);
-        _hoodMap.put(5.0, .6);
+        // _hoodMap.put(2.0, .4);
+        // _hoodMap.put(3.5, .56);
+        // _hoodMap.put(5.0, .6);
+
+        _hoodMap.put(1.0, .4);
+        _hoodMap.put(2.54, .7);
+        _hoodMap.put(3.1, .9);
+        _hoodMap.put(4.0, 1.15);
+        //_hoodMap.put(5.0, .);
+
 
         // _shooterMap.put(2.0, 60.0);
+
         // _shooterMap.put(3.5, 60.0);
-        _shooterMap.put(2.0, 48.0);
-        _shooterMap.put(3.5, 52.0);
-        _shooterMap.put(5.0, 60.0);
+        _shooterMap.put(1.0, 52.0);
+        _shooterMap.put(2.54, 52.0);
+        _shooterMap.put(3.1, 52.0);
+        _shooterMap.put(4.0, 58.0);
 
         configShooter();
         configHood();
@@ -116,17 +132,25 @@ public class Shooter extends SubsystemBase {
     }
 
     private void configHood(){
-        _leftHood = new Servo(0);
-        _rightHood = new Servo(1);
-         _leftHood.setSpeed(1);
-         _rightHood.setSpeed(1);
+        _hoodMotor = new TalonFX(40);
+
+        TalonFXConfiguration hoodConfig = new TalonFXConfiguration();
+        hoodConfig.MotorOutput.Inverted = InvertedValue.Clockwise_Positive;
+
+        var hoodSlot0 = hoodConfig.Slot0;
+
+        hoodSlot0.kP = 1.5;
+        //raise
+        hoodSlot0.kD = 0.02;
         
+        _hoodMotor.getConfigurator().apply(hoodConfig);
+        _hoodMotor.setNeutralMode(NeutralModeValue.Brake);
     }
 
     private void prepShooter() {
         _leftShooter1.setControl(shotVelocityTorqueCurrentFOC);
         _rightShooter1.setControl(shotVelocityTorqueCurrentFOC);
-        hoodUp();
+        _hoodMotor.setControl(HOOD_MOVE);
     }
 
     private void shoot(double shot) {
@@ -137,27 +161,13 @@ public class Shooter extends SubsystemBase {
     private void stop() {
         _leftShooter1.set(0);
         _rightShooter1.set(0);
-        hoodDown();
+        _hoodMotor.setControl(HOOD_DOWN);
     }
 
     private void setIdle() {
         _leftShooter1.setControl(idleVelocityTorqueCurrentFOC);
         _rightShooter1.setControl(idleVelocityTorqueCurrentFOC);
-        hoodDown();
-    }
-
-    private void hoodUp() {
-        _leftHood.setSpeed(1);
-        _rightHood.setSpeed(1);
-        _leftHood.set(_hoodPosition);
-        _rightHood.set(_hoodPosition);
-    }
-
-    private void hoodDown() {
-        _leftHood.setSpeed(1);
-        _rightHood.setSpeed(1);
-        _leftHood.set(0.2);
-        _rightHood.set(0.2);
+        _hoodMotor.setControl(HOOD_DOWN);
     }
 
     public boolean shooterReady(){
@@ -167,12 +177,12 @@ public class Shooter extends SubsystemBase {
         return false;
     }
 
-        public boolean hoodReady(){
-        if(_leftHood.getPosition() - _hoodTarget <= _shooterError){
-            return true;
-        }
-        return false;
-    }
+    //     public boolean hoodReady(){
+    //     if(_hoodPosition - _hoodTarget <= _shooterError){
+    //         return true;
+    //     }
+    //     return false;
+    // }
 
     public void setWantedState(ShooterState wantedState) {
         if (wantedState != _currentState) {
@@ -185,17 +195,16 @@ public class Shooter extends SubsystemBase {
         var targetSpeed = _shooterMap.get(distance);
         shotVelocityTorqueCurrentFOC.Velocity = targetSpeed;
         
-        _hoodPosition = _hoodMap.get(distance);
+        HOOD_MOVE.Position = _hoodMap.get(distance);
     }
 
     @Override
     public void periodic() {
         setShooterTargetSpeed(DRIVETRAIN::getDistanceToTarget);
-        SmartDashboard.putNumber("Right Hood", _rightHood.getPosition());
-        SmartDashboard.putNumber("Left Hood", _leftHood.getPosition());
-        SmartDashboard.putNumber("Left Hood Speed", _leftHood.getSpeed());
+        // SmartDashboard.putNumber("Left Hood", _leftHood.getPosition());
+        // SmartDashboard.putNumber("Left Hood Speed", _leftHood.getSpeed());
         SmartDashboard.putString("Shooter State", _currentState.name());
-        //_hoodPosition = SmartDashboard.getNumber("Hood Position", 0);
+        SmartDashboard.putNumber("Set Hood Position", _hoodPosition);
         SmartDashboard.putNumber("Shooter Target Velocity", shotVelocityTorqueCurrentFOC.Velocity);
         SmartDashboard.putBoolean("Shooter At Speed", _leftShooter1.getClosedLoopError().getValueAsDouble()<=1);
         handleCurrentState();

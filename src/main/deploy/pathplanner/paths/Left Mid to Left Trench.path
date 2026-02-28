@@ -3,67 +3,68 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 6.468630278442881,
-        "y": 4.574893295312021
+        "x": 7.043851609776686,
+        "y": 4.476395022134329
       },
       "prevControl": null,
       "nextControl": {
-        "x": 6.269795404356256,
-        "y": 6.077201232889734
+        "x": 8.1679491258607,
+        "y": 6.642705529809501
       },
       "isLocked": false,
-      "linkedName": "Close Mid"
+      "linkedName": "Left Mid"
     },
     {
       "anchor": {
-        "x": 4.812482467211774,
-        "y": 7.237990495617066
+        "x": 5.4973581446328605,
+        "y": 7.260083259398069
       },
       "prevControl": {
-        "x": 6.554788815863109,
-        "y": 7.248061630580369
+        "x": 5.745663779463232,
+        "y": 7.2310262170247315
       },
       "nextControl": {
-        "x": 2.901458399566429,
-        "y": 7.226944113723163
+        "x": 4.45899824660591,
+        "y": 7.3815934602292135
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 1.1671764422235433,
-        "y": 5.459523010698565
+        "x": 3.972,
+        "y": 7.134080623869034
       },
       "prevControl": {
-        "x": 2.835180108203007,
-        "y": 6.77404245607311
+        "x": 4.221742135052496,
+        "y": 7.122728708637654
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "Left Trench Aiming At Hub"
     }
   ],
   "rotationTargets": [
     {
-      "waypointRelativePos": 0.95,
-      "rotationDegrees": -89.16158502559776
+      "waypointRelativePos": 0.8550047379173568,
+      "rotationDegrees": -92.64298486799454
     }
   ],
   "constraintZones": [],
-  "pointTowardsZones": [
+  "pointTowardsZones": [],
+  "eventMarkers": [
     {
-      "fieldPosition": {
-        "x": 4.6,
-        "y": 4.03
-      },
-      "rotationOffset": 0.0,
-      "minWaypointRelativePos": 1.1876161799126308,
-      "maxWaypointRelativePos": 2.0,
-      "name": "Point Towards Zone"
+      "name": "IntakeOut",
+      "waypointRelativePos": 0.25,
+      "endWaypointRelativePos": null,
+      "command": {
+        "type": "named",
+        "data": {
+          "name": "IntakeOut"
+        }
+      }
     }
   ],
-  "eventMarkers": [],
   "globalConstraints": {
     "maxVelocity": 3.9,
     "maxAcceleration": 3.5,
@@ -74,7 +75,7 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -25.016893479307306
+    "rotation": -74.04672489010737
   },
   "reversed": false,
   "folder": null,

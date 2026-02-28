@@ -107,6 +107,14 @@ public class RobotContainer {
             Commands.runOnce(() -> DRIVETRAIN.setTargetEngageLeftClimb(GeometryUtil::isRedAlliance)),
             Commands.runOnce(() -> DRIVETRAIN.setWantedState(DrivetrainState.CLIMB_ENGAGE))));
 
+        // new Trigger(HOPPER.isMiddleEmpty() && DRIVETRAIN.getCurrentState() == "SHOOT").onTrue(
+        //     Commands.runOnce(() -> HOPPER.setWantedState(HopperState.INJECTING)));
+
+
+        // new Trigger(HOPPER.isMiddleEmpty() && DRIVETRAIN.getCurrentState() == "SHOOT").onTrue(
+        //     Commands.runOnce(() -> HOPPER.setWantedState(HopperState.INJECTING)));
+
+
     new Trigger(DRIVETRAIN::isReadyToClimb).onTrue(
         Commands.runOnce(() -> {
           SmartDashboard.putBoolean("isClimbed", true);
@@ -150,11 +158,11 @@ public class RobotContainer {
               DRIVETRAIN.setWantedState(DrivetrainState.OPEN_LOOP);
             }));
 
-    DRIVER_CONTROLLER.rightTrigger().onTrue(
-        Commands.runOnce(() -> {
-
-          SHOOTER.setWantedState(ShooterState.SHOOT);
-          HOPPER.setWantedState(HopperState.INJECTING_HOPPER_OUT);
+        DRIVER_CONTROLLER.rightTrigger().onTrue(
+          Commands.runOnce(() -> {
+          
+            SHOOTER.setWantedState(ShooterState.SHOOT);
+            HOPPER.setWantedState(HopperState.INJECTING_HOPPER_OUT);
 
         })).onFalse(
             Commands.runOnce(() -> {
@@ -162,15 +170,48 @@ public class RobotContainer {
               HOPPER.setWantedState(HopperState.INJECTING);
             }));
 
-    DRIVER_CONTROLLER.leftBumper().onTrue(
-        Commands.runOnce(() -> {
-          HOPPER.setWantedState(HopperState.FLOOR_INTAKE);
-        }));
+        DRIVER_CONTROLLER.leftBumper().onTrue(
+          Commands.runOnce(() -> {
+            HOPPER.setWantedState(HopperState.FLOOR_INTAKE);
+          })
+        );
+        
+        DRIVER_CONTROLLER.leftTrigger().onTrue(
+          Commands.runOnce(() -> {
+            HOPPER.setWantedState(HopperState.STOW);
+          })
+        );
 
-    DRIVER_CONTROLLER.leftTrigger().onTrue(
+        DRIVER_CONTROLLER.pov(90).onTrue(
+          Commands.runOnce(() -> DRIVETRAIN.setWantedState(DrivetrainState.IDLE))
+        ).onFalse(
+          Commands.runOnce(() -> DRIVETRAIN.setWantedState(DrivetrainState.OPEN_LOOP))
+        );
+    // DRIVER_CONTROLLER.y().onTrue(
+    //     Commands.runOnce(() -> DRIVETRAIN.setTargetHub(GeometryUtil::isRedAlliance)));
+
+    // DRIVER_CONTROLLER.a().onTrue(
+    //     Commands.runOnce(() -> DRIVETRAIN.setTargetDepot(GeometryUtil::isRedAlliance)));
+
+    // DRIVER_CONTROLLER.x().onTrue(
+    //     Commands.runOnce(() -> DRIVETRAIN.setTargetZoneA(GeometryUtil::isRedAlliance)));
+
+    // DRIVER_CONTROLLER.b().onTrue(
+    //     Commands.runOnce(() -> DRIVETRAIN.setTargetZoneB(GeometryUtil::isRedAlliance)));
+    DRIVER_CONTROLLER.back().onTrue(
+        Commands.runOnce(() -> DRIVETRAIN.seedFieldCentric()));
+
+    DRIVER_CONTROLLER.start().onTrue(
         Commands.runOnce(() -> {
-          HOPPER.setWantedState(HopperState.STOW);
-        }));
+          DRIVETRAIN.setWantedState(DrivetrainState.CLIMB_STAGE);
+          DRIVETRAIN.setTargetStageLeftClimb(GeometryUtil::isRedAlliance);
+        })).onFalse(
+            Commands.runOnce(() -> DRIVETRAIN.setWantedState(DrivetrainState.OPEN_LOOP)));
+
+    new Trigger(DRIVETRAIN::isStagedForClimb).onTrue(
+        Commands.sequence(
+            Commands.runOnce(() -> DRIVETRAIN.setTargetEngageLeftClimb(GeometryUtil::isRedAlliance)),
+            Commands.runOnce(() -> DRIVETRAIN.setWantedState(DrivetrainState.CLIMB_ENGAGE))));
   }
 
   private void registerNamedCommands() {
@@ -200,17 +241,24 @@ public class RobotContainer {
     NamedCommands.registerCommand("Injecting",
         Commands.runOnce(() -> HOPPER.setWantedState(HopperState.INJECTING)));
 
-    NamedCommands.registerCommand("Start Shooting",
-        Commands.runOnce(() -> SHOOTER.setWantedState(ShooterState.SHOOT)));
+  NamedCommands.registerCommand("Start Shooting",
+  Commands.sequence(
+    Commands.waitUntil(SHOOTER::shooterReady),
+     Commands.runOnce(() -> {
+      SHOOTER.setWantedState(ShooterState.SHOOT);
+      //DRIVETRAIN.setWantedState(DrivetrainState.AIM);
+    })));
 
-    NamedCommands.registerCommand("Idle",
-        Commands.runOnce(() -> {
-          SHOOTER.setWantedState(ShooterState.IDLE);
-          HOPPER.setWantedState(HopperState.IDLE);
-        }));
+  NamedCommands.registerCommand("Idle",
+     Commands.runOnce(() -> {
+      SHOOTER.setWantedState(ShooterState.IDLE);
+      HOPPER.setWantedState(HopperState.IDLE);
+     }));
 
-    NamedCommands.registerCommand("PrepShooter",
-        Commands.runOnce(() -> SHOOTER.setWantedState(ShooterState.PREPSHOOTER)));
+  NamedCommands.registerCommand("PrepShooter",
+     Commands.runOnce(() -> SHOOTER.setWantedState(ShooterState.PREPSHOOTER)));
+  
+  
 
   }
 
