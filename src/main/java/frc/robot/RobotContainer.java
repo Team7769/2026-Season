@@ -46,6 +46,7 @@ public class RobotContainer {
 
     autoChooser = AutoBuilder.buildAutoChooser();
 
+    
     // Another option that allows you to specify the default auto by its name
     // autoChooser = AutoBuilder.buildAutoChooser("My Default Auto");
 
@@ -110,6 +111,8 @@ public class RobotContainer {
           SmartDashboard.putBoolean("isClimbed", true);
           DRIVETRAIN.setWantedState(DrivetrainState.OPEN_LOOP);
         }));
+
+
 
     if (_isComp) {
       registerCompBindings();
@@ -202,6 +205,25 @@ public class RobotContainer {
         Commands.sequence(
             Commands.runOnce(() -> DRIVETRAIN.setTargetEngageLeftClimb(GeometryUtil::isRedAlliance)),
             Commands.runOnce(() -> DRIVETRAIN.setWantedState(DrivetrainState.CLIMB_ENGAGE))));
+
+      DRIVER_CONTROLLER.pov(180).onTrue(
+        Commands.runOnce(() -> {
+          DRIVETRAIN.setTargetTrenchStart(GeometryUtil::isRedAlliance);
+          DRIVETRAIN.setWantedState(DrivetrainState.TRENCH_START);
+        })).onFalse(
+          Commands.runOnce(() -> DRIVETRAIN.setWantedState(DrivetrainState.OPEN_LOOP)));
+
+    new Trigger(DRIVETRAIN::isAtTrenchStart).onTrue(
+        Commands.sequence(
+            Commands.runOnce(() -> DRIVETRAIN.setTargetTrenchEnd(GeometryUtil::isRedAlliance)),
+            Commands.runOnce(() -> DRIVETRAIN.setWantedState(DrivetrainState.TRENCH_END))));
+
+    new Trigger(DRIVETRAIN::isAtTrenchEnd).onTrue(
+        Commands.runOnce(() -> {
+          SmartDashboard.putBoolean("isDoneWithTrench", true);
+          DRIVETRAIN.setWantedState(DrivetrainState.OPEN_LOOP);
+        }));
+
   }
 
   private void registerNamedCommands() {

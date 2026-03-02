@@ -361,6 +361,22 @@ public class Drivetrain extends SubsystemBase {
         }
     }
 
+    public void setTargetTrenchStart(Supplier<Boolean> isRedAlliance) {
+        if (isRedAlliance.get()) {
+            _target = new Pose2d(FieldConstants.kRedZoneB, new Rotation2d());
+        } else {
+            _target = new Pose2d(FieldConstants.kBlueZoneB, new Rotation2d());
+        }
+    }
+
+    public void setTargetTrenchEnd(Supplier<Boolean> isRedAlliance) {
+        if (isRedAlliance.get()) {
+            _target = new Pose2d(FieldConstants.kRedZoneA, new Rotation2d());
+        } else {
+            _target = new Pose2d(FieldConstants.kBlueZoneA, new Rotation2d());
+        }
+    }
+
     private void updateTarget() {
         var currentTranslation = _swerve.getState().Pose.getTranslation();
         if (GeometryUtil.isRedAlliance()) {
@@ -437,6 +453,8 @@ public class Drivetrain extends SubsystemBase {
                 break;
             case CLIMB_STAGE:
             case CLIMB_ENGAGE:
+            case TRENCH_END:
+            case TRENCH_START:
                 if (GeometryUtil.isRedAlliance()) {
                     _swerve.setControl(
                             DRIVE.withVelocityX(-_xFollow * _maxSpeed) // Drive forward with negative Y (forward)
@@ -480,6 +498,22 @@ public class Drivetrain extends SubsystemBase {
     public boolean isStagedForClimb() {
         // If position is at the staged position
         return _currentState == DrivetrainState.CLIMB_STAGE
+                && _targetFollowControllerX.atSetpoint()
+                && _targetFollowControllerY.atSetpoint()
+                && _targetFollowControllerZ.atSetpoint();
+    }
+
+    public boolean isAtTrenchStart() {
+        // If position is at the ready position
+        return _currentState == DrivetrainState.TRENCH_START
+                && _targetFollowControllerX.atSetpoint()
+                && _targetFollowControllerY.atSetpoint()
+                && _targetFollowControllerZ.atSetpoint();
+    }
+
+    public boolean isAtTrenchEnd() {
+        // If position is at the end position
+        return _currentState == DrivetrainState.TRENCH_END
                 && _targetFollowControllerX.atSetpoint()
                 && _targetFollowControllerY.atSetpoint()
                 && _targetFollowControllerZ.atSetpoint();
