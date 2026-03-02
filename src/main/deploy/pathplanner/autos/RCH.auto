@@ -5,45 +5,63 @@
     "data": {
       "commands": [
         {
-          "type": "named",
+          "type": "path",
           "data": {
-            "name": "Intake"
+            "pathName": "Right Start to Outpost"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "Kitbot Left Start to Depot"
-          }
-        },
-        {
-          "type": "wait",
-          "data": {
-            "waitTime": 0.5
+            "pathName": "Outpost to Depot"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "Kitbot Depot to Hub"
-          }
-        },
-        {
-          "type": "wait",
-          "data": {
-            "waitTime": 4.0
+            "pathName": "Depot to Prep Shoot"
           }
         },
         {
           "type": "named",
           "data": {
-            "name": "Stop Shooting"
+            "name": "PrepShooter"
           }
         },
         {
-          "type": "path",
+          "type": "wait",
           "data": {
-            "pathName": "Kitbot Hub to Prep Climb"
+            "waitTime": 0.3
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Start Shooting"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 0.4
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Injecting"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 3.0
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Idle"
           }
         },
         {

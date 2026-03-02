@@ -3,40 +3,47 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 3.619024590163934,
-        "y": 4.027811475409836
+        "x": 3.575287695090914,
+        "y": 0.6322541230558307
       },
       "prevControl": null,
       "nextControl": {
-        "x": 3.3255506953121823,
-        "y": 3.81707568831213
+        "x": 2.9962948414890067,
+        "y": 0.6391338346001812
       },
       "isLocked": false,
-      "linkedName": "Hub Center"
+      "linkedName": "Right Trench Inside Start"
     },
     {
       "anchor": {
-        "x": 2.5369277970639637,
-        "y": 5.106038790086841
+        "x": 0.8533260429682741,
+        "y": 0.78
       },
       "prevControl": {
-        "x": 3.4189773615201533,
-        "y": 5.267543290459116
+        "x": 0.5894094869353137,
+        "y": 0.7777732321693837
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "Prep climb"
+      "linkedName": "Outpost"
     }
   ],
-  "rotationTargets": [
-    {
-      "waypointRelativePos": 0.436385422863792,
-      "rotationDegrees": 0.0
-    }
-  ],
+  "rotationTargets": [],
   "constraintZones": [],
   "pointTowardsZones": [],
-  "eventMarkers": [],
+  "eventMarkers": [
+    {
+      "name": "IntakeOut",
+      "waypointRelativePos": 0.510629722505751,
+      "endWaypointRelativePos": null,
+      "command": {
+        "type": "named",
+        "data": {
+          "name": "IntakeOut"
+        }
+      }
+    }
+  ],
   "globalConstraints": {
     "maxVelocity": 3.9,
     "maxAcceleration": 3.5,
@@ -47,7 +54,7 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -33.465379346355256
+    "rotation": 0.0
   },
   "reversed": false,
   "folder": null,

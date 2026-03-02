@@ -1,0 +1,91 @@
+{
+  "version": "2025.0",
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 4.215977844937331,
+        "y": 0.7758570876765793
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 4.543028162295616,
+        "y": 0.7733820208535496
+      },
+      "isLocked": false,
+      "linkedName": "Right Trench Shoot"
+    },
+    {
+      "anchor": {
+        "x": 5.412654924426638,
+        "y": 0.8
+      },
+      "prevControl": {
+        "x": 4.2971165642783475,
+        "y": 0.7010832569973123
+      },
+      "nextControl": {
+        "x": 7.214024645983758,
+        "y": 0.9597306127387697
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 6.81648098329529,
+        "y": 3.543764420213808
+      },
+      "prevControl": {
+        "x": 6.928290138426421,
+        "y": 3.1710672364433696
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": "Right Close Mid"
+    }
+  ],
+  "rotationTargets": [
+    {
+      "waypointRelativePos": 0.8574839347461586,
+      "rotationDegrees": 90.0
+    },
+    {
+      "waypointRelativePos": 1.3241790645548808,
+      "rotationDegrees": -98.16101275381472
+    }
+  ],
+  "constraintZones": [],
+  "pointTowardsZones": [],
+  "eventMarkers": [
+    {
+      "name": "IntakeOut",
+      "waypointRelativePos": 1.0602565171935627,
+      "endWaypointRelativePos": null,
+      "command": {
+        "type": "named",
+        "data": {
+          "name": "IntakeOut"
+        }
+      }
+    }
+  ],
+  "globalConstraints": {
+    "maxVelocity": 3.9,
+    "maxAcceleration": 3.5,
+    "maxAngularVelocity": 540.0,
+    "maxAngularAcceleration": 720.0,
+    "nominalVoltage": 12.0,
+    "unlimited": false
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": -91.7357045889285
+  },
+  "reversed": false,
+  "folder": null,
+  "idealStartingState": {
+    "velocity": 0,
+    "rotation": 82.7249950421107
+  },
+  "useDefaultConstraints": true
+}

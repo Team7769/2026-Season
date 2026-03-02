@@ -3,37 +3,32 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 3.619024590163934,
-        "y": 4.027811475409836
+        "x": 0.7787866062141864,
+        "y": 5.953872875262644
       },
       "prevControl": null,
       "nextControl": {
-        "x": 3.3255506953121823,
-        "y": 3.81707568831213
+        "x": 2.4134307123823504,
+        "y": 5.09953106848264
       },
       "isLocked": false,
-      "linkedName": "Hub Center"
+      "linkedName": "Comp Depot"
     },
     {
       "anchor": {
-        "x": 2.5369277970639637,
-        "y": 5.106038790086841
+        "x": 1.8223387207714143,
+        "y": 5.419673578525017
       },
       "prevControl": {
-        "x": 3.4189773615201533,
-        "y": 5.267543290459116
+        "x": 0.4745533441021559,
+        "y": 6.12640992126537
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "Prep climb"
+      "linkedName": "Prep Shoot Depot"
     }
   ],
-  "rotationTargets": [
-    {
-      "waypointRelativePos": 0.436385422863792,
-      "rotationDegrees": 0.0
-    }
-  ],
+  "rotationTargets": [],
   "constraintZones": [],
   "pointTowardsZones": [],
   "eventMarkers": [],

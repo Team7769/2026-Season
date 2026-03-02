@@ -1,0 +1,91 @@
+{
+  "version": "2025.0",
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 3.972,
+        "y": 7.134080623869034
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 4.502226330907378,
+        "y": 7.233498060914167
+      },
+      "isLocked": false,
+      "linkedName": "Left Trench Aiming At Hub"
+    },
+    {
+      "anchor": {
+        "x": 5.984123939541311,
+        "y": 7.260083259398069
+      },
+      "prevControl": {
+        "x": 5.015111261738171,
+        "y": 7.3204292157542525
+      },
+      "nextControl": {
+        "x": 7.198128733004253,
+        "y": 7.184480244122148
+      },
+      "isLocked": false,
+      "linkedName": "Prep Left Trench"
+    },
+    {
+      "anchor": {
+        "x": 7.043851609776686,
+        "y": 4.476395022134329
+      },
+      "prevControl": {
+        "x": 7.297918393336471,
+        "y": 6.232769743265022
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": "Left Mid"
+    }
+  ],
+  "rotationTargets": [
+    {
+      "waypointRelativePos": 0.8550047379173568,
+      "rotationDegrees": -92.64298486799454
+    },
+    {
+      "waypointRelativePos": 1.7378791749337512,
+      "rotationDegrees": 98.57044249128954
+    }
+  ],
+  "constraintZones": [],
+  "pointTowardsZones": [],
+  "eventMarkers": [
+    {
+      "name": "IntakeOut",
+      "waypointRelativePos": 1.0293744076895988,
+      "endWaypointRelativePos": null,
+      "command": {
+        "type": "named",
+        "data": {
+          "name": "IntakeOut"
+        }
+      }
+    }
+  ],
+  "globalConstraints": {
+    "maxVelocity": 3.9,
+    "maxAcceleration": 3.5,
+    "maxAngularVelocity": 540.0,
+    "maxAngularAcceleration": 720.0,
+    "nominalVoltage": 12.0,
+    "unlimited": false
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": 92.86240522611169
+  },
+  "reversed": false,
+  "folder": null,
+  "idealStartingState": {
+    "velocity": 0,
+    "rotation": -74.04672489010737
+  },
+  "useDefaultConstraints": true
+}

@@ -1,0 +1,87 @@
+{
+  "version": "2025.0",
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 6.468630278442881,
+        "y": 4.574893295312021
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 6.654358525715388,
+        "y": 6.258027267610125
+      },
+      "isLocked": false,
+      "linkedName": "Close Mid"
+    },
+    {
+      "anchor": {
+        "x": 6.021393657918354,
+        "y": 7.134080623869034
+      },
+      "prevControl": {
+        "x": 6.67614451195779,
+        "y": 6.859507685078301
+      },
+      "nextControl": {
+        "x": 5.636273234688901,
+        "y": 7.2955827368362245
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 3.972,
+        "y": 7.134080623869034
+      },
+      "prevControl": {
+        "x": 4.696657022792784,
+        "y": 7.182003340766202
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": "Left Trench Aiming At Hub"
+    }
+  ],
+  "rotationTargets": [
+    {
+      "waypointRelativePos": 1.7294669404413792,
+      "rotationDegrees": -89.16158502559776
+    }
+  ],
+  "constraintZones": [],
+  "pointTowardsZones": [],
+  "eventMarkers": [
+    {
+      "name": "PrepShooter",
+      "waypointRelativePos": 2.0,
+      "endWaypointRelativePos": null,
+      "command": {
+        "type": "named",
+        "data": {
+          "name": "PrepShooter"
+        }
+      }
+    }
+  ],
+  "globalConstraints": {
+    "maxVelocity": 3.9,
+    "maxAcceleration": 3.5,
+    "maxAngularVelocity": 540.0,
+    "maxAngularAcceleration": 720.0,
+    "nominalVoltage": 12.0,
+    "unlimited": false
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": -74.04672489010737
+  },
+  "reversed": false,
+  "folder": null,
+  "idealStartingState": {
+    "velocity": 0,
+    "rotation": 92.86240522611169
+  },
+  "useDefaultConstraints": true
+}

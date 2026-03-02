@@ -1,0 +1,98 @@
+{
+  "version": "2025.0",
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 8.601391456817113,
+        "y": 4.432209494558714
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 8.347324673257328,
+        "y": 6.807181601748015
+      },
+      "isLocked": false,
+      "linkedName": "Left Far Mid"
+    },
+    {
+      "anchor": {
+        "x": 5.462347882262696,
+        "y": 7.260083259398069
+      },
+      "prevControl": {
+        "x": 7.273954512862907,
+        "y": 7.061248385307802
+      },
+      "nextControl": {
+        "x": 5.213840212925663,
+        "y": 7.287358491398475
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 3.972,
+        "y": 7.134080623869034
+      },
+      "prevControl": {
+        "x": 4.21738685721915,
+        "y": 7.181885333931
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": "Left Trench Aiming At Hub"
+    }
+  ],
+  "rotationTargets": [
+    {
+      "waypointRelativePos": 0.9691405966951576,
+      "rotationDegrees": -96.12336768766545
+    }
+  ],
+  "constraintZones": [],
+  "pointTowardsZones": [
+    {
+      "fieldPosition": {
+        "x": 4.6,
+        "y": 4.03
+      },
+      "rotationOffset": 0.0,
+      "minWaypointRelativePos": 1.5000422430196574,
+      "maxWaypointRelativePos": 2.0,
+      "name": "Point Towards Zone"
+    }
+  ],
+  "eventMarkers": [
+    {
+      "name": "PrepShooter",
+      "waypointRelativePos": 2.0,
+      "endWaypointRelativePos": null,
+      "command": {
+        "type": "named",
+        "data": {
+          "name": "PrepShooter"
+        }
+      }
+    }
+  ],
+  "globalConstraints": {
+    "maxVelocity": 3.9,
+    "maxAcceleration": 3.5,
+    "maxAngularVelocity": 540.0,
+    "maxAngularAcceleration": 720.0,
+    "nominalVoltage": 12.0,
+    "unlimited": false
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": -74.04672489010737
+  },
+  "reversed": false,
+  "folder": null,
+  "idealStartingState": {
+    "velocity": 0,
+    "rotation": 85.36453657240948
+  },
+  "useDefaultConstraints": true
+}
