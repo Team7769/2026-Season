@@ -16,8 +16,8 @@ import frc.configuration.FieldConstants;
 
 public class Ledinator extends SubsystemBase {
     private LedState _currentState = LedState.Idle;
-    private CANdle _CandleL;
-    private CANdle _CandleR;
+    private CANdle _candleL;
+    private CANdle _candleR;
     private CANdiConfiguration config;
 
     private Animation Staged;
@@ -30,20 +30,25 @@ public class Ledinator extends SubsystemBase {
     
     public Ledinator()
     {
-        _CandleL = new CANdle(Constants.LEDinatorConstants.LED_L);
-        _CandleR = new CANdle(Constants.LEDinatorConstants.LED_R);
+        private LedState _currentState = LedState.IDLE;
+        _candleL = new CANdle(Constants.LEDinatorConstants.LED_L);
+        _candleR = new CANdle(Constants.LEDinatorConstants.LED_R);
 
     Disco = new RainbowAnimation(.5, .5, numLEDS);
     Stage = new StrobeAnimation(255,255,0,0,.05, numLEDS);
     Climb = new StrobeAnimation(0,255,0,0,.05, numLEDS);
 
+    public void Party() {
+        _candleL.animate(Disco);
+        _candleR.animate(Disco);
+    }
 
     public void handleCurrentState()
     {
         switch(_currentState) 
         {
             case Idle:
-                
+            Party();
             break;
             case Climb:
                 
