@@ -28,6 +28,8 @@ import frc.robot.subsystems.Shooter;
 import frc.robot.states.ShooterState;
 import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.Vision;
+import frc.robot.subsystems.Kitbot.KitbotIntake;
+import frc.robot.subsystems.Kitbot.KitbotShooter;
 import frc.robot.utilities.GeometryUtil;
 
 public class RobotContainer {
