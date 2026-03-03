@@ -4,6 +4,8 @@
 
 package frc.robot;
 
+import java.util.function.Consumer;
+
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
 
@@ -38,7 +40,7 @@ public class RobotContainer {
   private final boolean _isComp = true;
 
   private final SendableChooser<Command> autoChooser;
-    private final SendableChooser<Command> climbChooser;
+    private final SendableChooser<ClimbType> climbChooser;
   private final CommandXboxController DRIVER_CONTROLLER = new CommandXboxController(0);
 
   public final Climb CLIMB = new Climb();
@@ -54,10 +56,13 @@ public class RobotContainer {
     registerNamedCommands();
 
     autoChooser = AutoBuilder.buildAutoChooser();
-    climbChooser = new SendableChooser<Command>();
-    climbChooser.addOption("Front Climb",  Commands.runOnce(() ->  DRIVETRAIN.setWantedClimb(ClimbType.FRONT)));
-    climbChooser.addOption("Side Climb", Commands.runOnce(() -> DRIVETRAIN.setWantedClimb(ClimbType.SIDE)));
-    climbChooser.setDefaultOption("Front Climb", Commands.runOnce(() ->  DRIVETRAIN.setWantedClimb(ClimbType.FRONT)));
+    climbChooser = new SendableChooser<ClimbType>();
+    climbChooser.addOption("Front Climb",  ClimbType.FRONT);
+    climbChooser.addOption("Side Climb", ClimbType.SIDE);
+    climbChooser.setDefaultOption("Front Climb", ClimbType.FRONT);
+    climbChooser.onChange(value -> {
+      DRIVETRAIN.setWantedClimb(value);
+    });
 
     // Another option that allows you to specify the default auto by its name
     // autoChooser = AutoBuilder.buildAutoChooser("My Default Auto");
@@ -73,18 +78,9 @@ public class RobotContainer {
     RobotModeTriggers.disabled().onTrue(
         Commands.runOnce(() -> DRIVETRAIN.setWantedState(DrivetrainState.IDLE)));
 
-    RobotModeTriggers.autonomous().onTrue(
-      Commands.parallel(
-        climbChooser.getSelected(),
-        Commands.runOnce(() -> DRIVETRAIN.setWantedState(DrivetrainState.AUTO))
-      )
-    );
+    RobotModeTriggers.autonomous().onTrue(Commands.runOnce(() -> DRIVETRAIN.setWantedState(DrivetrainState.AUTO)));
 
-    RobotModeTriggers.teleop().onTrue(
-      Commands.parallel(
-        climbChooser.getSelected(),
-        Commands.runOnce(() -> DRIVETRAIN.setWantedState(DrivetrainState.OPEN_LOOP))
-      ));
+    RobotModeTriggers.teleop().onTrue(Commands.runOnce(() -> DRIVETRAIN.setWantedState(DrivetrainState.OPEN_LOOP)));
 
     // RobotModeTriggers.teleop().onTrue(
     //     Commands.sequence(

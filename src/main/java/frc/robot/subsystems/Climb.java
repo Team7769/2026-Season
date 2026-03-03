@@ -12,9 +12,9 @@ import frc.robot.states.ClimbState;
 public class Climb extends SubsystemBase {
     private ClimbState _currentState = ClimbState.IDLE;
     private TalonFX _climb = new TalonFX(23); // Must find Talon ID
-    private PositionDutyCycle _ClosedPosition = new PositionDutyCycle(.5);
+    private PositionDutyCycle _ClosedPosition = new PositionDutyCycle(.1);
     private PositionDutyCycle _EngagedPosition = new PositionDutyCycle(5);
-    private PositionDutyCycle _OpenPosition = new PositionDutyCycle(85.5);
+    private PositionDutyCycle _OpenPosition = new PositionDutyCycle(45);
     private String _TargetPosition = "None";
 
 

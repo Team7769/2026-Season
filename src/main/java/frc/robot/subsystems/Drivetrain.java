@@ -116,8 +116,8 @@ public class Drivetrain extends SubsystemBase {
         CONTROLLER = controller;
         VISION = vision;
 
-        _targetFollowControllerX = new PIDController(1.35, 0, 0.04);
-        _targetFollowControllerY = new PIDController(1.35, 0, 0.04);
+        _targetFollowControllerX = new PIDController(1.45, 0, 0.04);
+        _targetFollowControllerY = new PIDController(1.45, 0, 0.04);
         _targetFollowControllerZ = new PIDController(0.05, 0, 0.002);
         _targetFollowControllerX.setTolerance(.05);
         _targetFollowControllerY.setTolerance(.05);
@@ -284,7 +284,7 @@ public class Drivetrain extends SubsystemBase {
          * This ensures driving behavior doesn't change until an explicit disable event
          * occurs during testing.
          */
-        handleCurrentClimbType();
+        //handleCurrentClimbType();
 
         if (!m_hasAppliedOperatorPerspective || DriverStation.isDisabled()) {
             DriverStation.getAlliance().ifPresent(allianceColor -> {
@@ -301,14 +301,14 @@ public class Drivetrain extends SubsystemBase {
         updateClimbTarget();
         handleCurrentTarget();
         handleCurrentState();
-        SmartDashboard.putString("Current State", _currentState.toString());
-        SmartDashboard.putNumber("Target X", _target.getX());
-        SmartDashboard.putNumber("Target Y", _target.getY());
-        SmartDashboard.putNumber("Target Z", _target.getRotation().getDegrees());
-        SmartDashboard.putBoolean("X Staged", isXStagedForClimb());
-        SmartDashboard.putBoolean("Y Staged", isYStagedForClimb());
-        SmartDashboard.putBoolean("Z Staged", isZStagedForClimb());
-        SmartDashboard.putNumber("Distance to Target", getDistanceToTarget());
+         SmartDashboard.putString("Current State", _currentState.toString());
+        // SmartDashboard.putNumber("Target X", _target.getX());
+        // SmartDashboard.putNumber("Target Y", _target.getY());
+        // SmartDashboard.putNumber("Target Z", _target.getRotation().getDegrees());
+        // SmartDashboard.putBoolean("X Staged", isXStagedForClimb());
+        // SmartDashboard.putBoolean("Y Staged", isYStagedForClimb());
+        // SmartDashboard.putBoolean("Z Staged", isZStagedForClimb());
+        // SmartDashboard.putNumber("Distance to Target", getDistanceToTarget());
     }
 
     private void updateOdometry() {
@@ -496,16 +496,16 @@ public class Drivetrain extends SubsystemBase {
     private void updateClimbTarget() {
         var currentTranslation = _swerve.getState().Pose.getTranslation();
         if (GeometryUtil.isRedAlliance()) {
-            if (currentTranslation.getY() <= 6) {
-                setTargetClimbRight(true);
-            } else {
+            if (currentTranslation.getY() <= 4.3) {
                 setTargetClimbLeft(true);
+            } else {
+                setTargetClimbRight(true);
             }
         } else {
-            if (currentTranslation.getY() >= 6) {
-                setTargetClimbRight(false);
-            } else {
+            if (currentTranslation.getY() >= 3.7) {
                 setTargetClimbLeft(false);
+            } else {
+                setTargetClimbRight(false);
             }
         }
     }
