@@ -43,8 +43,8 @@ public class Shooter extends SubsystemBase {
     private VelocityVoltage _shooterVelocity = new VelocityVoltage(0);
     private final VelocityTorqueCurrentFOC shotVelocityTorqueCurrentFOC = new VelocityTorqueCurrentFOC(60);
     private final VelocityTorqueCurrentFOC idleVelocityTorqueCurrentFOC = new VelocityTorqueCurrentFOC(35);
-    private final PositionDutyCycle HOOD_DOWN = new PositionDutyCycle(.38);
-    private final PositionDutyCycle HOOD_MOVE = new PositionDutyCycle(.9);
+    private final PositionDutyCycle HOOD_DOWN = new PositionDutyCycle(.1);
+    private final PositionDutyCycle HOOD_MOVE = new PositionDutyCycle(.6);
     private final VoltageOut SHOOTER_VOLTAGE = new VoltageOut(3);
     private DigitalInput _leftPhotoEye;
     private DigitalInput _rightPhotoEye;
@@ -78,11 +78,15 @@ public class Shooter extends SubsystemBase {
         // _hoodMap.put(3.5, .56);
         // _hoodMap.put(5.0, .6);
 
-        _hoodMap.put(1.0, .4);
-        _hoodMap.put(2.54, .7);
-        _hoodMap.put(3.1, .9);
-        _hoodMap.put(4.0, 1.15);
-        //_hoodMap.put(5.0, .);
+        // _hoodMap.put(1.0, .4);
+        // _hoodMap.put(2.54, .7);
+        // _hoodMap.put(3.1, .9);
+        // _hoodMap.put(4.0, 1.15);
+        //everything -.38
+        _hoodMap.put(1.0, .02);
+        _hoodMap.put(2.54, .32);
+        _hoodMap.put(3.1, .52);
+        _hoodMap.put(4.0, 0.77);
 
 
         // _shooterMap.put(2.0, 60.0);
@@ -225,11 +229,7 @@ public class Shooter extends SubsystemBase {
                 shoot(_shooterPosition);
                 break;
             case PREPSHOOTER:
-                    if(drivetrainX > FieldConstants.closeTrench && drivetrainX < FieldConstants.farTrench){
-            _hoodMotor.setControl(HOOD_DOWN);
-        }else{
                 prepShooter();
-        }
                 break;
             case STOP:
                 stop();

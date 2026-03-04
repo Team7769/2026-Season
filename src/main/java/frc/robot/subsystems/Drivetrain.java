@@ -361,19 +361,19 @@ public class Drivetrain extends SubsystemBase {
         }
     }
 
-    public void setTargetTrenchStart(Supplier<Boolean> isRedAlliance) {
+    public void setTargetLeftTrench(Supplier<Boolean> isRedAlliance) {
         if (isRedAlliance.get()) {
-            _target = new Pose2d(FieldConstants.kRedZoneB, new Rotation2d());
+            _target = FieldConstants.kLeftTrench;
         } else {
-            _target = new Pose2d(FieldConstants.kBlueZoneB, new Rotation2d());
+            _target = FieldConstants.kRightTrench;
         }
     }
 
-    public void setTargetTrenchEnd(Supplier<Boolean> isRedAlliance) {
+    public void setTargetRightTrench(Supplier<Boolean> isRedAlliance) {
         if (isRedAlliance.get()) {
-            _target = new Pose2d(FieldConstants.kRedZoneA, new Rotation2d());
+            _target = FieldConstants.kLeftTrench;
         } else {
-            _target = new Pose2d(FieldConstants.kBlueZoneA, new Rotation2d());
+            _target = FieldConstants.kRightTrench;
         }
     }
 
@@ -453,8 +453,6 @@ public class Drivetrain extends SubsystemBase {
                 break;
             case CLIMB_STAGE:
             case CLIMB_ENGAGE:
-            case TRENCH_END:
-            case TRENCH_START:
                 if (GeometryUtil.isRedAlliance()) {
                     _swerve.setControl(
                             DRIVE.withVelocityX(-_xFollow * _maxSpeed) // Drive forward with negative Y (forward)
@@ -470,6 +468,15 @@ public class Drivetrain extends SubsystemBase {
                                                                                            // with negative X (left)
                     );
                 }
+                break;
+            case TRENCH_LEFT:
+            case TRENCH_RIGHT:
+                _swerve.setControl(
+                    DRIVE.withVelocityX(-CONTROLLER.getLeftY() * _maxSpeed) // Drive forward with negative Y
+                    .withVelocityY(_yFollow * _maxSpeed) // Drive left with negative X (left)
+                    .withRotationalRate(-CONTROLLER.getRightX() * _maxAngularRate)); 
+
+                                                                                                 
                 break;
             case AUTO:
                 break;
@@ -503,20 +510,18 @@ public class Drivetrain extends SubsystemBase {
                 && _targetFollowControllerZ.atSetpoint();
     }
 
-    public boolean isAtTrenchStart() {
+    public boolean isAtTrenchLeft() {
         // If position is at the ready position
-        return _currentState == DrivetrainState.TRENCH_START
-                && _targetFollowControllerX.atSetpoint()
-                && _targetFollowControllerY.atSetpoint()
-                && _targetFollowControllerZ.atSetpoint();
+        return _currentState == DrivetrainState.TRENCH_LEFT
+                && _targetFollowControllerY.atSetpoint();
+                //&& _targetFollowControllerZ.atSetpoint();
     }
 
-    public boolean isAtTrenchEnd() {
+    public boolean isAtTrenchRight() {
         // If position is at the end position
-        return _currentState == DrivetrainState.TRENCH_END
-                && _targetFollowControllerX.atSetpoint()
-                && _targetFollowControllerY.atSetpoint()
-                && _targetFollowControllerZ.atSetpoint();
+        return _currentState == DrivetrainState.TRENCH_RIGHT
+                && _targetFollowControllerY.atSetpoint();
+               // && _targetFollowControllerZ.atSetpoint();
     }
 
     public boolean isXStagedForClimb() {

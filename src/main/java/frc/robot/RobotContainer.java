@@ -208,21 +208,17 @@ public class RobotContainer {
 
       DRIVER_CONTROLLER.pov(180).onTrue(
         Commands.runOnce(() -> {
-          DRIVETRAIN.setTargetTrenchStart(GeometryUtil::isRedAlliance);
-          DRIVETRAIN.setWantedState(DrivetrainState.TRENCH_START);
+          DRIVETRAIN.setTargetRightTrench(GeometryUtil::isRedAlliance);
+          DRIVETRAIN.setWantedState(DrivetrainState.TRENCH_RIGHT);
         })).onFalse(
           Commands.runOnce(() -> DRIVETRAIN.setWantedState(DrivetrainState.OPEN_LOOP)));
-
-    new Trigger(DRIVETRAIN::isAtTrenchStart).onTrue(
-        Commands.sequence(
-            Commands.runOnce(() -> DRIVETRAIN.setTargetTrenchEnd(GeometryUtil::isRedAlliance)),
-            Commands.runOnce(() -> DRIVETRAIN.setWantedState(DrivetrainState.TRENCH_END))));
-
-    new Trigger(DRIVETRAIN::isAtTrenchEnd).onTrue(
+           
+        DRIVER_CONTROLLER.pov(270).onTrue(
         Commands.runOnce(() -> {
-          SmartDashboard.putBoolean("isDoneWithTrench", true);
-          DRIVETRAIN.setWantedState(DrivetrainState.OPEN_LOOP);
-        }));
+          DRIVETRAIN.setTargetLeftTrench(GeometryUtil::isRedAlliance);
+          DRIVETRAIN.setWantedState(DrivetrainState.TRENCH_LEFT);
+        })).onFalse(
+          Commands.runOnce(() -> DRIVETRAIN.setWantedState(DrivetrainState.OPEN_LOOP)));
 
   }
 
