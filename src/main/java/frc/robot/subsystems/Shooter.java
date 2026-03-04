@@ -84,9 +84,9 @@ public class Shooter extends SubsystemBase {
         // _hoodMap.put(4.0, 1.15);
         //everything -.38
         _hoodMap.put(1.0, .02);
-        _hoodMap.put(2.54, .32);
-        _hoodMap.put(3.1, .52);
-        _hoodMap.put(4.0, 0.77);
+        _hoodMap.put(2.54, .3);
+        _hoodMap.put(3.1, .5);
+        _hoodMap.put(4.0, 0.75);
 
 
         // _shooterMap.put(2.0, 60.0);

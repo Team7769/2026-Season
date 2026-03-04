@@ -409,6 +409,13 @@ public class Drivetrain extends SubsystemBase {
             _targetFollowControllerZ.setSetpoint(angleToTarget);
         } else if (_currentState == DrivetrainState.CLIMB_STAGE || _currentState == DrivetrainState.CLIMB_ENGAGE) {
             _targetFollowControllerZ.setSetpoint(_target.getRotation().getDegrees());
+        } else if (_currentState == DrivetrainState.TRENCH_LEFT) {
+            _targetFollowControllerY.setSetpoint(FieldConstants.kLeftTrench.getY());
+        } else if (_currentState == DrivetrainState.TRENCH_RIGHT) {
+            _targetFollowControllerY.setSetpoint(FieldConstants.kRightTrench.getY());
+        } else {
+            _targetFollowControllerX.setSetpoint(_target.getX());
+            _targetFollowControllerY.setSetpoint(_target.getY());
         }
 
         var currentPose = this.getPose();
@@ -418,6 +425,7 @@ public class Drivetrain extends SubsystemBase {
         // _target.getRotation().getDegrees());
         // var xDifference = GeometryUtil.getXDifference(_target, this::getPose);
         // var yDifference = GeometryUtil.getYDifference(_target, this::getPose);
+
 
         _targetFollowControllerX.setSetpoint(_target.getX());
         _targetFollowControllerY.setSetpoint(_target.getY());

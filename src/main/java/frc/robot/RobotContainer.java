@@ -205,13 +205,6 @@ public class RobotContainer {
         Commands.sequence(
             Commands.runOnce(() -> DRIVETRAIN.setTargetEngageLeftClimb(GeometryUtil::isRedAlliance)),
             Commands.runOnce(() -> DRIVETRAIN.setWantedState(DrivetrainState.CLIMB_ENGAGE))));
-
-      DRIVER_CONTROLLER.pov(180).onTrue(
-        Commands.runOnce(() -> {
-          DRIVETRAIN.setTargetRightTrench(GeometryUtil::isRedAlliance);
-          DRIVETRAIN.setWantedState(DrivetrainState.TRENCH_RIGHT);
-        })).onFalse(
-          Commands.runOnce(() -> DRIVETRAIN.setWantedState(DrivetrainState.OPEN_LOOP)));
            
         DRIVER_CONTROLLER.pov(270).onTrue(
         Commands.runOnce(() -> {
