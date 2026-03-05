@@ -27,14 +27,20 @@ public class Ledinator extends SubsystemBase {
     private static final int LeftSlotStart = 8;
     private static final int LeftSlotEnd = 15;
 
-    private static final int RightSlotStart = 15;
-    private static final int RightSlotEnd = 22;
+    private static final int RightSlotStart = 8;
+    private static final int RightSlotEnd = 15;
+
+    private static final int ModuleLStart = 0;
+    private static final int ModuleLEnd = 7;
+    
+    private static final int ModuleRStart = 0;
+    private static final int ModuleREnd = 7;
 
     private final CANdle m_candleL = new CANdle(1, CANBus.roboRIO());
     private final CANdle m_candleR = new CANdle(2, CANBus.roboRIO());
 
-    private LedState leftAnimationType = LedState.Idle;
-    private LedState rightAnimationType = LedState.Idle;
+    // private LedState leftAnimationType = LedState.Idle;
+    // private LedState rightAnimationType = LedState.Idle;
 
 
 
@@ -46,6 +52,15 @@ public class Ledinator extends SubsystemBase {
 
         m_candleL.getConfigurator().apply(CANdleConfig);
         m_candleR.getConfigurator().apply(CANdleConfig);
+
+                m_candleL.setControl(
+            new StrobeAnimation(ModuleLStart, ModuleLEnd)
+            .withColor(new RGBWColor(0, 255, 0))
+        );
+                m_candleR.setControl(
+            new StrobeAnimation(ModuleRStart, ModuleREnd)
+            .withColor(new RGBWColor(24, 155, 204))
+        );
     }
         
     

@@ -281,9 +281,9 @@ public class Drivetrain extends SubsystemBase {
             Ledinator._currentLED = LedState.Climb;
         } else if (isStagedForClimb()) {
             Ledinator._currentLED = LedState.Staged;
-        } else if (!isStagedForClimb() || !isReadyToClimb() || RunTime > 200) {
+        } else if (!isStagedForClimb() || !isReadyToClimb() || RunTime > 60) {
             Ledinator._currentLED = LedState.Idle;
-        } else if (RunTime <= 200) {
+        } else if (RunTime <= 60) {
             Ledinator._currentLED = LedState.Alliance;
         }
         /*
