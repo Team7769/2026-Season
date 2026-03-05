@@ -39,6 +39,8 @@ import frc.robot.generated.TunerConstants.TunerSwerveDrivetrain;
 import frc.robot.states.DrivetrainState;
 import frc.robot.utilities.GeometryUtil;
 import frc.robot.utilities.VisionMeasurement;
+import frc.robot.states.ClimbState;
+import frc.robot.states.ClimbType;
 
 /**
  * Class that extends the Phoenix 6 SwerveDrivetrain class and implements
@@ -50,9 +52,10 @@ import frc.robot.utilities.VisionMeasurement;
 public class Drivetrain extends SubsystemBase {
 
     private double _maxSpeed = 0.0; // kSpeedAt12Volts desired top
-                                                                                         // speed
+                                    // speed
     private double _maxAngularRate = RotationsPerSecond.of(0.75).in(RadiansPerSecond); // 3/4 of a rotation per second
                                                                                        // max angular velocity
+    public ClimbType _currentClimb = ClimbType.IDLE;
 
     /* Setting up bindings for necessary control of the swerve drive platform */
     private final SwerveRequest.FieldCentric DRIVE = new SwerveRequest.FieldCentric()
@@ -71,6 +74,8 @@ public class Drivetrain extends SubsystemBase {
     private final Vision VISION;
     private double _targetRotation = 0.0;
     private Pose2d _target = new Pose2d();
+    private Pose2d _climbTargetStage = new Pose2d();
+    private Pose2d _climbTargetEngage = new Pose2d();
     private PIDController _targetFollowControllerX;
     private PIDController _targetFollowControllerY;
     private PIDController _targetFollowControllerZ;
@@ -97,13 +102,13 @@ public class Drivetrain extends SubsystemBase {
     private final SwerveRequest.SysIdSwerveRotation m_rotationCharacterization = new SwerveRequest.SysIdSwerveRotation();
 
     public Drivetrain(CommandXboxController controller, Vision vision, boolean isComp) {
-        
+
         if (isComp) {
             // Use comp bot tuner constants
             _maxSpeed = 1.0 * TunerConstants.kSpeedAt12Volts.in(MetersPerSecond);
             _swerve = TunerConstants.createDrivetrain();
         } else {
-            //fix to kitbot later
+            // fix to kitbot later
             _maxSpeed = 1.0 * TunerConstants.kSpeedAt12Volts.in(MetersPerSecond);
             _swerve = TunerConstants.createDrivetrain();
         }
@@ -111,8 +116,8 @@ public class Drivetrain extends SubsystemBase {
         CONTROLLER = controller;
         VISION = vision;
 
-        _targetFollowControllerX = new PIDController(1.35, 0, 0.04);
-        _targetFollowControllerY = new PIDController(1.35, 0, 0.04);
+        _targetFollowControllerX = new PIDController(1.45, 0, 0.04);
+        _targetFollowControllerY = new PIDController(1.45, 0, 0.04);
         _targetFollowControllerZ = new PIDController(0.05, 0, 0.002);
         _targetFollowControllerX.setTolerance(.05);
         _targetFollowControllerY.setTolerance(.05);
@@ -247,6 +252,12 @@ public class Drivetrain extends SubsystemBase {
         return m_sysIdRoutineToApply.dynamic(direction);
     }
 
+    public void setWantedClimb(ClimbType wantedClimb) {
+        if (wantedClimb != _currentClimb) {
+            _currentClimb = wantedClimb;
+        }
+    }
+
     @Override
     public void periodic() {
         /*
@@ -260,6 +271,8 @@ public class Drivetrain extends SubsystemBase {
          * This ensures driving behavior doesn't change until an explicit disable event
          * occurs during testing.
          */
+        //handleCurrentClimbType();
+
         if (!m_hasAppliedOperatorPerspective || DriverStation.isDisabled()) {
             DriverStation.getAlliance().ifPresent(allianceColor -> {
                 _swerve.setOperatorPerspectiveForward(
@@ -272,16 +285,10 @@ public class Drivetrain extends SubsystemBase {
 
         updateOdometry();
         updateTarget();
+        updateClimbTarget();
         handleCurrentTarget();
         handleCurrentState();
-        SmartDashboard.putString("Current State", _currentState.toString());
-        SmartDashboard.putNumber("Target X", _target.getX());
-        SmartDashboard.putNumber("Target Y", _target.getY());
-        SmartDashboard.putNumber("Target Z", _target.getRotation().getDegrees());
-        SmartDashboard.putBoolean("X Staged", isXStagedForClimb());
-        SmartDashboard.putBoolean("Y Staged", isYStagedForClimb());
-        SmartDashboard.putBoolean("Z Staged", isZStagedForClimb());
-        SmartDashboard.putNumber("Distance to Target", getDistanceToTarget());
+         SmartDashboard.putString("Current State", _currentState.toString());
     }
 
     private void updateOdometry() {
@@ -297,10 +304,17 @@ public class Drivetrain extends SubsystemBase {
         publisher.set(getPose());
         m_field.setRobotPose(getPose());
         m_field.getObject("targetPose").setPose(_target);
+        m_field.getObject("climbStagePose").setPose(_climbTargetStage);
+        m_field.getObject("climbEngagePose").setPose(_climbTargetEngage);
+
+        SmartDashboard.putString("climbType", _currentClimb.name());
     }
 
-    public double getDistanceToTarget(){
-        return _target.getTranslation().getDistance(_swerve.getState().Pose.getTranslation());
+    public double getDistanceToTarget() {
+        var distance = _target.getTranslation().getDistance(_swerve.getState().Pose.getTranslation());
+
+        SmartDashboard.putNumber("Distance to Target", distance);
+        return distance;
     }
 
     public void setWantedState(DrivetrainState wantedState) {
@@ -321,22 +335,80 @@ public class Drivetrain extends SubsystemBase {
         }
     }
 
-    public void setTargetStageLeftClimb(Supplier<Boolean> isRedAlliance) {
-        if (isRedAlliance.get()) {
-            _target = FieldConstants.kRedClimbStageLeftFront;
+    public void setTargetClimbRight(boolean isRedAlliance) {
+        if (isRedAlliance) {
+            if (_currentClimb == ClimbType.FRONT) {
+                _climbTargetStage = FieldConstants.kRedClimbStageRightFront;
+                _climbTargetEngage = FieldConstants.kRedClimbEngageRightFront;
+            } else {
+                _climbTargetStage = FieldConstants.kRedClimbStageRightSide;
+                _climbTargetEngage = FieldConstants.kRedClimbEngageRightSide;
+
+            }
         } else {
-            _target = FieldConstants.kBlueClimbStageLeftFront;
+            if (_currentClimb == ClimbType.FRONT) {
+                _climbTargetStage = FieldConstants.kBlueClimbStageRightFront;
+                _climbTargetEngage = FieldConstants.kBlueClimbEngageRightFront;
+            } else {
+                _climbTargetStage = FieldConstants.kBlueClimbStageRightSide;
+                _climbTargetEngage = FieldConstants.kBlueClimbEngageRightSide;
+            }
+        }
+    }
+
+    public void setTargetClimbLeft(boolean isRedAlliance) {
+        if (isRedAlliance) {
+            if (_currentClimb == ClimbType.FRONT) {
+                _climbTargetStage = FieldConstants.kRedClimbStageLeftFront;
+                _climbTargetEngage = FieldConstants.kRedClimbEngageLeftFront;
+            } else {
+                _climbTargetStage = FieldConstants.kRedClimbStageLeftSide;
+                _climbTargetEngage = FieldConstants.kRedClimbEngageLeftSide;
+            }
+        } else {
+            if (_currentClimb == ClimbType.FRONT) {
+                _climbTargetStage = FieldConstants.kBlueClimbStageLeftFront;
+                _climbTargetEngage = FieldConstants.kBlueClimbEngageLeftFront;
+            } else {
+                _climbTargetStage = FieldConstants.kBlueClimbStageLeftSide;
+                _climbTargetEngage = FieldConstants.kBlueClimbEngageLeftSide;
+            }
+        }
+    }
+
+    public void setTargetStageLeftClimb(Supplier<Boolean> isRedAlliance) {
+
+        if (isRedAlliance.get()) {
+            if (_currentClimb == ClimbType.FRONT) {
+                _target = FieldConstants.kRedClimbStageLeftFront;
+            } else {
+                _target = FieldConstants.kRedClimbStageLeftSide;
+            }
+        } else {
+            if (_currentClimb == ClimbType.FRONT) {
+                _target = FieldConstants.kBlueClimbStageLeftFront;
+            } else {
+                _target = FieldConstants.kBlueClimbStageLeftSide;
+            }
         }
     }
 
     public void setTargetEngageLeftClimb(Supplier<Boolean> isRedAlliance) {
         if (isRedAlliance.get()) {
-            _target = FieldConstants.kRedClimbEngageLeftFront;
+            if (_currentClimb == ClimbType.FRONT) {
+                _target = FieldConstants.kRedClimbEngageLeftFront;
+            } else {
+                _target = FieldConstants.kRedClimbEngageLeftSide;
+            }
         } else {
-            _target = FieldConstants.kBlueClimbEngageLeftFront;
+            if (_currentClimb == ClimbType.FRONT) {
+                _target = FieldConstants.kBlueClimbEngageLeftFront;
+            } else {
+                _target = FieldConstants.kBlueClimbEngageLeftSide;
+            }
         }
     }
-
+    
     public void setTargetDepot(Supplier<Boolean> isRedAlliance) {
         if (isRedAlliance.get()) {
             _target = new Pose2d(FieldConstants.kRedDepot, new Rotation2d());
@@ -362,26 +434,45 @@ public class Drivetrain extends SubsystemBase {
     }
 
     private void updateTarget() {
-        var currentTranslation = _swerve.getState().Pose.getTranslation();
-        if (GeometryUtil.isRedAlliance()) {
-            if (currentTranslation.getX() >= 11.3) {
-                setTargetHub(GeometryUtil::isRedAlliance);
-            } else {
-                if (currentTranslation.getY() >= 4){
-                    setTargetZoneB(GeometryUtil::isRedAlliance);
+        if (_currentState != DrivetrainState.CLIMB_ENGAGE && _currentState != DrivetrainState.CLIMB_STAGE) {
+            var currentTranslation = _swerve.getState().Pose.getTranslation();
+            if (GeometryUtil.isRedAlliance()) {
+                if (currentTranslation.getX() >= 11.3) {
+                    setTargetHub(GeometryUtil::isRedAlliance);
                 } else {
-                    setTargetZoneA(GeometryUtil::isRedAlliance);
+                    if (currentTranslation.getY() >= 4) {
+                        setTargetZoneB(GeometryUtil::isRedAlliance);
+                    } else {
+                        setTargetZoneA(GeometryUtil::isRedAlliance);
+                    }
+                }
+            } else {
+                if (currentTranslation.getX() <= 5.1) {
+                    setTargetHub(GeometryUtil::isRedAlliance);
+                } else {
+                    if (currentTranslation.getY() >= 4) {
+                        setTargetZoneA(GeometryUtil::isRedAlliance);
+                    } else {
+                        setTargetZoneB(GeometryUtil::isRedAlliance);
+                    }
                 }
             }
-        } else {
-            if (currentTranslation.getX() <= 5.1) {
-                setTargetHub(GeometryUtil::isRedAlliance);
+        }
+    }
+
+    private void updateClimbTarget() {
+        var currentTranslation = _swerve.getState().Pose.getTranslation();
+        if (GeometryUtil.isRedAlliance()) {
+            if (currentTranslation.getY() <= 4.3) {
+                setTargetClimbLeft(true);
             } else {
-                if (currentTranslation.getY() >= 4){
-                    setTargetZoneA(GeometryUtil::isRedAlliance);
-                } else {
-                    setTargetZoneB(GeometryUtil::isRedAlliance);
-                }
+                setTargetClimbRight(true);
+            }
+        } else {
+            if (currentTranslation.getY() >= 3.7) {
+                setTargetClimbLeft(false);
+            } else {
+                setTargetClimbRight(false);
             }
         }
     }
@@ -391,20 +482,26 @@ public class Drivetrain extends SubsystemBase {
         if (_currentState == DrivetrainState.AIM) {
             var angleToTarget = GeometryUtil.getAngleToTarget(_target.getTranslation(), this::getPose, true);
             _targetFollowControllerZ.setSetpoint(angleToTarget);
-        } else if (_currentState == DrivetrainState.CLIMB_STAGE || _currentState == DrivetrainState.CLIMB_ENGAGE) {
-            _targetFollowControllerZ.setSetpoint(_target.getRotation().getDegrees());
+        } else if (_currentState == DrivetrainState.CLIMB_STAGE) {
+            _targetFollowControllerZ.setSetpoint(_climbTargetStage.getRotation().getDegrees());
+        } else if (_currentState == DrivetrainState.CLIMB_ENGAGE) {
+            _targetFollowControllerZ.setSetpoint(_climbTargetEngage.getRotation().getDegrees());
         }
 
         var currentPose = this.getPose();
         _targetRotation = _targetFollowControllerZ.calculate(currentPose.getRotation().getDegrees());
 
-        // var zDifference = GeometryUtil.getRotationDifference(this::getPose,
-        // _target.getRotation().getDegrees());
-        // var xDifference = GeometryUtil.getXDifference(_target, this::getPose);
-        // var yDifference = GeometryUtil.getYDifference(_target, this::getPose);
+        if (_currentState == DrivetrainState.CLIMB_ENGAGE) {
+            _targetFollowControllerX.setSetpoint(_climbTargetEngage.getX());
+            _targetFollowControllerY.setSetpoint(_climbTargetEngage.getY());
+        } else if (_currentState == DrivetrainState.CLIMB_STAGE) {
+            _targetFollowControllerX.setSetpoint(_climbTargetStage.getX());
+            _targetFollowControllerY.setSetpoint(_climbTargetStage.getY());
+        } else {
+            _targetFollowControllerX.setSetpoint(_target.getX());
+            _targetFollowControllerY.setSetpoint(_target.getY());
+        }
 
-        _targetFollowControllerX.setSetpoint(_target.getX());
-        _targetFollowControllerY.setSetpoint(_target.getY());
         _xFollow = _targetFollowControllerX.calculate(currentPose.getX());
         _yFollow = _targetFollowControllerY.calculate(currentPose.getY());
         _xFollow = MathUtil.clamp(_xFollow, -_targetFollowLimit, _targetFollowLimit);
@@ -482,24 +579,6 @@ public class Drivetrain extends SubsystemBase {
         return _currentState == DrivetrainState.CLIMB_STAGE
                 && _targetFollowControllerX.atSetpoint()
                 && _targetFollowControllerY.atSetpoint()
-                && _targetFollowControllerZ.atSetpoint();
-    }
-
-    public boolean isXStagedForClimb() {
-        // If position is at the staged position
-        return _currentState == DrivetrainState.CLIMB_STAGE
-                && _targetFollowControllerX.atSetpoint();
-    }
-
-    public boolean isYStagedForClimb() {
-        // If position is at the staged position
-        return _currentState == DrivetrainState.CLIMB_STAGE
-                && _targetFollowControllerY.atSetpoint();
-    }
-
-    public boolean isZStagedForClimb() {
-        // If position is at the staged position
-        return _currentState == DrivetrainState.CLIMB_STAGE
                 && _targetFollowControllerZ.atSetpoint();
     }
 
