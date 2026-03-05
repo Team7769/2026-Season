@@ -32,6 +32,8 @@ import frc.robot.subsystems.Vision;
 import frc.robot.subsystems.Kitbot.KitbotIntake;
 import frc.robot.subsystems.Kitbot.KitbotShooter;
 import frc.robot.utilities.GeometryUtil;
+import frc.robot.subsystems.Ledinator;
+import frc.robot.states.LedState;
 
 public class RobotContainer {
   // Set this to false to setup as Kitbot

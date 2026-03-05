@@ -33,10 +33,12 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
+import frc.robot.RobotContainer;
 import frc.robot.configuration.FieldConstants;
 import frc.robot.generated.TunerConstants;
 import frc.robot.generated.TunerConstants.TunerSwerveDrivetrain;
 import frc.robot.states.DrivetrainState;
+import frc.robot.states.LedState;
 import frc.robot.utilities.GeometryUtil;
 import frc.robot.utilities.VisionMeasurement;
 import frc.robot.states.ClimbState;
@@ -82,6 +84,7 @@ public class Drivetrain extends SubsystemBase {
     private double _targetFollowLimit = 0.35;
     private double _xFollow = 0;
     private double _yFollow = 0;
+    public float RunTime = 0;
 
     StructPublisher<Pose2d> publisher = NetworkTableInstance.getDefault()
             .getStructTopic("Robot Pose", Pose2d.struct).publish();
@@ -273,6 +276,16 @@ public class Drivetrain extends SubsystemBase {
 
     @Override
     public void periodic() {
+        RunTime += 1;
+        if (isReadyToClimb()) {
+            Ledinator._currentLED = LedState.Climb;
+        } else if (isStagedForClimb()) {
+            Ledinator._currentLED = LedState.Staged;
+        } else if (!isStagedForClimb() || !isReadyToClimb() || RunTime > 200) {
+            Ledinator._currentLED = LedState.Idle;
+        } else if (RunTime <= 200) {
+            Ledinator._currentLED = LedState.Alliance;
+        }
         /*
          * Periodically try to apply the operator perspective.
          * If we haven't applied the operator perspective before, then we should apply
