@@ -36,8 +36,8 @@ public class Ledinator extends SubsystemBase {
     private static final int ModuleRStart = 0;
     private static final int ModuleREnd = 7;
 
-    private final CANdle m_candleL = new CANdle(1, CANBus.roboRIO());
-    private final CANdle m_candleR = new CANdle(2, CANBus.roboRIO());
+    private final CANdle m_candleL = new CANdle(30, CANBus.roboRIO());
+    private final CANdle m_candleR = new CANdle(31, CANBus.roboRIO());
 
     // private LedState leftAnimationType = LedState.Idle;
     // private LedState rightAnimationType = LedState.Idle;
