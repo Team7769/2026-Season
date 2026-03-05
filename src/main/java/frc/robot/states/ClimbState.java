@@ -4,5 +4,6 @@ public enum ClimbState {
     IDLE,
     EXTEND,
     CLIMB_PREP,
-    RETRACT
+    RETRACT,
+    ENGAGE
 }
