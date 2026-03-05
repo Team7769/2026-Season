@@ -40,7 +40,7 @@ public class RobotContainer {
   private final boolean _isComp = true;
 
   private final SendableChooser<Command> autoChooser;
-    private final SendableChooser<ClimbType> climbChooser;
+  private final SendableChooser<ClimbType> climbChooser;
   private final CommandXboxController DRIVER_CONTROLLER = new CommandXboxController(0);
 
   public final Climb CLIMB = new Climb();
@@ -57,7 +57,7 @@ public class RobotContainer {
 
     autoChooser = AutoBuilder.buildAutoChooser();
     climbChooser = new SendableChooser<ClimbType>();
-    climbChooser.addOption("Front Climb",  ClimbType.FRONT);
+    climbChooser.addOption("Front Climb", ClimbType.FRONT);
     climbChooser.addOption("Side Climb", ClimbType.SIDE);
     climbChooser.setDefaultOption("Front Climb", ClimbType.FRONT);
     climbChooser.onChange(value -> {
@@ -82,22 +82,8 @@ public class RobotContainer {
 
     RobotModeTriggers.teleop().onTrue(Commands.runOnce(() -> DRIVETRAIN.setWantedState(DrivetrainState.OPEN_LOOP)));
 
-    // RobotModeTriggers.teleop().onTrue(
-    //     Commands.sequence(
-    //         Commands.runOnce(() -> DRIVETRAIN.setWantedState(DrivetrainState.OPEN_LOOP)),
-    //         Commands.runOnce(() -> CLIMB.setWantedState(ClimbState.EXTEND))));
-
     DRIVER_CONTROLLER.back().onTrue(
         Commands.runOnce(() -> DRIVETRAIN.seedFieldCentric()));
-
-
-        // new Trigger(HOPPER.isMiddleEmpty() && DRIVETRAIN.getCurrentState() == "SHOOT").onTrue(
-        //     Commands.runOnce(() -> HOPPER.setWantedState(HopperState.INJECTING)));
-
-
-        // new Trigger(HOPPER.isMiddleEmpty() && DRIVETRAIN.getCurrentState() == "SHOOT").onTrue(
-        //     Commands.runOnce(() -> HOPPER.setWantedState(HopperState.INJECTING)));
-
 
     if (_isComp) {
       registerCompBindings();
@@ -112,8 +98,6 @@ public class RobotContainer {
     // DRIVER_CONTROLLER.start().and(DRIVER_CONTROLLER.x()).whileTrue(DRIVETRAIN.sysIdQuasistatic(Direction.kReverse));
   }
 
-
-
   public Command getAutonomousCommand() {
     return autoChooser.getSelected();
   }
@@ -124,6 +108,8 @@ public class RobotContainer {
 
   private void registerCompBindings() {
     // Register triggers/bindings for comp bot here
+
+    // Aim and Spin Up for Shot
     DRIVER_CONTROLLER.rightBumper().onTrue(
         Commands.runOnce(() -> {
           SHOOTER.setWantedState(ShooterState.PREPSHOOTER);
@@ -135,70 +121,59 @@ public class RobotContainer {
               DRIVETRAIN.setWantedState(DrivetrainState.OPEN_LOOP);
             }));
 
-        DRIVER_CONTROLLER.rightTrigger().onTrue(
-          Commands.runOnce(() -> {
-          
-            SHOOTER.setWantedState(ShooterState.SHOOT);
-            HOPPER.setWantedState(HopperState.INJECTING_HOPPER_OUT);
-
+    // Shoot
+    DRIVER_CONTROLLER.rightTrigger().onTrue(
+        Commands.runOnce(() -> {
+          SHOOTER.setWantedState(ShooterState.SHOOT);
+          HOPPER.setWantedState(HopperState.INJECTING_HOPPER_OUT);
         })).onFalse(
             Commands.runOnce(() -> {
               SHOOTER.setWantedState(ShooterState.SHOOT);
               HOPPER.setWantedState(HopperState.INJECTING);
             }));
 
-        DRIVER_CONTROLLER.leftBumper().onTrue(
-          Commands.runOnce(() -> {
-            HOPPER.setWantedState(HopperState.FLOOR_INTAKE);
-          })
-        );
-        
-        DRIVER_CONTROLLER.leftTrigger().onTrue(
-          Commands.runOnce(() -> {
-            HOPPER.setWantedState(HopperState.STOW);
-          })
-        );
+    // Intake out
+    DRIVER_CONTROLLER.leftBumper().onTrue(
+        Commands.runOnce(() -> {
+          HOPPER.setWantedState(HopperState.FLOOR_INTAKE);
+        }));
 
-        DRIVER_CONTROLLER.pov(90).onTrue(
-          Commands.runOnce(() -> DRIVETRAIN.setWantedState(DrivetrainState.IDLE))
-        ).onFalse(
-          Commands.runOnce(() -> DRIVETRAIN.setWantedState(DrivetrainState.OPEN_LOOP))
-        );
-    // DRIVER_CONTROLLER.y().onTrue(
-    //     Commands.runOnce(() -> DRIVETRAIN.setTargetHub(GeometryUtil::isRedAlliance)));
+    // Intake in
+    DRIVER_CONTROLLER.leftTrigger().onTrue(
+        Commands.runOnce(() -> {
+          HOPPER.setWantedState(HopperState.STOW);
+        }));
 
-    // DRIVER_CONTROLLER.a().onTrue(
-    //     Commands.runOnce(() -> DRIVETRAIN.setTargetDepot(GeometryUtil::isRedAlliance)));
+    // Brake mode
+    DRIVER_CONTROLLER.pov(90).onTrue(
+        Commands.runOnce(() -> DRIVETRAIN.setWantedState(DrivetrainState.IDLE))).onFalse(
+            Commands.runOnce(() -> DRIVETRAIN.setWantedState(DrivetrainState.OPEN_LOOP)));
 
-    // DRIVER_CONTROLLER.x().onTrue(
-    //     Commands.runOnce(() -> DRIVETRAIN.setTargetZoneA(GeometryUtil::isRedAlliance)));
-
-    // DRIVER_CONTROLLER.b().onTrue(
-    //     Commands.runOnce(() -> DRIVETRAIN.setTargetZoneB(GeometryUtil::isRedAlliance)));
+    // Reseed heading
     DRIVER_CONTROLLER.back().onTrue(
         Commands.runOnce(() -> DRIVETRAIN.seedFieldCentric()));
-        
+
+    // Manual Climb retract
     DRIVER_CONTROLLER.povDown().onTrue(
         Commands.runOnce(() -> CLIMB.setWantedState(ClimbState.RETRACT)));
 
+    // Manual Climb extend
     DRIVER_CONTROLLER.povUp().onTrue(
         Commands.runOnce(() -> CLIMB.setWantedState(ClimbState.EXTEND)));
 
+    // Climb sequence. Release start to abort.
     DRIVER_CONTROLLER.start().onTrue(
-        Commands.sequence(
-            Commands.runOnce(() -> {
-              CLIMB.setWantedState(ClimbState.EXTEND);
-              DRIVETRAIN.setWantedState(DrivetrainState.CLIMB_STAGE);
-            }),
-            Commands.runOnce(() -> DRIVETRAIN.setTargetStageLeftClimb(GeometryUtil::isRedAlliance))))
-        .onFalse(
-            Commands.runOnce(() -> DRIVETRAIN.setWantedState(DrivetrainState.OPEN_LOOP)));
+        beginClimbSequenceCommand()
+    )
+    .onFalse(Commands.runOnce(() -> DRIVETRAIN.setWantedState(DrivetrainState.OPEN_LOOP)));
 
+    // Trigger during climb sequence to move from stage -> engage
     new Trigger(DRIVETRAIN::isStagedForClimb).onTrue(
         Commands.sequence(
             Commands.runOnce(() -> DRIVETRAIN.setTargetEngageLeftClimb(GeometryUtil::isRedAlliance)),
-            Commands.runOnce(() -> DRIVETRAIN.setWantedState(DrivetrainState.CLIMB_ENGAGE))));         
+            Commands.runOnce(() -> DRIVETRAIN.setWantedState(DrivetrainState.CLIMB_ENGAGE))));
 
+    // Trigger during climb sequence to activate climb if engaged
     new Trigger(DRIVETRAIN::isReadyToClimb).onTrue(
         Commands.runOnce(() -> {
           SmartDashboard.putBoolean("isClimbed", true);
@@ -208,11 +183,6 @@ public class RobotContainer {
   }
 
   private void registerNamedCommands() {
-    NamedCommands.registerCommand("Auto Climb",
-        Commands.sequence(
-            Commands.runOnce(() -> DRIVETRAIN.setTargetEngageLeftClimb(GeometryUtil::isRedAlliance)),
-            Commands.runOnce(() -> DRIVETRAIN.setWantedState(DrivetrainState.CLIMB_ENGAGE))));
-
     if (_isComp) {
       registerCompNamedCommands();
     } else {
@@ -234,25 +204,37 @@ public class RobotContainer {
     NamedCommands.registerCommand("Injecting",
         Commands.runOnce(() -> HOPPER.setWantedState(HopperState.INJECTING)));
 
-  NamedCommands.registerCommand("Start Shooting",
-  Commands.sequence(
-    Commands.waitUntil(SHOOTER::shooterReady),
-     Commands.runOnce(() -> {
-      SHOOTER.setWantedState(ShooterState.SHOOT);
-      //DRIVETRAIN.setWantedState(DrivetrainState.AIM);
-    })));
+    NamedCommands.registerCommand("Start Shooting",
+        Commands.sequence(
+            Commands.waitUntil(SHOOTER::shooterReady),
+            Commands.runOnce(() -> {
+              SHOOTER.setWantedState(ShooterState.SHOOT);
+              // DRIVETRAIN.setWantedState(DrivetrainState.AIM);
+            })));
 
-  NamedCommands.registerCommand("Idle",
-     Commands.runOnce(() -> {
-      SHOOTER.setWantedState(ShooterState.IDLE);
-      HOPPER.setWantedState(HopperState.IDLE);
-     }));
+    NamedCommands.registerCommand("Idle",
+        Commands.runOnce(() -> {
+          SHOOTER.setWantedState(ShooterState.IDLE);
+          HOPPER.setWantedState(HopperState.IDLE);
+          DRIVETRAIN.setWantedState(DrivetrainState.AUTO);
+        }));
 
-  NamedCommands.registerCommand("PrepShooter",
-     Commands.runOnce(() -> SHOOTER.setWantedState(ShooterState.PREPSHOOTER)));
-  
-  
+    NamedCommands.registerCommand("PrepShooter",
+        Commands.runOnce(() -> {
+          SHOOTER.setWantedState(ShooterState.PREPSHOOTER);
+          DRIVETRAIN.setWantedState(DrivetrainState.AIM);
+        }));
+        
+    NamedCommands.registerCommand("Auto Climb", beginClimbSequenceCommand());
+  }
 
+  private Command beginClimbSequenceCommand() {
+    return Commands.sequence(
+        Commands.runOnce(() -> {
+          CLIMB.setWantedState(ClimbState.EXTEND);
+          DRIVETRAIN.setWantedState(DrivetrainState.CLIMB_STAGE);
+        }),
+        Commands.runOnce(() -> DRIVETRAIN.setTargetStageLeftClimb(GeometryUtil::isRedAlliance)));
   }
 
 }
