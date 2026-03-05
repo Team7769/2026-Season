@@ -24,7 +24,7 @@ public class Hopper extends SubsystemBase {
 
     private final VoltageOut HALT = new VoltageOut(0);
     private final VoltageOut FLOOR_INJECT = new VoltageOut(11);
-    private final VoltageOut INTAKE = new VoltageOut(11);//7
+    private final VoltageOut INTAKE = new VoltageOut(9);//7
 
 
     private final PositionDutyCycle INTAKE_IN = new PositionDutyCycle(.1);
