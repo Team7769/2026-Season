@@ -76,6 +76,8 @@ public class Drivetrain extends SubsystemBase {
     private Pose2d _target = new Pose2d();
     private Pose2d _climbTargetStage = new Pose2d();
     private Pose2d _climbTargetEngage = new Pose2d();
+    private Pose2d _trenchLeft = new Pose2d();
+    private Pose2d _trenchRight = new Pose2d();
     private PIDController _targetFollowControllerX;
     private PIDController _targetFollowControllerY;
     private PIDController _targetFollowControllerZ;
@@ -468,22 +470,22 @@ public class Drivetrain extends SubsystemBase {
 
     public void setTargetLeftTrench(Supplier<Boolean> isRedAlliance) {
         if (isRedAlliance.get()) {
-            _target = FieldConstants.kLeftTrench;
+            _trenchRight = FieldConstants.kRightTrench;
         } else {
-            _target = FieldConstants.kRightTrench;
+            _trenchLeft = FieldConstants.kLeftTrench;
         }
     }
 
     public void setTargetRightTrench(Supplier<Boolean> isRedAlliance) {
         if (isRedAlliance.get()) {
-            _target = FieldConstants.kLeftTrench;
+            _trenchLeft = FieldConstants.kLeftTrench;
         } else {
-            _target = FieldConstants.kRightTrench;
+            _trenchRight = FieldConstants.kRightTrench;
         }
     }
 
     private void updateTarget() {
-        if (_currentState != DrivetrainState.CLIMB_ENGAGE && _currentState != DrivetrainState.CLIMB_STAGE) {
+        if (_currentState != DrivetrainState.CLIMB_ENGAGE && _currentState != DrivetrainState.CLIMB_STAGE || _currentState != DrivetrainState.TRENCH_LEFT || _currentState != DrivetrainState.TRENCH_RIGHT) {
             var currentTranslation = _swerve.getState().Pose.getTranslation();
             if (GeometryUtil.isRedAlliance()) {
                 if (currentTranslation.getX() >= 11.3) {
@@ -551,7 +553,11 @@ public class Drivetrain extends SubsystemBase {
         } else if (_currentState == DrivetrainState.CLIMB_STAGE) {
             _targetFollowControllerX.setSetpoint(_climbTargetStage.getX());
             _targetFollowControllerY.setSetpoint(_climbTargetStage.getY());
-        } else {
+        } else if (_currentState == DrivetrainState.TRENCH_LEFT) {
+            _targetFollowControllerY.setSetpoint(_trenchLeft.getY());
+        }else if (_currentState == DrivetrainState.TRENCH_RIGHT)  {
+            _targetFollowControllerY.setSetpoint(_trenchRight.getY());
+        }else {
             _targetFollowControllerX.setSetpoint(_target.getX());
             _targetFollowControllerY.setSetpoint(_target.getY());
         }
