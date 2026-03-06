@@ -22,19 +22,15 @@ import com.ctre.phoenix6.signals.MotorAlignmentValue;
 import com.ctre.phoenix6.signals.NeutralModeValue;
 import com.fasterxml.jackson.annotation.Nulls;
 
-import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 import edu.wpi.first.math.interpolation.InterpolatingDoubleTreeMap;
 import edu.wpi.first.wpilibj.DigitalInput;
-import edu.wpi.first.wpilibj.Servo;
-import edu.wpi.first.wpilibj.motorcontrol.Talon;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.states.ShooterState;
 import frc.robot.configuration.FieldConstants;
 
-
 public class Shooter extends SubsystemBase {
-    private ShooterState _currentState = ShooterState.IDLE;
+    public static ShooterState _currentState = ShooterState.IDLE;
     private TalonFX _leftShooter1;
     private TalonFX _rightShooter1;
     private TalonFX _leftShooter2;
@@ -183,7 +179,7 @@ public class Shooter extends SubsystemBase {
     public boolean shooterReady(){
         if(_shooterPosition - _shooterTarget <= _shooterError){
             return true;
-        }
+    }
         return false;
     }
 
@@ -210,13 +206,6 @@ public class Shooter extends SubsystemBase {
 
     @Override
     public void periodic() {
-        setShooterTargetSpeed(DRIVETRAIN::getDistanceToTarget);
-        // SmartDashboard.putNumber("Left Hood", _leftHood.getPosition());
-        // SmartDashboard.putNumber("Left Hood Speed", _leftHood.getSpeed());
-        SmartDashboard.putString("Shooter State", _currentState.name());
-        SmartDashboard.putNumber("Set Hood Position", _hoodPosition);
-        SmartDashboard.putNumber("Shooter Target Velocity", shotVelocityTorqueCurrentFOC.Velocity);
-        SmartDashboard.putBoolean("Shooter At Speed", _leftShooter1.getClosedLoopError().getValueAsDouble()<=1);
         handleCurrentState();
         drivetrainX = DRIVETRAIN.getPose().getTranslation().getX();
 
