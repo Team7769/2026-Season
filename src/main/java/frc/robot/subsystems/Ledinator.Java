@@ -98,11 +98,11 @@ public class Ledinator extends SubsystemBase {
 
         public void Crew() {
         m_candleL.setControl(
-            new StrobeAnimation(LeftSlotStart, LeftSlotEnd)
+            new ColorFlowAnimation(LeftSlotStart, LeftSlotEnd)
             .withColor(new RGBWColor(0, 255, 0))
         );
                 m_candleR.setControl(
-            new StrobeAnimation(RightSlotStart, RightSlotEnd)
+            new ColorFlowAnimation(RightSlotStart, RightSlotEnd)
             .withColor(new RGBWColor(24, 155, 204))
         );
     }
@@ -121,11 +121,11 @@ public class Ledinator extends SubsystemBase {
 
             public void Climbed() {
          m_candleL.setControl(
-            new StrobeAnimation(LeftSlotStart, LeftSlotEnd)
+            new ColorFlowAnimation(LeftSlotStart, LeftSlotEnd)
             .withColor(new RGBWColor(0, 255, 0))
         );
                 m_candleR.setControl(
-            new StrobeAnimation(RightSlotStart, RightSlotEnd)
+            new ColorFlowAnimation(RightSlotStart, RightSlotEnd)
             .withColor(new RGBWColor(0, 255, 0))
         );
     }
