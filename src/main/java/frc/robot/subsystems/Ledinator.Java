@@ -112,10 +112,25 @@ public class Ledinator extends SubsystemBase {
         m_candleL.setControl(
             new StrobeAnimation(LeftSlotStart, LeftSlotEnd)
             .withColor(new RGBWColor(255, 255, 0))
+            .withFrameRate(5)
         );
                 m_candleR.setControl(
             new StrobeAnimation(RightSlotStart, RightSlotEnd)
             .withColor(new RGBWColor(255, 255, 0))
+            .withFrameRate(5)
+        );
+    }
+
+            public void Feed() {
+        m_candleL.setControl(
+            new StrobeAnimation(LeftSlotStart, LeftSlotEnd)
+            .withColor(new RGBWColor(0, 0, 255))
+            .withFrameRate(5)
+        );
+                m_candleR.setControl(
+            new StrobeAnimation(RightSlotStart, RightSlotEnd)
+            .withColor(new RGBWColor(0, 0, 255))
+            .withFrameRate(5)
         );
     }
 
@@ -134,10 +149,12 @@ public class Ledinator extends SubsystemBase {
        m_candleL.setControl(
             new StrobeAnimation(LeftSlotStart, LeftSlotEnd)
             .withColor(new RGBWColor(255, 0, 0))
+            .withFrameRate(5)
         );
                 m_candleR.setControl(
             new StrobeAnimation(RightSlotStart, RightSlotEnd)
             .withColor(new RGBWColor(255, 0, 0))
+            .withFrameRate(5)
         );
     }
 
@@ -146,7 +163,7 @@ public class Ledinator extends SubsystemBase {
         switch(_currentLED) 
         {
             case Idle:
-            Party();
+            Crew();
             break;
             case Climb:
             Climbed();
@@ -156,6 +173,9 @@ public class Ledinator extends SubsystemBase {
             break;
             case Alliance:
             Alliance();
+            break;
+            case FEED:
+            Feed();
             break;
             default:
             Idled();

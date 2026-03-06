@@ -39,6 +39,7 @@ import frc.robot.generated.TunerConstants;
 import frc.robot.generated.TunerConstants.TunerSwerveDrivetrain;
 import frc.robot.states.DrivetrainState;
 import frc.robot.states.LedState;
+import frc.robot.states.ShooterState;
 import frc.robot.utilities.GeometryUtil;
 import frc.robot.utilities.VisionMeasurement;
 import frc.robot.states.ClimbState;
@@ -281,10 +282,12 @@ public class Drivetrain extends SubsystemBase {
             Ledinator._currentLED = LedState.Climb;
         } else if (isStagedForClimb()) {
             Ledinator._currentLED = LedState.Staged;
-        } else if (!isStagedForClimb() || !isReadyToClimb() || RunTime > 60) {
+        } else if (!isStagedForClimb() || !isReadyToClimb() || RunTime > 60 || Shooter._currentState != ShooterState.PREPSHOOTER) {
             Ledinator._currentLED = LedState.Idle;
         } else if (RunTime <= 60) {
             Ledinator._currentLED = LedState.Alliance;
+        } else if (Shooter._currentState == ShooterState.PREPSHOOTER) {
+            Ledinator._currentLED = LedState.FEED;
         }
         /*
          * Periodically try to apply the operator perspective.

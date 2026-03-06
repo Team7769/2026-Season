@@ -7,5 +7,6 @@ public enum LedState {
         Climb,
         CREW,
         Disco,
-        Alliance
+        Alliance,
+        FEED
 }

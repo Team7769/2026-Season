@@ -29,7 +29,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.states.ShooterState;
 
 public class Shooter extends SubsystemBase {
-    private ShooterState _currentState = ShooterState.IDLE;
+    public static ShooterState _currentState = ShooterState.IDLE;
     private TalonFX _leftShooter1;
     private TalonFX _rightShooter1;
     private TalonFX _leftShooter2;
