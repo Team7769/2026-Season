@@ -271,11 +271,11 @@ public class Drivetrain extends SubsystemBase {
             Ledinator._currentLED = LedState.Climb;
         } else if (isStagedForClimb()) {
             Ledinator._currentLED = LedState.Staged;
-        } else if (!isStagedForClimb() || !isReadyToClimb() || RunTime > 60 || Shooter._currentState != ShooterState.PREPSHOOTER) {
+        } else if (!isStagedForClimb() || !isReadyToClimb() || RunTime > 60 || Shooter._currentState != ShooterState.SHOOT) {
             Ledinator._currentLED = LedState.Idle;
         } else if (RunTime <= 60) {
             Ledinator._currentLED = LedState.Alliance;
-        } else if (Shooter._currentState == ShooterState.PREPSHOOTER) {
+        } else if (Shooter._currentState == ShooterState.SHOOT) {
             Ledinator._currentLED = LedState.FEED;
         }
         /*
