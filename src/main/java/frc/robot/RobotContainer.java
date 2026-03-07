@@ -26,8 +26,10 @@ import frc.robot.subsystems.Climb;
 import frc.robot.states.ClimbType;
 import frc.robot.states.HopperState;
 import frc.robot.states.IntakeState;
+import frc.robot.states.LedState;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Hopper;
+import frc.robot.subsystems.Ledinator;
 import frc.robot.subsystems.Shooter;
 import frc.robot.states.ShooterState;
 import frc.robot.subsystems.Vision;
@@ -50,6 +52,7 @@ public class RobotContainer {
   public final KitbotIntake KITBOT_INTAKE = _isComp ? null : new KitbotIntake();
   public final Hopper HOPPER = _isComp ? new Hopper() : null;
   public final Shooter SHOOTER = _isComp ? new Shooter(DRIVETRAIN) : null;
+  public final Ledinator LEDINATOR = _isComp ? new Ledinator() : null;
 
   public RobotContainer() {
 
@@ -77,7 +80,10 @@ public class RobotContainer {
     // Idle while the robot is disabled. This ensures the configured
     // neutral mode is applied to the drive motors while disabled.
     RobotModeTriggers.disabled().onTrue(
-        Commands.runOnce(() -> DRIVETRAIN.setWantedState(DrivetrainState.IDLE)));
+        Commands.runOnce(() -> {
+          DRIVETRAIN.setWantedState(DrivetrainState.IDLE);
+          LEDINATOR.setWantedState(LedState.Idle);
+        }));
 
     RobotModeTriggers.autonomous().onTrue(Commands.runOnce(() -> DRIVETRAIN.setWantedState(DrivetrainState.AUTO)));
 
@@ -138,12 +144,14 @@ public class RobotContainer {
     // Intake out
     DRIVER_CONTROLLER.leftBumper().onTrue(
         Commands.runOnce(() -> {
+          LEDINATOR.setWantedState(LedState.FEED);
           HOPPER.setWantedState(HopperState.FLOOR_INTAKE);
         }));
 
     // Intake in
     DRIVER_CONTROLLER.leftTrigger().onTrue(
         Commands.runOnce(() -> {
+          LEDINATOR.setWantedState(LedState.CREW);
           HOPPER.setWantedState(HopperState.STOW);
         }));
 
