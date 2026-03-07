@@ -15,6 +15,7 @@ public final class FieldConstants {
     public static final double kHalfFieldLength = kFieldLength / 2;
     public static final Translation2d kFieldCenter = new Translation2d(kHalfFieldLength, kHalfFieldWidth);
 
+
     // Coral Source Coordinates:
     public static final int[] kRedTagIDs = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16};
     public static final int[] kBlueTagIDs = {17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32};
@@ -24,6 +25,9 @@ public final class FieldConstants {
     public static final Translation2d kBlueZoneA = new Translation2d(2.0172, 6.0518);
     public static final Translation2d kBlueZoneB = new Translation2d(2.0172, 2.0172);
     public static final Translation2d kBlueDepot = new Translation2d(0.3429, 5.9631);
+
+    public static final Pose2d kRightTrench = new Pose2d(1.127 + 2 * kRobotWidth, 5.172, Rotation2d.fromDegrees(180));
+    public static final Pose2d kLeftTrench = new Pose2d(1.127 + 2 * kRobotWidth, 2.22, Rotation2d.fromDegrees(180));
     
     public static final Pose2d kBlueClimbEngageLeftFront = new Pose2d(1.075 + kRobotWidth / 2, 4.17, Rotation2d.fromDegrees(180));
     public static final Pose2d kBlueClimbEngageRightFront = new Pose2d(1.075 + kRobotWidth / 2, 3.27, Rotation2d.fromDegrees(180));

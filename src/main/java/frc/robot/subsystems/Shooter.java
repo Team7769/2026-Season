@@ -30,6 +30,7 @@ import edu.wpi.first.wpilibj.Servo;
 import edu.wpi.first.wpilibj.motorcontrol.Talon;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.states.ShooterState;
+import frc.robot.configuration.FieldConstants;
 
 
 public class Shooter extends SubsystemBase {
@@ -42,14 +43,14 @@ public class Shooter extends SubsystemBase {
     private VelocityVoltage _shooterVelocity = new VelocityVoltage(0);
     private final VelocityTorqueCurrentFOC shotVelocityTorqueCurrentFOC = new VelocityTorqueCurrentFOC(60);
     private final VelocityTorqueCurrentFOC idleVelocityTorqueCurrentFOC = new VelocityTorqueCurrentFOC(35);
-    private final PositionDutyCycle HOOD_DOWN = new PositionDutyCycle(.38);
-    private final PositionDutyCycle HOOD_MOVE = new PositionDutyCycle(.9);
+    private final PositionDutyCycle HOOD_DOWN = new PositionDutyCycle(.1);
+    private final PositionDutyCycle HOOD_MOVE = new PositionDutyCycle(.6);
     private final VoltageOut SHOOTER_VOLTAGE = new VoltageOut(3);
     private DigitalInput _leftPhotoEye;
     private DigitalInput _rightPhotoEye;
     private TalonFX _hoodMotor;
     private double _manualHood = 0;
-        private double hoodTest = 0.6;
+    private double hoodTest = 0.6;
 
 
     private SimpleMotorFeedforward _ff = new SimpleMotorFeedforward(0, 0);
@@ -59,6 +60,7 @@ public class Shooter extends SubsystemBase {
     private double _shooterError = 0.1;
     // private double _hoodPosition = .5;
     private double _hoodTarget;
+    
     private final Drivetrain DRIVETRAIN;
     private InterpolatingDoubleTreeMap _hoodMap = new InterpolatingDoubleTreeMap();
     private InterpolatingDoubleTreeMap _shooterMap = new InterpolatingDoubleTreeMap();
@@ -75,23 +77,30 @@ public class Shooter extends SubsystemBase {
         // _hoodMap.put(3.5, .56);
         // _hoodMap.put(5.0, .6);
 
-        _hoodMap.put(1.0, .4);
-        _hoodMap.put(2.54, .7);
-        _hoodMap.put(3.1, .9);
-        _hoodMap.put(4.0, 1.15);
-        //_hoodMap.put(5.0, .);
+        // _hoodMap.put(1.0, .4);
+        // _hoodMap.put(2.54, .7);
+        // _hoodMap.put(3.1, .9);
+        // _hoodMap.put(4.0, 1.15);
+        //everything -.38
+        _hoodMap.put(1.0, .02);
+        _hoodMap.put(2.0, .15);
+        _hoodMap.put(3.0, .4);
+        _hoodMap.put(4.0, 0.48);
+        _hoodMap.put(5.0, 0.55);
 
 
         // _shooterMap.put(2.0, 60.0);
 
         // _shooterMap.put(3.5, 60.0);
         _shooterMap.put(1.0, 52.0);
-        _shooterMap.put(2.54, 52.0);
-        _shooterMap.put(3.1, 52.0);
-        _shooterMap.put(4.0, 58.0);
+        _shooterMap.put(2.0, 52.0);
+        _shooterMap.put(3.0, 52.0);
+        _shooterMap.put(4.0, 55.0);
+        _shooterMap.put(5.0, 58.0);
 
         configShooter();
         configHood();
+        
     }
 
     private void configShooter(){

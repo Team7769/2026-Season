@@ -64,6 +64,7 @@ public class RobotContainer {
       DRIVETRAIN.setWantedClimb(value);
     });
 
+    
     // Another option that allows you to specify the default auto by its name
     // autoChooser = AutoBuilder.buildAutoChooser("My Default Auto");
 
@@ -97,6 +98,8 @@ public class RobotContainer {
     // DRIVER_CONTROLLER.start().and(DRIVER_CONTROLLER.y()).whileTrue(DRIVETRAIN.sysIdQuasistatic(Direction.kForward));
     // DRIVER_CONTROLLER.start().and(DRIVER_CONTROLLER.x()).whileTrue(DRIVETRAIN.sysIdQuasistatic(Direction.kReverse));
   }
+
+
 
   public Command getAutonomousCommand() {
     return autoChooser.getSelected();
@@ -152,6 +155,12 @@ public class RobotContainer {
     // Reseed heading
     DRIVER_CONTROLLER.back().onTrue(
         Commands.runOnce(() -> DRIVETRAIN.seedFieldCentric()));
+        
+    DRIVER_CONTROLLER.povDown().onTrue(
+        Commands.runOnce(() -> CLIMB.setWantedState(ClimbState.RETRACT)));
+
+    DRIVER_CONTROLLER.povUp().onTrue(
+        Commands.runOnce(() -> CLIMB.setWantedState(ClimbState.EXTEND)));
 
     // Manual Climb retract
     DRIVER_CONTROLLER.povDown().onTrue(
@@ -172,6 +181,14 @@ public class RobotContainer {
         Commands.sequence(
             Commands.runOnce(() -> DRIVETRAIN.setTargetEngageLeftClimb(GeometryUtil::isRedAlliance)),
             Commands.runOnce(() -> DRIVETRAIN.setWantedState(DrivetrainState.CLIMB_ENGAGE))));
+           
+        DRIVER_CONTROLLER.pov(270).onTrue(
+        Commands.runOnce(() -> {
+          DRIVETRAIN.setTargetLeftTrench(GeometryUtil::isRedAlliance);
+          DRIVETRAIN.setWantedState(DrivetrainState.TRENCH_LEFT);
+        })).onFalse(
+          Commands.runOnce(() -> DRIVETRAIN.setWantedState(DrivetrainState.OPEN_LOOP)));    
+
 
     // Trigger during climb sequence to activate climb if engaged
     new Trigger(DRIVETRAIN::isReadyToClimb).onTrue(

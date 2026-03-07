@@ -7,13 +7,13 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Left Trench Start to Carry Mid"
+            "pathName": "Comp Left Trench Start to Left Far Mid"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "Carry Left Mid to Left Trench Shoot"
+            "pathName": "Comp Left Far Mid to Left Trench Shoot"
           }
         },
         {
@@ -103,7 +103,7 @@
         {
           "type": "wait",
           "data": {
-            "waitTime": 1.5
+            "waitTime": 2.5
           }
         },
         {

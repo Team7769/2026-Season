@@ -4,12 +4,12 @@
     {
       "anchor": {
         "x": 3.972,
-        "y": 7.134080623869034
+        "y": 7.234
       },
       "prevControl": null,
       "nextControl": {
-        "x": 4.957545051432093,
-        "y": 7.244119538061275
+        "x": 4.957545051432092,
+        "y": 7.344038914192241
       },
       "isLocked": false,
       "linkedName": "Left Trench Aiming At Hub"

@@ -76,6 +76,8 @@ public class Drivetrain extends SubsystemBase {
     private Pose2d _target = new Pose2d();
     private Pose2d _climbTargetStage = new Pose2d();
     private Pose2d _climbTargetEngage = new Pose2d();
+    private Pose2d _trenchLeft = new Pose2d();
+    private Pose2d _trenchRight = new Pose2d();
     private PIDController _targetFollowControllerX;
     private PIDController _targetFollowControllerY;
     private PIDController _targetFollowControllerZ;
@@ -433,8 +435,24 @@ public class Drivetrain extends SubsystemBase {
         }
     }
 
+    public void setTargetLeftTrench(Supplier<Boolean> isRedAlliance) {
+        if (isRedAlliance.get()) {
+            _trenchRight = FieldConstants.kRightTrench;
+        } else {
+            _trenchLeft = FieldConstants.kLeftTrench;
+        }
+    }
+
+    public void setTargetRightTrench(Supplier<Boolean> isRedAlliance) {
+        if (isRedAlliance.get()) {
+            _trenchLeft = FieldConstants.kLeftTrench;
+        } else {
+            _trenchRight = FieldConstants.kRightTrench;
+        }
+    }
+
     private void updateTarget() {
-        if (_currentState != DrivetrainState.CLIMB_ENGAGE && _currentState != DrivetrainState.CLIMB_STAGE) {
+        if (_currentState != DrivetrainState.CLIMB_ENGAGE && _currentState != DrivetrainState.CLIMB_STAGE || _currentState != DrivetrainState.TRENCH_LEFT || _currentState != DrivetrainState.TRENCH_RIGHT) {
             var currentTranslation = _swerve.getState().Pose.getTranslation();
             if (GeometryUtil.isRedAlliance()) {
                 if (currentTranslation.getX() >= 11.3) {
@@ -490,18 +508,20 @@ public class Drivetrain extends SubsystemBase {
 
         var currentPose = this.getPose();
         _targetRotation = _targetFollowControllerZ.calculate(currentPose.getRotation().getDegrees());
-
         if (_currentState == DrivetrainState.CLIMB_ENGAGE) {
             _targetFollowControllerX.setSetpoint(_climbTargetEngage.getX());
             _targetFollowControllerY.setSetpoint(_climbTargetEngage.getY());
         } else if (_currentState == DrivetrainState.CLIMB_STAGE) {
             _targetFollowControllerX.setSetpoint(_climbTargetStage.getX());
             _targetFollowControllerY.setSetpoint(_climbTargetStage.getY());
-        } else {
+        } else if (_currentState == DrivetrainState.TRENCH_LEFT) {
+            _targetFollowControllerY.setSetpoint(_trenchLeft.getY());
+        }else if (_currentState == DrivetrainState.TRENCH_RIGHT)  {
+            _targetFollowControllerY.setSetpoint(_trenchRight.getY());
+        }else {
             _targetFollowControllerX.setSetpoint(_target.getX());
             _targetFollowControllerY.setSetpoint(_target.getY());
         }
-
         _xFollow = _targetFollowControllerX.calculate(currentPose.getX());
         _yFollow = _targetFollowControllerY.calculate(currentPose.getY());
         _xFollow = MathUtil.clamp(_xFollow, -_targetFollowLimit, _targetFollowLimit);
@@ -550,6 +570,15 @@ public class Drivetrain extends SubsystemBase {
                     );
                 }
                 break;
+            case TRENCH_LEFT:
+            case TRENCH_RIGHT:
+                _swerve.setControl(
+                    DRIVE.withVelocityX(-CONTROLLER.getLeftY() * _maxSpeed) // Drive forward with negative Y
+                    .withVelocityY(_yFollow * _maxSpeed) // Drive left with negative X (left)
+                    .withRotationalRate(-CONTROLLER.getRightX() * _maxAngularRate)); 
+
+                                                                                                 
+                break;
             case AUTO:
                 break;
             default:
@@ -580,6 +609,20 @@ public class Drivetrain extends SubsystemBase {
                 && _targetFollowControllerX.atSetpoint()
                 && _targetFollowControllerY.atSetpoint()
                 && _targetFollowControllerZ.atSetpoint();
+    }
+
+    public boolean isAtTrenchLeft() {
+        // If position is at the ready position
+        return _currentState == DrivetrainState.TRENCH_LEFT
+                && _targetFollowControllerY.atSetpoint();
+                //&& _targetFollowControllerZ.atSetpoint();
+    }
+
+    public boolean isAtTrenchRight() {
+        // If position is at the end position
+        return _currentState == DrivetrainState.TRENCH_RIGHT
+                && _targetFollowControllerY.atSetpoint();
+               // && _targetFollowControllerZ.atSetpoint();
     }
 
     private void startSimThread() {

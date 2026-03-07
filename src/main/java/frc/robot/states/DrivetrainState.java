@@ -7,5 +7,7 @@ public enum DrivetrainState {
     POINT_FOLLOW,
     CLIMB_STAGE,
     CLIMB_ENGAGE,
+    TRENCH_LEFT,
+    TRENCH_RIGHT,
     AUTO
 }
