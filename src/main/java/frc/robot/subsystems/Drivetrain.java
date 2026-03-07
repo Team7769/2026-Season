@@ -254,19 +254,6 @@ public class Drivetrain extends SubsystemBase {
         return m_sysIdRoutineToApply.dynamic(direction);
     }
 
-    private void handleCurrentClimbType() {
-        switch (_currentClimb) {
-            case IDLE:
-                break;
-            case FRONT:
-                break;
-            case SIDE:
-                break;
-            default:
-                break;
-        }
-    }
-
     public void setWantedClimb(ClimbType wantedClimb) {
         if (wantedClimb != _currentClimb) {
             _currentClimb = wantedClimb;
@@ -304,13 +291,6 @@ public class Drivetrain extends SubsystemBase {
         handleCurrentTarget();
         handleCurrentState();
          SmartDashboard.putString("Current State", _currentState.toString());
-        // SmartDashboard.putNumber("Target X", _target.getX());
-        // SmartDashboard.putNumber("Target Y", _target.getY());
-        // SmartDashboard.putNumber("Target Z", _target.getRotation().getDegrees());
-        // SmartDashboard.putBoolean("X Staged", isXStagedForClimb());
-        // SmartDashboard.putBoolean("Y Staged", isYStagedForClimb());
-        // SmartDashboard.putBoolean("Z Staged", isZStagedForClimb());
-        // SmartDashboard.putNumber("Distance to Target", getDistanceToTarget());
     }
 
     private void updateOdometry() {
@@ -333,7 +313,10 @@ public class Drivetrain extends SubsystemBase {
     }
 
     public double getDistanceToTarget() {
-        return _target.getTranslation().getDistance(_swerve.getState().Pose.getTranslation());
+        var distance = _target.getTranslation().getDistance(_swerve.getState().Pose.getTranslation());
+
+        SmartDashboard.putNumber("Distance to Target", distance);
+        return distance;
     }
 
     public void setWantedState(DrivetrainState wantedState) {
@@ -427,23 +410,7 @@ public class Drivetrain extends SubsystemBase {
             }
         }
     }
-
-    public void setTargetStageRightClimb(Supplier<Boolean> isRedAlliance) {
-        if (isRedAlliance.get()) {
-            _target = FieldConstants.kRedClimbStageRightSide;
-        } else {
-            _target = FieldConstants.kBlueClimbStageRightSide;
-        }
-    }
-
-    public void setTargetEngageRightClimb(Supplier<Boolean> isRedAlliance) {
-        if (isRedAlliance.get()) {
-            _target = FieldConstants.kRedClimbEngageRightSide;
-        } else {
-            _target = FieldConstants.kBlueClimbEngageRightSide;
-        }
-    }
-
+    
     public void setTargetDepot(Supplier<Boolean> isRedAlliance) {
         if (isRedAlliance.get()) {
             _target = new Pose2d(FieldConstants.kRedDepot, new Rotation2d());
@@ -541,12 +508,6 @@ public class Drivetrain extends SubsystemBase {
 
         var currentPose = this.getPose();
         _targetRotation = _targetFollowControllerZ.calculate(currentPose.getRotation().getDegrees());
-
-        // var zDifference = GeometryUtil.getRotationDifference(this::getPose,
-        // _target.getRotation().getDegrees());
-        // var xDifference = GeometryUtil.getXDifference(_target, this::getPose);
-        // var yDifference = GeometryUtil.getYDifference(_target, this::getPose);
-
         if (_currentState == DrivetrainState.CLIMB_ENGAGE) {
             _targetFollowControllerX.setSetpoint(_climbTargetEngage.getX());
             _targetFollowControllerY.setSetpoint(_climbTargetEngage.getY());
@@ -662,24 +623,6 @@ public class Drivetrain extends SubsystemBase {
         return _currentState == DrivetrainState.TRENCH_RIGHT
                 && _targetFollowControllerY.atSetpoint();
                // && _targetFollowControllerZ.atSetpoint();
-    }
-
-    public boolean isXStagedForClimb() {
-        // If position is at the staged position
-        return _currentState == DrivetrainState.CLIMB_STAGE
-                && _targetFollowControllerX.atSetpoint();
-    }
-
-    public boolean isYStagedForClimb() {
-        // If position is at the staged position
-        return _currentState == DrivetrainState.CLIMB_STAGE
-                && _targetFollowControllerY.atSetpoint();
-    }
-
-    public boolean isZStagedForClimb() {
-        // If position is at the staged position
-        return _currentState == DrivetrainState.CLIMB_STAGE
-                && _targetFollowControllerZ.atSetpoint();
     }
 
     private void startSimThread() {
