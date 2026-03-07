@@ -50,8 +50,7 @@ public class Shooter extends SubsystemBase {
     private DigitalInput _rightPhotoEye;
     private TalonFX _hoodMotor;
     private double _manualHood = 0;
-        private double hoodTest = 0.6;
-        public double drivetrainX;
+    private double hoodTest = 0.6;
 
 
     private SimpleMotorFeedforward _ff = new SimpleMotorFeedforward(0, 0);
@@ -218,8 +217,6 @@ public class Shooter extends SubsystemBase {
         SmartDashboard.putNumber("Shooter Target Velocity", shotVelocityTorqueCurrentFOC.Velocity);
         SmartDashboard.putBoolean("Shooter At Speed", _leftShooter1.getClosedLoopError().getValueAsDouble()<=1);
         handleCurrentState();
-        drivetrainX = DRIVETRAIN.getPose().getTranslation().getX();
-
     }
 
     private void handleCurrentState() {
