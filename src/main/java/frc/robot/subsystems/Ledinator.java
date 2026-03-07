@@ -20,19 +20,19 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.states.LedState;
 
 public class Ledinator extends SubsystemBase {
-    public static LedState _currentLED = LedState.Idle;
+    public static LedState _currentLED = LedState.IDLE;
 
-    private static final int LeftSlotStart = 8;
-    private static final int LeftSlotEnd = 15;
+    private static final int LeftSlotStart = 0;
+    private static final int LeftSlotEnd = 20;
 
-    private static final int RightSlotStart = 8;
-    private static final int RightSlotEnd = 15;
+    private static final int RightSlotStart = 0;
+    private static final int RightSlotEnd = 20;
 
     private static final int ModuleLStart = 0;
-    private static final int ModuleLEnd = 7;
+    private static final int ModuleLEnd = 20;
 
     private static final int ModuleRStart = 0;
-    private static final int ModuleREnd = 7;
+    private static final int ModuleREnd = 20;
 
     private final CANdle m_candleL = new CANdle(30, CANBus.roboRIO());
     private final CANdle m_candleR = new CANdle(31, CANBus.roboRIO());
@@ -54,17 +54,17 @@ public class Ledinator extends SubsystemBase {
                         .withColor(new RGBWColor(0, 255, 0)));
         m_candleR.setControl(
                 new StrobeAnimation(ModuleRStart, ModuleREnd)
-                        .withColor(new RGBWColor(24, 155, 204)));
+                        .withColor(new RGBWColor(0, 0, 255)));
     }
 
-    public void Party() {
+    public void party() {
         m_candleL.setControl(
                 new RainbowAnimation(LeftSlotStart, LeftSlotEnd));
         m_candleR.setControl(
                 new RainbowAnimation(RightSlotStart, RightSlotEnd));
     }
 
-    public void Alliance() {
+    public void alliance() {
         if (GeometryUtil.isRedAlliance()) {
             m_candleL.setControl(
                     new SolidColor(LeftSlotStart, LeftSlotEnd)
@@ -83,7 +83,7 @@ public class Ledinator extends SubsystemBase {
 
     }
 
-    public void Crew() {
+    public void crew() {
         m_candleL.setControl(
                 new ColorFlowAnimation(LeftSlotStart, LeftSlotEnd)
                         .withColor(new RGBWColor(0, 255, 0)));
@@ -92,7 +92,7 @@ public class Ledinator extends SubsystemBase {
                         .withColor(new RGBWColor(24, 155, 204)));
     }
 
-    public void Staged() {
+    public void staged() {
         m_candleL.setControl(
                 new StrobeAnimation(LeftSlotStart, LeftSlotEnd)
                         .withColor(new RGBWColor(255, 255, 0))
@@ -103,7 +103,7 @@ public class Ledinator extends SubsystemBase {
                         .withFrameRate(5));
     }
 
-    public void Feed() {
+    public void shoot() {
         m_candleL.setControl(
                 new StrobeAnimation(LeftSlotStart, LeftSlotEnd)
                         .withColor(new RGBWColor(0, 0, 255))
@@ -114,7 +114,7 @@ public class Ledinator extends SubsystemBase {
                         .withFrameRate(5));
     }
 
-    public void Climbed() {
+    public void climbed() {
         m_candleL.setControl(
                 new ColorFlowAnimation(LeftSlotStart, LeftSlotEnd)
                         .withColor(new RGBWColor(0, 255, 0)));
@@ -123,7 +123,7 @@ public class Ledinator extends SubsystemBase {
                         .withColor(new RGBWColor(0, 255, 0)));
     }
 
-    public void Idled() {
+    public void idled() {
         m_candleL.setControl(
                 new StrobeAnimation(LeftSlotStart, LeftSlotEnd)
                         .withColor(new RGBWColor(255, 0, 0))
@@ -136,23 +136,26 @@ public class Ledinator extends SubsystemBase {
 
     private void handleCurrentState() {
         switch (_currentLED) {
-            case Idle:
-                Crew();
+            case IDLE:
+                crew();
                 break;
-            case Climb:
-                Climbed();
+            case CLIMB:
+                climbed();
                 break;
-            case Staged:
-                Staged();
+            case STAGED:
+                staged();
                 break;
-            case Alliance:
-                Alliance();
+            case ALLIANCE:
+                alliance();
                 break;
-            case FEED:
-                Feed();
+            case SHOOT:
+                shoot();
+                break;
+            case INTAKE:
+                party();
                 break;
             default:
-                Idled();
+                idled();
                 break;
 
         }

@@ -3,55 +3,55 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 4.207600696902221,
-        "y": 7.270736257918194
+        "x": 4.406372528246454,
+        "y": 7.245889779000164
       },
       "prevControl": null,
       "nextControl": {
-        "x": 4.737827027809599,
-        "y": 7.370153694963327
+        "x": 5.45295618050384,
+        "y": 7.245889779000164
       },
       "isLocked": false,
-      "linkedName": "Left Trench Aiming At Hub"
+      "linkedName": "Left Start"
     },
     {
       "anchor": {
-        "x": 5.984123939541311,
-        "y": 7.260083259398069
+        "x": 8.31969295783606,
+        "y": 7.245889779000164
       },
       "prevControl": {
-        "x": 5.015111261738171,
-        "y": 7.3204292157542525
+        "x": 7.524353461474991,
+        "y": 7.2569361608940675
       },
       "nextControl": {
-        "x": 7.198128733004253,
-        "y": 7.184480244122148
+        "x": 9.119041949406398,
+        "y": 7.234787709672799
       },
       "isLocked": false,
-      "linkedName": "Prep Left Trench"
+      "linkedName": null
     },
     {
       "anchor": {
-        "x": 7.043851609776686,
-        "y": 4.476395022134329
+        "x": 8.630273944311423,
+        "y": 4.984860197459504
       },
       "prevControl": {
-        "x": 7.297918393336471,
-        "y": 6.232769743265022
+        "x": 8.43143907022622,
+        "y": 7.0284408478332345
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "Left Mid"
+      "linkedName": "Left Far Mid"
     }
   ],
   "rotationTargets": [
     {
-      "waypointRelativePos": 0.8550047379173568,
-      "rotationDegrees": -92.64298486799454
+      "waypointRelativePos": 0.3171001002308279,
+      "rotationDegrees": 0.0
     },
     {
-      "waypointRelativePos": 1.7378791749337512,
-      "rotationDegrees": 98.57044249128954
+      "waypointRelativePos": 0.976204625662413,
+      "rotationDegrees": 75.80063465328018
     }
   ],
   "constraintZones": [],
@@ -59,7 +59,7 @@
   "eventMarkers": [
     {
       "name": "IntakeOut",
-      "waypointRelativePos": 1.0293744076895988,
+      "waypointRelativePos": 0.6817014489371179,
       "endWaypointRelativePos": null,
       "command": {
         "type": "named",
@@ -78,14 +78,14 @@
     "unlimited": false
   },
   "goalEndState": {
-    "velocity": 0,
-    "rotation": 92.86240522611169
+    "velocity": 0.0,
+    "rotation": 71.8442569023982
   },
   "reversed": false,
   "folder": null,
   "idealStartingState": {
     "velocity": 0,
-    "rotation": -80.21759296819269
+    "rotation": 0.0
   },
   "useDefaultConstraints": true
 }

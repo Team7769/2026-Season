@@ -8,8 +8,8 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 8.096074647573795,
-        "y": 2.5374820240336247
+        "x": 8.617850704852408,
+        "y": 6.575034848213375
       },
       "isLocked": false,
       "linkedName": "Left Far Mid"
@@ -36,8 +36,8 @@
         "y": 7.270736257918194
       },
       "prevControl": {
-        "x": 4.452987554121371,
-        "y": 7.31854096798016
+        "x": 4.480911965000542,
+        "y": 7.270736257918194
       },
       "nextControl": null,
       "isLocked": false,
@@ -46,16 +46,8 @@
   ],
   "rotationTargets": [
     {
-      "waypointRelativePos": 0.19837940931457992,
-      "rotationDegrees": -57.23196989960659
-    },
-    {
       "waypointRelativePos": 0.501321861997421,
-      "rotationDegrees": -71.66601261993598
-    },
-    {
-      "waypointRelativePos": 0.7797014131113837,
-      "rotationDegrees": -132.20888931299422
+      "rotationDegrees": -124.98645877123869
     },
     {
       "waypointRelativePos": 0.9691405966951576,
@@ -103,7 +95,7 @@
   "reversed": false,
   "folder": null,
   "idealStartingState": {
-    "velocity": 3.5,
+    "velocity": 0.0,
     "rotation": 71.8442569023982
   },
   "useDefaultConstraints": true

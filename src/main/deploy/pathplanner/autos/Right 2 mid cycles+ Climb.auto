@@ -7,13 +7,13 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Comp Left Trench Start to Left Far Mid"
+            "pathName": "Right Trench Start to Far Right Mid Prep"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "Comp Left Far Mid to Left Trench Shoot"
+            "pathName": "Right Center Mid to Right Trench Shoot"
           }
         },
         {
@@ -31,13 +31,67 @@
         {
           "type": "named",
           "data": {
-            "name": "Shoot"
+            "name": "Start Shooting"
           }
         },
         {
           "type": "wait",
           "data": {
-            "waitTime": 0.4
+            "waitTime": 0.2
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Injecting"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 1.5
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Idle"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 0.15
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Right Trench Shoot to Close Right Mid"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Right Close Mid to Right Trench Shoot"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "PrepShooter"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 0.05
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Start Shooting"
           }
         },
         {
@@ -59,54 +113,6 @@
           }
         },
         {
-          "type": "path",
-          "data": {
-            "pathName": "Left Trench to Close Mid"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "Close Left Mid to Left Trench"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "PrepShooter"
-          }
-        },
-        {
-          "type": "wait",
-          "data": {
-            "waitTime": 0.05
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "Shoot"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "Injecting"
-          }
-        },
-        {
-          "type": "wait",
-          "data": {
-            "waitTime": 1.4
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "Idle"
-          }
-        },
-        {
           "type": "named",
           "data": {
             "name": "IntakeIn"
@@ -115,7 +121,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Left Trench to Prep Climb"
+            "pathName": "Right Trench Shoot to Prep Climb"
           }
         },
         {

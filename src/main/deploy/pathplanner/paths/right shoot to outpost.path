@@ -8,58 +8,33 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 4.543028162295616,
-        "y": 0.7733820208535496
+        "x": 2.7913513985745544,
+        "y": 0.9970003311158133
       },
       "isLocked": false,
       "linkedName": "Right Trench Shoot"
     },
     {
       "anchor": {
-        "x": 5.412654924426638,
-        "y": 0.8
+        "x": 0.8409028035092596,
+        "y": 0.6739961051814316
       },
       "prevControl": {
-        "x": 4.2971165642783475,
-        "y": 0.7010832569973123
-      },
-      "nextControl": {
-        "x": 7.214024645983758,
-        "y": 0.9597306127387697
-      },
-      "isLocked": false,
-      "linkedName": null
-    },
-    {
-      "anchor": {
-        "x": 6.81648098329529,
-        "y": 3.543764420213808
-      },
-      "prevControl": {
-        "x": 6.928290138426421,
-        "y": 3.1710672364433696
+        "x": 2.2447288623779107,
+        "y": 0.9597306127387675
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "Right Close Mid"
+      "linkedName": "Outpost"
     }
   ],
-  "rotationTargets": [
-    {
-      "waypointRelativePos": 0.8574839347461586,
-      "rotationDegrees": 90.0
-    },
-    {
-      "waypointRelativePos": 1.3241790645548808,
-      "rotationDegrees": -98.16101275381472
-    }
-  ],
+  "rotationTargets": [],
   "constraintZones": [],
   "pointTowardsZones": [],
   "eventMarkers": [
     {
       "name": "IntakeOut",
-      "waypointRelativePos": 1.0602565171935627,
+      "waypointRelativePos": 0.38752189726729547,
       "endWaypointRelativePos": null,
       "command": {
         "type": "named",
@@ -79,7 +54,7 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -91.7357045889285
+    "rotation": 0.0
   },
   "reversed": false,
   "folder": null,

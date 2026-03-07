@@ -82,7 +82,7 @@ public class RobotContainer {
     RobotModeTriggers.disabled().onTrue(
         Commands.runOnce(() -> {
           DRIVETRAIN.setWantedState(DrivetrainState.IDLE);
-          LEDINATOR.setWantedState(LedState.Idle);
+          LEDINATOR.setWantedState(LedState.IDLE);
         }));
 
     RobotModeTriggers.autonomous().onTrue(Commands.runOnce(() -> DRIVETRAIN.setWantedState(DrivetrainState.AUTO)));
@@ -144,7 +144,7 @@ public class RobotContainer {
     // Intake out
     DRIVER_CONTROLLER.leftBumper().onTrue(
         Commands.runOnce(() -> {
-          LEDINATOR.setWantedState(LedState.FEED);
+          LEDINATOR.setWantedState(LedState.INTAKE);
           HOPPER.setWantedState(HopperState.FLOOR_INTAKE);
         }));
 

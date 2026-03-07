@@ -1,12 +1,13 @@
 package frc.robot.states;
 
 public enum LedState {
-        Idle,
-        Staged,
-        Error,
-        Climb,
+        IDLE,
+        STAGED,
+        ERROR,
+        CLIMB,
         CREW,
         Disco,
-        Alliance,
-        FEED
+        ALLIANCE,
+        SHOOT,
+        INTAKE
 }

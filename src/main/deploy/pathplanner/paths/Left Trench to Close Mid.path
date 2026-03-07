@@ -3,13 +3,13 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 3.972,
-        "y": 7.234
+        "x": 4.207600696902221,
+        "y": 7.270736257918194
       },
       "prevControl": null,
       "nextControl": {
-        "x": 4.957545051432092,
-        "y": 7.344038914192241
+        "x": 5.193145748334313,
+        "y": 7.380775172110435
       },
       "isLocked": false,
       "linkedName": "Left Trench Aiming At Hub"
@@ -70,8 +70,8 @@
     }
   ],
   "globalConstraints": {
-    "maxVelocity": 3.9,
-    "maxAcceleration": 3.5,
+    "maxVelocity": 4.3,
+    "maxAcceleration": 4.0,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0,
     "nominalVoltage": 12.0,
@@ -85,7 +85,7 @@
   "folder": null,
   "idealStartingState": {
     "velocity": 0,
-    "rotation": -74.04672489010737
+    "rotation": -80.21759296819269
   },
   "useDefaultConstraints": true
 }
