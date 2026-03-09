@@ -23,10 +23,10 @@ public class Ledinator extends SubsystemBase {
     public static LedState _currentLED = LedState.IDLE;
 
     private static final int LeftSlotStart = 0;
-    private static final int LeftSlotEnd = 20;
+    private static final int LeftSlotEnd = 30;
 
     private static final int RightSlotStart = 0;
-    private static final int RightSlotEnd = 20;
+    private static final int RightSlotEnd = 30;
 
     private static final int ModuleLStart = 0;
     private static final int ModuleLEnd = 20;
@@ -54,7 +54,7 @@ public class Ledinator extends SubsystemBase {
                         .withColor(new RGBWColor(0, 255, 0)));
         m_candleR.setControl(
                 new StrobeAnimation(ModuleRStart, ModuleREnd)
-                        .withColor(new RGBWColor(0, 0, 255)));
+                        .withColor(new RGBWColor(100, 0, 255)));
     }
 
     public void party() {
@@ -75,10 +75,10 @@ public class Ledinator extends SubsystemBase {
         } else {
             m_candleL.setControl(
                     new SolidColor(LeftSlotStart, LeftSlotEnd)
-                            .withColor(new RGBWColor(24, 155, 204)));
+                            .withColor(new RGBWColor(0, 0, 255)));
             m_candleR.setControl(
                     new SolidColor(RightSlotStart, RightSlotEnd)
-                            .withColor(new RGBWColor(24, 155, 204)));
+                            .withColor(new RGBWColor(0, 0, 255)));
         }
 
     }
@@ -86,10 +86,10 @@ public class Ledinator extends SubsystemBase {
     public void crew() {
         m_candleL.setControl(
                 new ColorFlowAnimation(LeftSlotStart, LeftSlotEnd)
-                        .withColor(new RGBWColor(0, 255, 0)));
+                        .withColor(new RGBWColor(0, 255, 0)).withFrameRate(5));
         m_candleR.setControl(
                 new ColorFlowAnimation(RightSlotStart, RightSlotEnd)
-                        .withColor(new RGBWColor(24, 155, 204)));
+                        .withColor(new RGBWColor(0, 0, 255)).withFrameRate(5));
     }
 
     public void staged() {

@@ -516,8 +516,10 @@ public class Drivetrain extends SubsystemBase {
             _targetFollowControllerY.setSetpoint(_climbTargetStage.getY());
         } else if (_currentState == DrivetrainState.TRENCH_LEFT) {
             _targetFollowControllerY.setSetpoint(_trenchLeft.getY());
+            _targetFollowControllerZ.setSetpoint(_trenchLeft.getRotation().getDegrees());
         }else if (_currentState == DrivetrainState.TRENCH_RIGHT)  {
             _targetFollowControllerY.setSetpoint(_trenchRight.getY());
+            _targetFollowControllerZ.setSetpoint(_trenchRight.getRotation().getDegrees());
         }else {
             _targetFollowControllerX.setSetpoint(_target.getX());
             _targetFollowControllerY.setSetpoint(_target.getY());

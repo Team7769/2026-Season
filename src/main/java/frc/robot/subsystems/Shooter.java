@@ -49,8 +49,8 @@ public class Shooter extends SubsystemBase {
     private DigitalInput _leftPhotoEye;
     private DigitalInput _rightPhotoEye;
     private TalonFX _hoodMotor;
-    private double _manualHood = 0;
-    private double hoodTest = 0.6;
+    private double _manualHood = 0.5;
+    private double hoodTest = 0.5;
 
 
     private SimpleMotorFeedforward _ff = new SimpleMotorFeedforward(0, 0);

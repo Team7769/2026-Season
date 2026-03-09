@@ -26,8 +26,8 @@ public final class FieldConstants {
     public static final Translation2d kBlueZoneB = new Translation2d(2.0172, 2.0172);
     public static final Translation2d kBlueDepot = new Translation2d(0.3429, 5.9631);
 
-    public static final Pose2d kRightTrench = new Pose2d(1.127 + 2 * kRobotWidth, 5.172, Rotation2d.fromDegrees(180));
-    public static final Pose2d kLeftTrench = new Pose2d(1.127 + 2 * kRobotWidth, 2.22, Rotation2d.fromDegrees(180));
+    public static final Pose2d kRightTrench = new Pose2d(kHalfFieldLength, 0.810, Rotation2d.fromDegrees(90));
+    public static final Pose2d kLeftTrench = new Pose2d(kHalfFieldLength, 7.271, Rotation2d.fromDegrees(270));
     
     public static final Pose2d kBlueClimbEngageLeftFront = new Pose2d(1.075 + kRobotWidth / 2, 4.17, Rotation2d.fromDegrees(180));
     public static final Pose2d kBlueClimbEngageRightFront = new Pose2d(1.075 + kRobotWidth / 2, 3.27, Rotation2d.fromDegrees(180));
