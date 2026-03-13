@@ -28,10 +28,11 @@ public class Hopper extends SubsystemBase {
 
     private final VoltageOut HALT = new VoltageOut(0);
     private final VoltageOut FLOOR_INJECT = new VoltageOut(11);
+    private final VoltageOut REVERSE = new VoltageOut(-11);
     //private final VelocityTorqueCurrentFOC INTAKE = new VelocityTorqueCurrentFOC(85);
-    private final VoltageOut INTAKE = new VoltageOut(10.5);
+    private final VoltageOut INTAKE = new VoltageOut(11);
 
-
+    private int _timer = 0; 
     private final PositionDutyCycle INTAKE_IN = new PositionDutyCycle(.1);
     private final PositionDutyCycle INTAKE_OUT = new PositionDutyCycle(14.25);
     private final PositionDutyCycle INTAKE_SHOOT = new PositionDutyCycle(4.5);
@@ -64,6 +65,12 @@ public class Hopper extends SubsystemBase {
                                  .withKP(0.68)
                                  .withKS(4.7)
                                  .withKV(0.03);
+        var intakeCurrentLimits = new CurrentLimitsConfigs()
+                                    .withStatorCurrentLimit(100) //60
+                                    .withSupplyCurrentLimit(60) //40
+                                    .withSupplyCurrentLowerTime(1)
+                                    .withSupplyCurrentLowerLimit(40); //30
+        intakeConfiguration.withCurrentLimits(intakeCurrentLimits);
 
         slideConfiguration.withSlot0(slideSlot0Configs);
         intakeConfiguration.withSlot0(intakeSlot0Configs);
@@ -96,6 +103,10 @@ public class Hopper extends SubsystemBase {
         handleCurrentState();
         SmartDashboard.putBoolean("Middle Sensor", isMiddleEmpty());
         SmartDashboard.putBoolean("Middle Sensor 2", _candiRight.getS2Closed().getValue());
+        _timer++;
+        if(_timer>50){
+            _timer = 0;
+        }
     }
 
     private void handleCurrentState() {
@@ -111,6 +122,12 @@ public class Hopper extends SubsystemBase {
                 break;
             case INJECTING_HOPPER_OUT:
                 handleInjectHopperOut();
+                break;
+            case EMERGENCY:
+                handleEmergency();
+                break;
+            case JAM:
+                handleJam();
                 break;
             default:
                 handleStow();
@@ -138,24 +155,46 @@ public class Hopper extends SubsystemBase {
         _injector.setControl(HALT);
     }
 
+    private void handleJam() {
+        _injector.setControl(REVERSE);
+    }
+
     private void handleInject() {
-        // if(_candiRight.getS2Closed().getValue()){
-        // _slide.setControl(INTAKE_OUT);
-        // _intake.setControl(INTAKE);
-        // _floor.setControl(FLOOR_INJECT);
-        // _injector.setControl(FLOOR_INJECT);
-        // } else {
-        _slide.setControl(INTAKE_SHOOT);
         _intake.setControl(INTAKE);
-        _floor.setControl(FLOOR_INJECT);
         _injector.setControl(FLOOR_INJECT);  
-        // }
+
+        if(_timer > 45){
+        _floor.setControl(REVERSE);
+        }else{
+        _floor.setControl(FLOOR_INJECT);
+        }
+        if(_timer <= 20){
+            _slide.setControl(INTAKE_IN);
+        } else if(_timer > 20 || _timer > 30) {
+            _slide.setControl(INTAKE_OUT);
+        } else {
+            _slide.setControl(INTAKE_IN);
+        }
+        
+    }
+
+    private void handleEmergency(){
+        _slide.setControl(INTAKE_OUT);
+        _intake.setControl(REVERSE);
+        _floor.setControl(REVERSE);
+        _injector.setControl(REVERSE);
     }
 
     private void handleInjectHopperOut() {
         _slide.setControl(INTAKE_OUT);
         _intake.setControl(INTAKE);
-        _floor.setControl(FLOOR_INJECT);
         _injector.setControl(FLOOR_INJECT);
+
+        if(_timer > 45){
+        _floor.setControl(REVERSE);
+        }else{
+        _floor.setControl(FLOOR_INJECT);
+        }
+        
     }
 }

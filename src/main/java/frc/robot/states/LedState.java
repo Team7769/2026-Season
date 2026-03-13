@@ -9,5 +9,7 @@ public enum LedState {
         Disco,
         ALLIANCE,
         SHOOT,
-        INTAKE
+        INTAKE,
+        WARNING,
+        ACTIVE
 }

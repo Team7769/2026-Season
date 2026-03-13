@@ -41,16 +41,16 @@ public class Shooter extends SubsystemBase {
     private TalonFX _rightShooter2;
     private double _hoodPosition = .5;
     private VelocityVoltage _shooterVelocity = new VelocityVoltage(0);
-    private final VelocityTorqueCurrentFOC shotVelocityTorqueCurrentFOC = new VelocityTorqueCurrentFOC(60);
+    private final VelocityTorqueCurrentFOC shotVelocityTorqueCurrentFOC = new VelocityTorqueCurrentFOC(52);
     private final VelocityTorqueCurrentFOC idleVelocityTorqueCurrentFOC = new VelocityTorqueCurrentFOC(35);
-    private final PositionDutyCycle HOOD_DOWN = new PositionDutyCycle(.1);
+    private final PositionDutyCycle HOOD_DOWN = new PositionDutyCycle(.05);
     private final PositionDutyCycle HOOD_MOVE = new PositionDutyCycle(.6);
     private final VoltageOut SHOOTER_VOLTAGE = new VoltageOut(3);
     private DigitalInput _leftPhotoEye;
     private DigitalInput _rightPhotoEye;
     private TalonFX _hoodMotor;
-    private double _manualHood = 0.5;
-    private double hoodTest = 0.5;
+    private final PositionDutyCycle EMERGENCY_HOOD = new PositionDutyCycle(0.5);
+    private final VelocityTorqueCurrentFOC EMERGENCY_SHOT = new VelocityTorqueCurrentFOC(62);
 
 
     private SimpleMotorFeedforward _ff = new SimpleMotorFeedforward(0, 0);
@@ -92,11 +92,11 @@ public class Shooter extends SubsystemBase {
         // _shooterMap.put(2.0, 60.0);
 
         // _shooterMap.put(3.5, 60.0);
-        _shooterMap.put(1.0, 52.0);
-        _shooterMap.put(2.0, 52.0);
-        _shooterMap.put(3.0, 52.0);
-        _shooterMap.put(4.0, 55.0);
-        _shooterMap.put(5.0, 58.0);
+        _shooterMap.put(1.0, 51.5);
+        _shooterMap.put(2.0, 51.5);
+        _shooterMap.put(3.0, 51.5);
+        _shooterMap.put(4.0, 54.5);
+        _shooterMap.put(5.0, 58.5);
 
         configShooter();
         configHood();
@@ -167,6 +167,17 @@ public class Shooter extends SubsystemBase {
         _rightShooter1.setControl(shotVelocityTorqueCurrentFOC);
     }
 
+    private void emergencyShot(){
+        _hoodMotor.setControl(EMERGENCY_HOOD);
+        _leftShooter1.setControl(EMERGENCY_SHOT);
+        _rightShooter1.setControl(EMERGENCY_SHOT);
+        
+    }
+
+    private void farShot(){
+
+    }
+
     private void stop() {
         _leftShooter1.set(0);
         _rightShooter1.set(0);
@@ -232,6 +243,9 @@ public class Shooter extends SubsystemBase {
                 break;
             case STOP:
                 stop();
+                break;
+            case EMERGENCY:
+                emergencyShot();
                 break;
             default:
                 setIdle();

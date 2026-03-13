@@ -6,6 +6,7 @@ package frc.robot;
 
 import java.util.function.Consumer;
 
+import com.ctre.phoenix6.configs.LEDConfigs;
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
 
@@ -13,6 +14,9 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
+import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.GenericHID.RumbleType;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.RobotModeTriggers;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
@@ -28,6 +32,7 @@ import frc.robot.states.HopperState;
 import frc.robot.states.IntakeState;
 import frc.robot.states.LedState;
 import frc.robot.subsystems.Drivetrain;
+import frc.robot.subsystems.GameManager;
 import frc.robot.subsystems.Hopper;
 import frc.robot.subsystems.Ledinator;
 import frc.robot.subsystems.Shooter;
@@ -44,6 +49,7 @@ public class RobotContainer {
   private final SendableChooser<Command> autoChooser;
   private final SendableChooser<ClimbType> climbChooser;
   private final CommandXboxController DRIVER_CONTROLLER = new CommandXboxController(0);
+  private final CommandXboxController OPERATOR_CONTROLLER = new CommandXboxController(1);
 
   public final Climb CLIMB = new Climb();
   public final Vision VISION = new Vision();
@@ -53,6 +59,8 @@ public class RobotContainer {
   public final Hopper HOPPER = _isComp ? new Hopper() : null;
   public final Shooter SHOOTER = _isComp ? new Shooter(DRIVETRAIN) : null;
   public final Ledinator LEDINATOR = _isComp ? new Ledinator() : null;
+  //private final GameManager GAME_MANAGER = new GameManager(DRIVER_CONTROLLER);
+
 
   public RobotContainer() {
 
@@ -82,12 +90,12 @@ public class RobotContainer {
     RobotModeTriggers.disabled().onTrue(
         Commands.runOnce(() -> {
           DRIVETRAIN.setWantedState(DrivetrainState.IDLE);
-          LEDINATOR.setWantedState(LedState.IDLE);
+          LEDINATOR.setWantedState(LedState.CREW);
         }));
 
     RobotModeTriggers.autonomous().onTrue(Commands.runOnce(() -> DRIVETRAIN.setWantedState(DrivetrainState.AUTO)));
 
-    RobotModeTriggers.teleop().onTrue(Commands.runOnce(() -> DRIVETRAIN.setWantedState(DrivetrainState.OPEN_LOOP)));
+    RobotModeTriggers.teleop().onTrue(Commands.runOnce(() ->  DRIVETRAIN.setWantedState(DrivetrainState.OPEN_LOOP)));
 
     DRIVER_CONTROLLER.back().onTrue(
         Commands.runOnce(() -> DRIVETRAIN.seedFieldCentric()));
@@ -144,19 +152,26 @@ public class RobotContainer {
     // Intake out
     DRIVER_CONTROLLER.leftBumper().onTrue(
         Commands.runOnce(() -> {
-          LEDINATOR.setWantedState(LedState.INTAKE);
           HOPPER.setWantedState(HopperState.FLOOR_INTAKE);
         }));
 
     // Intake in
     DRIVER_CONTROLLER.leftTrigger().onTrue(
         Commands.runOnce(() -> {
-          LEDINATOR.setWantedState(LedState.CREW);
           HOPPER.setWantedState(HopperState.STOW);
         }));
 
+      OPERATOR_CONTROLLER.b().onTrue(
+        Commands.runOnce(() -> {
+          SHOOTER.setWantedState(ShooterState.EMERGENCY);
+        })).onFalse(
+          Commands.runOnce( () -> {
+            SHOOTER.setWantedState(ShooterState.IDLE);
+          })
+        );
+
     // Brake mode
-    DRIVER_CONTROLLER.pov(90).onTrue(
+    DRIVER_CONTROLLER.y().onTrue(
         Commands.runOnce(() -> DRIVETRAIN.setWantedState(DrivetrainState.IDLE))).onFalse(
             Commands.runOnce(() -> DRIVETRAIN.setWantedState(DrivetrainState.OPEN_LOOP)));
 
@@ -170,13 +185,43 @@ public class RobotContainer {
     DRIVER_CONTROLLER.povUp().onTrue(
         Commands.runOnce(() -> CLIMB.setWantedState(ClimbState.EXTEND)));
 
-    // Manual Climb retract
-    DRIVER_CONTROLLER.povDown().onTrue(
+    OPERATOR_CONTROLLER.povDown().onTrue(
         Commands.runOnce(() -> CLIMB.setWantedState(ClimbState.RETRACT)));
 
-    // Manual Climb extend
-    DRIVER_CONTROLLER.povUp().onTrue(
+    OPERATOR_CONTROLLER.povUp().onTrue(
         Commands.runOnce(() -> CLIMB.setWantedState(ClimbState.EXTEND)));
+
+    OPERATOR_CONTROLLER.a().onTrue(
+      Commands.runOnce(() -> HOPPER.setWantedState(HopperState.EMERGENCY))
+    ).onFalse(Commands.runOnce(() -> HOPPER.setWantedState(HopperState.IDLE)));
+
+    OPERATOR_CONTROLLER.x().onTrue(
+      Commands.runOnce(() -> HOPPER.setWantedState(HopperState.JAM))
+    ).onFalse(Commands.runOnce(() -> HOPPER.setWantedState(HopperState.IDLE)));
+
+      OPERATOR_CONTROLLER.leftTrigger().onTrue(
+        Commands.runOnce(() -> {
+          LEDINATOR.setWantedState(LedState.WARNING);
+        })).onFalse(
+            Commands.runOnce(() -> {
+              LEDINATOR.setWantedState(LedState.CREW);
+            }));
+
+    OPERATOR_CONTROLLER.rightTrigger().onTrue(
+        Commands.runOnce(() -> {
+          LEDINATOR.setWantedState(LedState.ACTIVE);
+          DRIVER_CONTROLLER.setRumble(RumbleType.kBothRumble, 100);
+        })).onFalse(
+            Commands.runOnce(() -> {
+              LEDINATOR.setWantedState(LedState.CREW);
+              DRIVER_CONTROLLER.setRumble(RumbleType.kBothRumble, 0);
+            }));;
+        
+        
+    OPERATOR_CONTROLLER.rightBumper().onTrue(
+            Commands.runOnce(() -> {
+              LEDINATOR.setWantedState(LedState.CREW);
+            }));
 
     // Climb sequence. Release start to abort.
     DRIVER_CONTROLLER.start().onTrue(
@@ -190,7 +235,7 @@ public class RobotContainer {
             Commands.runOnce(() -> DRIVETRAIN.setTargetEngageLeftClimb(GeometryUtil::isRedAlliance)),
             Commands.runOnce(() -> DRIVETRAIN.setWantedState(DrivetrainState.CLIMB_ENGAGE))));
            
-        DRIVER_CONTROLLER.pov(270).onTrue(
+        DRIVER_CONTROLLER.x().onTrue(
         Commands.runOnce(() -> {
           DRIVETRAIN.setTargetLeftTrench(GeometryUtil::isRedAlliance);
           DRIVETRAIN.setWantedState(DrivetrainState.TRENCH_LEFT);
@@ -205,6 +250,7 @@ public class RobotContainer {
           DRIVETRAIN.setWantedState(DrivetrainState.OPEN_LOOP);
           CLIMB.setWantedState(ClimbState.ENGAGE);
         }));
+
   }
 
   private void registerNamedCommands() {
