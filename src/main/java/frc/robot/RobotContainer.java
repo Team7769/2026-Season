@@ -210,7 +210,7 @@ public class RobotContainer {
     OPERATOR_CONTROLLER.rightTrigger().onTrue(
         Commands.runOnce(() -> {
           LEDINATOR.setWantedState(LedState.ACTIVE);
-          DRIVER_CONTROLLER.setRumble(RumbleType.kBothRumble, 100);
+          DRIVER_CONTROLLER.setRumble(RumbleType.kBothRumble, .8);
         })).onFalse(
             Commands.runOnce(() -> {
               LEDINATOR.setWantedState(LedState.CREW);
