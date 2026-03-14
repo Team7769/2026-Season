@@ -164,9 +164,11 @@ public class RobotContainer {
       OPERATOR_CONTROLLER.b().onTrue(
         Commands.runOnce(() -> {
           SHOOTER.setWantedState(ShooterState.EMERGENCY);
+          HOPPER.setWantedState(HopperState.INJECTING);
         })).onFalse(
           Commands.runOnce( () -> {
             SHOOTER.setWantedState(ShooterState.IDLE);
+            HOPPER.setWantedState(HopperState.IDLE);
           })
         );
 

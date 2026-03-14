@@ -86,6 +86,8 @@ public class Hopper extends SubsystemBase {
         candiConfig.DigitalInputs.S2CloseState = S2CloseStateValue.CloseWhenHigh;
         _candiRight.getConfigurator().apply(candiConfig);
         _intake.getConfigurator().apply(intakeConfiguration);
+
+        _slide.setPosition(0.0);
     }
 
     private void configInjector(){
