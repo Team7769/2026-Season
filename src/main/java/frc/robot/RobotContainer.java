@@ -173,7 +173,7 @@ public class RobotContainer {
         );
 
     // Brake mode
-    DRIVER_CONTROLLER.y().onTrue(
+    DRIVER_CONTROLLER.a().onTrue(
         Commands.runOnce(() -> DRIVETRAIN.setWantedState(DrivetrainState.IDLE))).onFalse(
             Commands.runOnce(() -> DRIVETRAIN.setWantedState(DrivetrainState.OPEN_LOOP)));
 

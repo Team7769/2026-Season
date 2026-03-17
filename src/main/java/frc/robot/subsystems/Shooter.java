@@ -49,8 +49,8 @@ public class Shooter extends SubsystemBase {
     private DigitalInput _leftPhotoEye;
     private DigitalInput _rightPhotoEye;
     private TalonFX _hoodMotor;
-    private final PositionDutyCycle EMERGENCY_HOOD = new PositionDutyCycle(0.5);
-    private final VelocityTorqueCurrentFOC EMERGENCY_SHOT = new VelocityTorqueCurrentFOC(62);
+    private final PositionDutyCycle EMERGENCY_HOOD = new PositionDutyCycle(0.44);
+    private final VelocityTorqueCurrentFOC EMERGENCY_SHOT = new VelocityTorqueCurrentFOC(51.5);
 
 
     private SimpleMotorFeedforward _ff = new SimpleMotorFeedforward(0, 0);
