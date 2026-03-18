@@ -7,13 +7,13 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Comp Left Trench Start to Left Far Mid"
+            "pathName": "Right Trench Start to Far Right Mid Prep"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "Comp Left Far Mid to Left Trench Shoot"
+            "pathName": "Right Far Mid to Bump Shoot"
           }
         },
         {
@@ -31,13 +31,7 @@
         {
           "type": "named",
           "data": {
-            "name": "Shoot"
-          }
-        },
-        {
-          "type": "wait",
-          "data": {
-            "waitTime": 0.4
+            "name": "Start Shooting"
           }
         },
         {
@@ -49,7 +43,7 @@
         {
           "type": "wait",
           "data": {
-            "waitTime": 2.0
+            "waitTime": 3.5
           }
         },
         {
@@ -61,13 +55,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Left Trench to Close Mid"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "Close Left Mid to Left Trench"
+            "pathName": "Right Bump Shoot to Right Mid"
           }
         },
         {
@@ -85,7 +73,7 @@
         {
           "type": "named",
           "data": {
-            "name": "Shoot"
+            "name": "Start Shooting"
           }
         },
         {
@@ -97,31 +85,7 @@
         {
           "type": "wait",
           "data": {
-            "waitTime": 1.4
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "Idle"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "IntakeIn"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "Left Trench to Prep Climb"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "Auto Climb"
+            "waitTime": 3.0
           }
         }
       ]

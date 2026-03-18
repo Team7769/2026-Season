@@ -3,25 +3,25 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 3.972,
-        "y": 7.234
+        "x": 4.207600696902221,
+        "y": 7.270736257918194
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.469692062429093,
-        "y": 6.714820050986524
+        "x": 2.169748572804765,
+        "y": 7.158393642328211
       },
       "isLocked": false,
       "linkedName": "Left Trench Aiming At Hub"
     },
     {
       "anchor": {
-        "x": 1.211361969795516,
-        "y": 4.9734822073599965
+        "x": 2.9280070326237153,
+        "y": 4.1649263931645395
       },
       "prevControl": {
-        "x": 1.3660113163101681,
-        "y": 6.0007957234930425
+        "x": 3.0826563791383674,
+        "y": 5.1922399092975855
       },
       "nextControl": null,
       "isLocked": false,
@@ -33,8 +33,8 @@
   "pointTowardsZones": [],
   "eventMarkers": [],
   "globalConstraints": {
-    "maxVelocity": 3.9,
-    "maxAcceleration": 3.5,
+    "maxVelocity": 4.3,
+    "maxAcceleration": 4.0,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0,
     "nominalVoltage": 12.0,
@@ -42,13 +42,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -88.26429541107161
+    "rotation": -166.37300514010852
   },
   "reversed": false,
   "folder": null,
   "idealStartingState": {
     "velocity": 0,
-    "rotation": -74.04672489010737
+    "rotation": -80.21759296819269
   },
   "useDefaultConstraints": true
 }

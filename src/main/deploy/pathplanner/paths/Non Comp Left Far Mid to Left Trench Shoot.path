@@ -3,29 +3,29 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 6.468630278442881,
-        "y": 4.574893295312021
+        "x": 8.232730281622956,
+        "y": 4.947590479082461
       },
       "prevControl": null,
       "nextControl": {
-        "x": 6.654358525715388,
-        "y": 6.258027267610125
+        "x": 8.220307042163942,
+        "y": 6.537765129836331
       },
       "isLocked": false,
-      "linkedName": "Close Mid"
+      "linkedName": "Left Far Mid"
     },
     {
       "anchor": {
-        "x": 6.021393657918354,
-        "y": 7.134080623869034
+        "x": 5.462347882262696,
+        "y": 7.260083259398069
       },
       "prevControl": {
-        "x": 6.67614451195779,
-        "y": 6.859507685078301
+        "x": 7.273954512862907,
+        "y": 7.061248385307802
       },
       "nextControl": {
-        "x": 5.636273234688901,
-        "y": 7.2955827368362245
+        "x": 5.213840212925663,
+        "y": 7.287358491398475
       },
       "isLocked": false,
       "linkedName": null
@@ -36,8 +36,8 @@
         "y": 7.270736257918194
       },
       "prevControl": {
-        "x": 4.932257719695004,
-        "y": 7.318658974815362
+        "x": 4.480911965000542,
+        "y": 7.270736257918194
       },
       "nextControl": null,
       "isLocked": false,
@@ -46,12 +46,27 @@
   ],
   "rotationTargets": [
     {
-      "waypointRelativePos": 1.7294669404413792,
-      "rotationDegrees": -89.16158502559776
+      "waypointRelativePos": 0.501321861997421,
+      "rotationDegrees": -124.98645877123869
+    },
+    {
+      "waypointRelativePos": 0.9691405966951576,
+      "rotationDegrees": -96.12336768766545
     }
   ],
   "constraintZones": [],
-  "pointTowardsZones": [],
+  "pointTowardsZones": [
+    {
+      "fieldPosition": {
+        "x": 4.6,
+        "y": 4.03
+      },
+      "rotationOffset": 0.0,
+      "minWaypointRelativePos": 1.5000422430196574,
+      "maxWaypointRelativePos": 2.0,
+      "name": "Point Towards Zone"
+    }
+  ],
   "eventMarkers": [
     {
       "name": "PrepShooter",
@@ -80,8 +95,8 @@
   "reversed": false,
   "folder": null,
   "idealStartingState": {
-    "velocity": 0,
-    "rotation": 92.86240522611169
+    "velocity": 0.0,
+    "rotation": 66.32716100761054
   },
   "useDefaultConstraints": true
 }

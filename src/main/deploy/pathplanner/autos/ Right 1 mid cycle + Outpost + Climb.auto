@@ -7,13 +7,13 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Comp Left Trench Start to Left Far Mid"
+            "pathName": "Right Trench Start to Far Right Mid Prep"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "Comp Left Far Mid to Left Trench Shoot"
+            "pathName": "Right Center Mid to Right Trench Shoot"
           }
         },
         {
@@ -31,13 +31,7 @@
         {
           "type": "named",
           "data": {
-            "name": "Shoot"
-          }
-        },
-        {
-          "type": "wait",
-          "data": {
-            "waitTime": 0.4
+            "name": "Start Shooting"
           }
         },
         {
@@ -61,13 +55,19 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Left Trench to Close Mid"
+            "pathName": "right shoot to outpost"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 1.0
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "Close Left Mid to Left Trench"
+            "pathName": "Outpost to Shoot"
           }
         },
         {
@@ -85,7 +85,7 @@
         {
           "type": "named",
           "data": {
-            "name": "Shoot"
+            "name": "Start Shooting"
           }
         },
         {
@@ -97,7 +97,7 @@
         {
           "type": "wait",
           "data": {
-            "waitTime": 1.4
+            "waitTime": 2.0
           }
         },
         {
@@ -115,7 +115,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Left Trench to Prep Climb"
+            "pathName": "outpost shoot to climb prep"
           }
         },
         {

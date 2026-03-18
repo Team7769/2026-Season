@@ -7,25 +7,19 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Comp Left Trench Start to Left Far Mid"
+            "pathName": "Non Comp Left Trench Start to Left Far Mid"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "Comp Left Far Mid to Left Trench Shoot"
+            "pathName": "Non Comp Left Far Mid to Left Trench Shoot"
           }
         },
         {
           "type": "named",
           "data": {
             "name": "PrepShooter"
-          }
-        },
-        {
-          "type": "wait",
-          "data": {
-            "waitTime": 0.05
           }
         },
         {
@@ -49,7 +43,7 @@
         {
           "type": "wait",
           "data": {
-            "waitTime": 2.0
+            "waitTime": 2.5
           }
         },
         {
@@ -59,27 +53,27 @@
           }
         },
         {
-          "type": "path",
+          "type": "wait",
           "data": {
-            "pathName": "Left Trench to Close Mid"
+            "waitTime": 0.125
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "Close Left Mid to Left Trench"
+            "pathName": "left trench shoot to depot"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Depot to Prep Shoot"
           }
         },
         {
           "type": "named",
           "data": {
             "name": "PrepShooter"
-          }
-        },
-        {
-          "type": "wait",
-          "data": {
-            "waitTime": 0.05
           }
         },
         {
@@ -97,7 +91,7 @@
         {
           "type": "wait",
           "data": {
-            "waitTime": 1.4
+            "waitTime": 2.0
           }
         },
         {
@@ -113,9 +107,15 @@
           }
         },
         {
+          "type": "wait",
+          "data": {
+            "waitTime": 0.125
+          }
+        },
+        {
           "type": "path",
           "data": {
-            "pathName": "Left Trench to Prep Climb"
+            "pathName": "Depot prep shoot to left prep climb"
           }
         },
         {

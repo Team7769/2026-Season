@@ -3,13 +3,13 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 8.344539436754088,
-        "y": 3.5810341385908524
+        "x": 8.605427465393396,
+        "y": 3.059258081312238
       },
       "prevControl": null,
       "nextControl": {
-        "x": 8.3569626762131,
-        "y": 2.7238306159188435
+        "x": 8.617850704852408,
+        "y": 2.202054558640229
       },
       "isLocked": false,
       "linkedName": "Far Right Mid Prep"
@@ -74,8 +74,8 @@
   "pointTowardsZones": [],
   "eventMarkers": [],
   "globalConstraints": {
-    "maxVelocity": 3.9,
-    "maxAcceleration": 3.5,
+    "maxVelocity": 4.3,
+    "maxAcceleration": 4.0,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0,
     "nominalVoltage": 12.0,
@@ -89,7 +89,7 @@
   "folder": null,
   "idealStartingState": {
     "velocity": 0,
-    "rotation": -73.61045966596531
+    "rotation": -79.99202019855859
   },
   "useDefaultConstraints": true
 }
