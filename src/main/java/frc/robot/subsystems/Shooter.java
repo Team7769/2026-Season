@@ -51,6 +51,8 @@ public class Shooter extends SubsystemBase {
     private TalonFX _hoodMotor;
     private final PositionDutyCycle EMERGENCY_HOOD = new PositionDutyCycle(0.44);
     private final VelocityTorqueCurrentFOC EMERGENCY_SHOT = new VelocityTorqueCurrentFOC(51.5);
+    private final PositionDutyCycle EMERGENCY_FEED_HOOD = new PositionDutyCycle(0.7);
+    private final VelocityTorqueCurrentFOC EMERGENCY_FEED_SHOT = new VelocityTorqueCurrentFOC(61.5);
 
 
     private SimpleMotorFeedforward _ff = new SimpleMotorFeedforward(0, 0);
@@ -63,6 +65,7 @@ public class Shooter extends SubsystemBase {
     
     private final Drivetrain DRIVETRAIN;
     private InterpolatingDoubleTreeMap _hoodMap = new InterpolatingDoubleTreeMap();
+    private InterpolatingDoubleTreeMap _feedMap = new InterpolatingDoubleTreeMap();
     private InterpolatingDoubleTreeMap _shooterMap = new InterpolatingDoubleTreeMap();
 
     private final double[] kDistanceIDs = {1.77, 2, 2.5, 3, 3.5, 4};
@@ -88,6 +91,11 @@ public class Shooter extends SubsystemBase {
         _hoodMap.put(4.0, 0.48);
         _hoodMap.put(5.0, 0.55);
 
+        _feedMap.put(1.0, .02);
+        _feedMap.put(2.0, .15);
+        _feedMap.put(3.0, .4);
+        _feedMap.put(4.0, 0.48);
+        _feedMap.put(5.0, 0.55);
 
         // _shooterMap.put(2.0, 60.0);
 
@@ -136,7 +144,8 @@ public class Shooter extends SubsystemBase {
         _rightShooter2.setNeutralMode(NeutralModeValue.Coast);
 
         _leftShooter2.setControl(new Follower(_leftShooter1.getDeviceID(), MotorAlignmentValue.Aligned));
-        _rightShooter2.setControl(new Follower(_rightShooter1.getDeviceID(), MotorAlignmentValue.Aligned));
+        _rightShooter1.setControl(new Follower(_leftShooter1.getDeviceID(), MotorAlignmentValue.Aligned));
+        _rightShooter2.setControl(new Follower(_leftShooter1.getDeviceID(), MotorAlignmentValue.Aligned));
 
     }
 
@@ -158,35 +167,42 @@ public class Shooter extends SubsystemBase {
 
     private void prepShooter() {
         _leftShooter1.setControl(shotVelocityTorqueCurrentFOC);
-        _rightShooter1.setControl(shotVelocityTorqueCurrentFOC);
+       // _rightShooter1.setControl(shotVelocityTorqueCurrentFOC);
         _hoodMotor.setControl(HOOD_MOVE);
     }
 
     private void shoot(double shot) {
         _leftShooter1.setControl(shotVelocityTorqueCurrentFOC);
-        _rightShooter1.setControl(shotVelocityTorqueCurrentFOC);
+       // _rightShooter1.setControl(shotVelocityTorqueCurrentFOC);
     }
 
     private void emergencyShot(){
         _hoodMotor.setControl(EMERGENCY_HOOD);
         _leftShooter1.setControl(EMERGENCY_SHOT);
-        _rightShooter1.setControl(EMERGENCY_SHOT);
+       // _rightShooter1.setControl(EMERGENCY_SHOT);
         
     }
 
-    private void farShot(){
+        private void emergencyFeed(){
+        _hoodMotor.setControl(EMERGENCY_FEED_HOOD);
+        _leftShooter1.setControl(EMERGENCY_FEED_SHOT);
+       // _rightShooter1.setControl(EMERGENCY_SHOT);
+        
+    }
+
+    private void feedShot(){
 
     }
 
     private void stop() {
         _leftShooter1.set(0);
-        _rightShooter1.set(0);
+       // _rightShooter1.set(0);
         _hoodMotor.setControl(HOOD_DOWN);
     }
 
     private void setIdle() {
         _leftShooter1.setControl(idleVelocityTorqueCurrentFOC);
-        _rightShooter1.setControl(idleVelocityTorqueCurrentFOC);
+       // _rightShooter1.setControl(idleVelocityTorqueCurrentFOC);
         _hoodMotor.setControl(HOOD_DOWN);
     }
 
@@ -246,6 +262,9 @@ public class Shooter extends SubsystemBase {
                 break;
             case EMERGENCY:
                 emergencyShot();
+                break;
+            case EMERGENCY_FEED:
+                emergencyFeed();
                 break;
             default:
                 setIdle();

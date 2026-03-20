@@ -162,13 +162,15 @@ public class Hopper extends SubsystemBase {
     }
 
     private void handleInject() {
-        _intake.setControl(INTAKE);
+        _intake.setControl(HALT);
         _injector.setControl(FLOOR_INJECT);  
 
         if(_timer > 45){
         _floor.setControl(REVERSE);
+        _injector.setControl(REVERSE);
         }else{
         _floor.setControl(FLOOR_INJECT);
+        _injector.setControl(FLOOR_INJECT);
         }
         if(_timer <= 20){
             _slide.setControl(INTAKE_IN);
