@@ -70,7 +70,7 @@ public class RobotContainer {
     climbChooser = new SendableChooser<ClimbType>();
     climbChooser.addOption("Front Climb", ClimbType.FRONT);
     climbChooser.addOption("Side Climb", ClimbType.SIDE);
-    climbChooser.setDefaultOption("Front Climb", ClimbType.FRONT);
+    climbChooser.setDefaultOption("Front Climb", ClimbType.SIDE);
     climbChooser.onChange(value -> {
       DRIVETRAIN.setWantedClimb(value);
     });
@@ -186,6 +186,9 @@ public class RobotContainer {
 
     DRIVER_CONTROLLER.povUp().onTrue(
         Commands.runOnce(() -> CLIMB.setWantedState(ClimbState.EXTEND)));
+
+            DRIVER_CONTROLLER.povUp().onTrue(
+        Commands.runOnce(() -> CLIMB.setWantedState(ClimbState.ENGAGE)));
 
     OPERATOR_CONTROLLER.povDown().onTrue(
         Commands.runOnce(() -> CLIMB.setWantedState(ClimbState.RETRACT)));
