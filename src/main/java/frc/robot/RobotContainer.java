@@ -187,7 +187,7 @@ public class RobotContainer {
     DRIVER_CONTROLLER.povUp().onTrue(
         Commands.runOnce(() -> CLIMB.setWantedState(ClimbState.EXTEND)));
 
-            DRIVER_CONTROLLER.povUp().onTrue(
+    DRIVER_CONTROLLER.povRight().onTrue(
         Commands.runOnce(() -> CLIMB.setWantedState(ClimbState.ENGAGE)));
 
     OPERATOR_CONTROLLER.povDown().onTrue(
