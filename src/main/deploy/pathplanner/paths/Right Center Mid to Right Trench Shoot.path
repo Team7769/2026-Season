@@ -4,12 +4,12 @@
     {
       "anchor": {
         "x": 8.605427465393396,
-        "y": 3.059258081312238
+        "y": 3.071681320771254
       },
       "prevControl": null,
       "nextControl": {
         "x": 8.617850704852408,
-        "y": 2.202054558640229
+        "y": 2.214477798099245
       },
       "isLocked": false,
       "linkedName": "Far Right Mid Prep"

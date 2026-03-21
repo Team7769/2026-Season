@@ -1,0 +1,97 @@
+{
+  "version": "2025.0",
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "path",
+          "data": {
+            "pathName": "SHOP Right Trench Start to Far Right Mid Prep"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "SHOP Right Far Mid to Bump Shoot"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "PrepShooter"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 0.05
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Start Shooting"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Injecting"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 3.5
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Idle"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "SHOP Right Bump Shoot to Right Mid"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "PrepShooter"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 0.05
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Start Shooting"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Injecting"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 3.0
+          }
+        }
+      ]
+    }
+  },
+  "resetOdom": true,
+  "folder": null,
+  "choreoAuto": false
+}

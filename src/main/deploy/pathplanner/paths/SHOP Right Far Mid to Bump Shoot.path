@@ -3,16 +3,16 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 8.605427465393396,
-        "y": 3.071681320771254
+        "x": 7.934572534606605,
+        "y": 3.0219883629351942
       },
       "prevControl": null,
       "nextControl": {
-        "x": 7.623991548131239,
-        "y": 3.0344116023942105
+        "x": 6.953136617344449,
+        "y": 2.984718644558151
       },
       "isLocked": false,
-      "linkedName": "Far Right Mid Prep"
+      "linkedName": "SHOP FAR RIGHT MID"
     },
     {
       "anchor": {
@@ -69,7 +69,7 @@
   "folder": null,
   "idealStartingState": {
     "velocity": 3.0,
-    "rotation": -79.99202019855859
+    "rotation": -90.0
   },
   "useDefaultConstraints": false
 }

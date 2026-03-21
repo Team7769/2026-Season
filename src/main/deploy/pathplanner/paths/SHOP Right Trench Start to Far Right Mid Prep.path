@@ -3,81 +3,94 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 4.431219007164484,
-        "y": 0.7979498514643852
+        "x": 4.418795767705469,
+        "y": 0.8354982181486219
       },
       "prevControl": null,
       "nextControl": {
-        "x": 4.956978113120969,
-        "y": 0.7982284997715783
-      },
-      "isLocked": false,
-      "linkedName": "Right Start"
-    },
-    {
-      "anchor": {
-        "x": 5.751424928189949,
-        "y": 0.7979498514643852
-      },
-      "prevControl": {
-        "x": 5.167532673616262,
-        "y": 0.8106517392305933
-      },
-      "nextControl": {
-        "x": 6.273682002500975,
-        "y": 0.78658876439559
+        "x": 4.9445548736619545,
+        "y": 0.835776866455815
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 7.176408192503532,
-        "y": 0.974691961766847
+        "x": 5.7232359109020035,
+        "y": 0.8354982181486219
       },
       "prevControl": {
-        "x": 6.8421054136911135,
-        "y": 0.8531817609339076
+        "x": 5.139343656328316,
+        "y": 0.84820010591483
       },
       "nextControl": {
-        "x": 7.439955926358618,
-        "y": 1.070484578817651
+        "x": 6.24549298521303,
+        "y": 0.8241371310798267
+      },
+      "isLocked": false,
+      "linkedName": "Sideways Right Start"
+    },
+    {
+      "anchor": {
+        "x": 7.648838027049269,
+        "y": 0.9970003311158131
+      },
+      "prevControl": {
+        "x": 7.314535248236851,
+        "y": 0.8754901302828737
+      },
+      "nextControl": {
+        "x": 7.912385760904355,
+        "y": 1.092792948166617
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 8.605427465393396,
-        "y": 3.071681320771254
+        "x": 7.934572534606605,
+        "y": 3.0219883629351942
       },
       "prevControl": {
-        "x": 8.85389225457369,
-        "y": 2.0778221640500845
+        "x": 7.822763379475475,
+        "y": 1.55604610677147
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "Far Right Mid Prep"
+      "linkedName": "SHOP FAR RIGHT MID"
     }
   ],
   "rotationTargets": [
     {
       "waypointRelativePos": 0.8870787516249681,
-      "rotationDegrees": 0.0
+      "rotationDegrees": -90.0
     },
     {
       "waypointRelativePos": 2.1950532601677737,
-      "rotationDegrees": -80.2287498738361
+      "rotationDegrees": -89.09688077691992
     }
   ],
   "constraintZones": [
     {
       "name": "Constraints Zone",
       "minWaypointRelativePos": 0.0,
-      "maxWaypointRelativePos": 2.329345011770405,
+      "maxWaypointRelativePos": 2.2437811949727005,
       "constraints": {
         "maxVelocity": 4.5,
-        "maxAcceleration": 4.5,
+        "maxAcceleration": 6.0,
+        "maxAngularVelocity": 540.0,
+        "maxAngularAcceleration": 720.0,
+        "nominalVoltage": 12.0,
+        "unlimited": false
+      }
+    },
+    {
+      "name": "Constraints Zone",
+      "minWaypointRelativePos": 2.477137058966406,
+      "maxWaypointRelativePos": 3.0,
+      "constraints": {
+        "maxVelocity": 2.0,
+        "maxAcceleration": 4.0,
         "maxAngularVelocity": 540.0,
         "maxAngularAcceleration": 720.0,
         "nominalVoltage": 12.0,
@@ -109,13 +122,13 @@
   },
   "goalEndState": {
     "velocity": 3.0,
-    "rotation": -79.99202019855859
+    "rotation": -90.0
   },
   "reversed": false,
   "folder": null,
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 0.0
+    "rotation": -90.0
   },
   "useDefaultConstraints": true
 }

@@ -27,6 +27,7 @@ public class Hopper extends SubsystemBase {
     private CANdi _candiRight;
 
     private final VoltageOut HALT = new VoltageOut(0);
+     private final VoltageOut SLOW = new VoltageOut(5);
     private final VoltageOut FLOOR_INJECT = new VoltageOut(11);
     private final VoltageOut REVERSE = new VoltageOut(-11);
     //private final VelocityTorqueCurrentFOC INTAKE = new VelocityTorqueCurrentFOC(85);
@@ -65,6 +66,11 @@ public class Hopper extends SubsystemBase {
                                  .withKP(0.68)
                                  .withKS(4.7)
                                  .withKV(0.03);
+        // var intakeCurrentLimits = new CurrentLimitsConfigs()
+        //                             .withStatorCurrentLimit(80) //60
+        //                             .withSupplyCurrentLimit(60) //40
+        //                             .withSupplyCurrentLowerTime(1)
+        //                             .withSupplyCurrentLowerLimit(40); //30
         var intakeCurrentLimits = new CurrentLimitsConfigs()
                                     .withStatorCurrentLimit(100) //60
                                     .withSupplyCurrentLimit(60) //40
@@ -162,20 +168,20 @@ public class Hopper extends SubsystemBase {
     }
 
     private void handleInject() {
-        _intake.setControl(HALT);
+        _intake.setControl(SLOW);
         _injector.setControl(FLOOR_INJECT);  
 
-        if(_timer > 45){
-        _floor.setControl(REVERSE);
-        _injector.setControl(REVERSE);
-        }else{
+        //if(_timer > 45){
+       // _floor.setControl(REVERSE);
+        //_injector.setControl(REVERSE);
+       // }else{
         _floor.setControl(FLOOR_INJECT);
-        _injector.setControl(FLOOR_INJECT);
-        }
+        //_injector.setControl(FLOOR_INJECT);
+       // }
         if(_timer <= 20){
             _slide.setControl(INTAKE_IN);
         } else if(_timer > 20 || _timer > 30) {
-            _slide.setControl(INTAKE_OUT);
+            //_slide.setControl(INTAKE_OUT);
         } else {
             _slide.setControl(INTAKE_IN);
         }
@@ -194,11 +200,11 @@ public class Hopper extends SubsystemBase {
         _intake.setControl(INTAKE);
         _injector.setControl(FLOOR_INJECT);
 
-        if(_timer > 45){
-        _floor.setControl(REVERSE);
-        }else{
+       // if(_timer > 45){
+       // _floor.setControl(REVERSE);
+       // }else{
         _floor.setControl(FLOOR_INJECT);
-        }
+       // }
         
     }
 }

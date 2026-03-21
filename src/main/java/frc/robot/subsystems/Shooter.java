@@ -87,7 +87,8 @@ public class Shooter extends SubsystemBase {
         //everything -.38
         _hoodMap.put(1.0, .02);
         _hoodMap.put(2.0, .15);
-        _hoodMap.put(3.0, .4);
+        _hoodMap.put(3.0, .32);
+        _hoodMap.put(3.5, .4);
         _hoodMap.put(4.0, 0.48);
         _hoodMap.put(5.0, 0.55);
 
@@ -103,6 +104,7 @@ public class Shooter extends SubsystemBase {
         _shooterMap.put(1.0, 51.5);
         _shooterMap.put(2.0, 51.5);
         _shooterMap.put(3.0, 51.5);
+        _shooterMap.put(3.5, 53.0);        
         _shooterMap.put(4.0, 54.5);
         _shooterMap.put(5.0, 58.5);
 
@@ -129,9 +131,9 @@ public class Shooter extends SubsystemBase {
 
         var leftSlot0 = leftShooterConfig.Slot0;
 
-        leftSlot0.kV = 0.3;
-        leftSlot0.kP = 3;
-        leftSlot0.kS = 0.7;
+        leftSlot0.kV = 0.03;
+        leftSlot0.kP = 4;
+        leftSlot0.kS = 3.7;
 
         _leftShooter1.getConfigurator().apply(leftShooterConfig);
         _leftShooter2.getConfigurator().apply(leftShooterConfig);
@@ -144,8 +146,8 @@ public class Shooter extends SubsystemBase {
         _rightShooter2.setNeutralMode(NeutralModeValue.Coast);
 
         _leftShooter2.setControl(new Follower(_leftShooter1.getDeviceID(), MotorAlignmentValue.Aligned));
-        _rightShooter1.setControl(new Follower(_leftShooter1.getDeviceID(), MotorAlignmentValue.Aligned));
-        _rightShooter2.setControl(new Follower(_leftShooter1.getDeviceID(), MotorAlignmentValue.Aligned));
+        _rightShooter1.setControl(new Follower(_leftShooter1.getDeviceID(), MotorAlignmentValue.Opposed));
+        _rightShooter2.setControl(new Follower(_leftShooter1.getDeviceID(), MotorAlignmentValue.Opposed));
 
     }
 
