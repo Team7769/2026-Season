@@ -34,9 +34,9 @@ public final class FieldConstants {
     public static final Pose2d kBlueClimbStageLeftFront = new Pose2d(1.075 + 2 * kRobotWidth, 4.17, Rotation2d.fromDegrees(180));
     public static final Pose2d kBlueClimbStageRightFront = new Pose2d(1.075 + 2 * kRobotWidth, 3.27, Rotation2d.fromDegrees(180));
     
-    public static final Pose2d kBlueClimbStageRightSide = new Pose2d(2, 2.000, Rotation2d.fromDegrees(325));
+    public static final Pose2d kBlueClimbStageRightSide = new Pose2d(2, 2.000, Rotation2d.fromDegrees(35));
     public static final Pose2d kBlueClimbEngageRightSide = new Pose2d(1.065, 2.814, Rotation2d.fromDegrees(90));
-    public static final Pose2d kBlueClimbStageLeftSide = new Pose2d(2, 5.501, Rotation2d.fromDegrees(35));
+    public static final Pose2d kBlueClimbStageLeftSide = new Pose2d(2, 5.501, Rotation2d.fromDegrees(325));
     public static final Pose2d kBlueClimbEngageLeftSide = new Pose2d(1.065, 4.687, Rotation2d.fromDegrees(270));
 
     public static final Translation2d kRedHub = GeometryUtil.rotateTranslationForRedAlliance(kBlueHub);
