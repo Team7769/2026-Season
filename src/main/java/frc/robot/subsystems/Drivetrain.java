@@ -120,7 +120,7 @@ public class Drivetrain extends SubsystemBase {
 
         _targetFollowControllerX = new PIDController(1.45, 0, 0.04);
         _targetFollowControllerY = new PIDController(1.45, 0, 0.04);
-        _targetFollowControllerZ = new PIDController(0.05, 0, 0.002);
+        _targetFollowControllerZ = new PIDController(0.05, 0, 0.002);//0.002
         _targetFollowControllerX.setTolerance(.05);
         _targetFollowControllerY.setTolerance(.05);
         _targetFollowControllerZ.setTolerance(2);

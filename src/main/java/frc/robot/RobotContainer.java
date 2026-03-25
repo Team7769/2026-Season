@@ -194,11 +194,17 @@ public class RobotContainer {
         Commands.runOnce(() -> CLIMB.setWantedState(ClimbState.EXTEND)));
 
     OPERATOR_CONTROLLER.a().onTrue(
-      Commands.runOnce(() -> HOPPER.setWantedState(HopperState.EMERGENCY))
-    ).onFalse(Commands.runOnce(() -> HOPPER.setWantedState(HopperState.IDLE)));
-
+      Commands.runOnce(() -> {
+          SHOOTER.setWantedState(ShooterState.EMERGENCY_FEED);
+          HOPPER.setWantedState(HopperState.INJECTING);
+        })
+    ).onFalse(Commands.runOnce(() -> {
+          SHOOTER.setWantedState(ShooterState.IDLE);
+          HOPPER.setWantedState(HopperState.STOW);
+        }));
+    
     OPERATOR_CONTROLLER.x().onTrue(
-      Commands.runOnce(() -> HOPPER.setWantedState(HopperState.JAM))
+      Commands.runOnce(() -> HOPPER.setWantedState(HopperState.EMERGENCY))
     ).onFalse(Commands.runOnce(() -> HOPPER.setWantedState(HopperState.IDLE)));
 
       OPERATOR_CONTROLLER.leftTrigger().onTrue(

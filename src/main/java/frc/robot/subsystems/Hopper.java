@@ -24,7 +24,7 @@ public class Hopper extends SubsystemBase {
     private TalonFX _injector;
     private TalonFX _intake;
     private TalonFX _slide;
-    private CANdi _candiRight;
+    private CANdi _candiFuel;
 
     private final VoltageOut HALT = new VoltageOut(0);
      private final VoltageOut SLOW = new VoltageOut(5);
@@ -86,11 +86,11 @@ public class Hopper extends SubsystemBase {
         
         _slide = new TalonFX(21);
         _slide.getConfigurator().apply(slideConfiguration);
-        _candiRight = new CANdi(34);
+        _candiFuel = new CANdi(34);
         var candiConfig = new CANdiConfiguration();
         candiConfig.DigitalInputs.S1CloseState = S1CloseStateValue.CloseWhenHigh;
         candiConfig.DigitalInputs.S2CloseState = S2CloseStateValue.CloseWhenHigh;
-        _candiRight.getConfigurator().apply(candiConfig);
+        _candiFuel.getConfigurator().apply(candiConfig);
         _intake.getConfigurator().apply(intakeConfiguration);
 
         _slide.setPosition(0.0);
@@ -103,16 +103,20 @@ public class Hopper extends SubsystemBase {
     }
 
     public boolean isMiddleEmpty(){
-        return _candiRight.getS2Closed().getValue();
+        return _candiFuel.getS2Closed().getValue();
+    }
+
+    public boolean isFuelStaged(){
+        return _candiFuel.getS1Closed().getValue();
     }
 
     @Override
     public void periodic() {
         handleCurrentState();
         SmartDashboard.putBoolean("Middle Sensor", isMiddleEmpty());
-        SmartDashboard.putBoolean("Middle Sensor 2", _candiRight.getS2Closed().getValue());
+        SmartDashboard.putBoolean("Middle Sensor 2", _candiFuel.getS2Closed().getValue());
         _timer++;
-        if(_timer>50){
+        if(_timer>60){//50
             _timer = 0;
         }
     }
@@ -171,21 +175,29 @@ public class Hopper extends SubsystemBase {
         _intake.setControl(SLOW);
         _injector.setControl(FLOOR_INJECT);  
 
-        //if(_timer > 45){
-       // _floor.setControl(REVERSE);
-        //_injector.setControl(REVERSE);
-       // }else{
+        if(_timer > 55){//45
+        //_floor.setControl(REVERSE);
+       }else{
         _floor.setControl(FLOOR_INJECT);
-        //_injector.setControl(FLOOR_INJECT);
-       // }
-        if(_timer <= 20){
+       }
+        if(_timer <= 15){//20
             _slide.setControl(INTAKE_IN);
-        } else if(_timer > 20 || _timer > 30) {
-            //_slide.setControl(INTAKE_OUT);
+        } else if(_timer > 15 && _timer < 30) {//20,30
+            _slide.setControl(INTAKE_OUT);
+        } else if(_timer >= 30 && _timer < 45) {//30,40
+            _slide.setControl(INTAKE_IN);
         } else {
-            _slide.setControl(INTAKE_IN);
+            _slide.setControl(INTAKE_OUT);
         }
-        
+               // if(_timer <= 20){
+        //     _injector.setControl(FLOOR_INJECT);
+        // } else if(_timer >= 20 && _timer < 30) {
+        //     _injector.setControl(SLOW);
+        // } else if(_timer >= 30 && _timer < 40) {
+        //     _injector.setControl(FLOOR_INJECT);
+        // } else {
+        //     _injector.setControl(SLOW);
+       // }
     }
 
     private void handleEmergency(){
@@ -200,11 +212,11 @@ public class Hopper extends SubsystemBase {
         _intake.setControl(INTAKE);
         _injector.setControl(FLOOR_INJECT);
 
-       // if(_timer > 45){
-       // _floor.setControl(REVERSE);
-       // }else{
+       if(_timer > 45){
+       _floor.setControl(REVERSE);
+       }else{
         _floor.setControl(FLOOR_INJECT);
-       // }
+       }
         
     }
 }

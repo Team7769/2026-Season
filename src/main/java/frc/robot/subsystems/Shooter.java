@@ -65,8 +65,11 @@ public class Shooter extends SubsystemBase {
     
     private final Drivetrain DRIVETRAIN;
     private InterpolatingDoubleTreeMap _hoodMap = new InterpolatingDoubleTreeMap();
-    private InterpolatingDoubleTreeMap _feedMap = new InterpolatingDoubleTreeMap();
     private InterpolatingDoubleTreeMap _shooterMap = new InterpolatingDoubleTreeMap();
+    private InterpolatingDoubleTreeMap _feedHoodMap = new InterpolatingDoubleTreeMap();
+    private InterpolatingDoubleTreeMap _feedShooterMap = new InterpolatingDoubleTreeMap();
+    private InterpolatingDoubleTreeMap _currentShooterMap;
+    private InterpolatingDoubleTreeMap _currentHoodMap;
 
     private final double[] kDistanceIDs = {1.77, 2, 2.5, 3, 3.5, 4};
     private final double[] kHoodAngles = {4.5, 5.1, 5.55, 5.85, 6.2, 6.35};
@@ -85,24 +88,32 @@ public class Shooter extends SubsystemBase {
         // _hoodMap.put(3.1, .9);
         // _hoodMap.put(4.0, 1.15);
         //everything -.38
-        _hoodMap.put(1.0, .02);
-        _hoodMap.put(2.0, .15);
+        _hoodMap.put(1.0, .06);
+        _hoodMap.put(2.0, .23);
         _hoodMap.put(3.0, .32);
         _hoodMap.put(3.5, .4);
         _hoodMap.put(4.0, 0.48);
         _hoodMap.put(5.0, 0.55);
 
-        _feedMap.put(1.0, .02);
-        _feedMap.put(2.0, .15);
-        _feedMap.put(3.0, .4);
-        _feedMap.put(4.0, 0.48);
-        _feedMap.put(5.0, 0.55);
+        _feedHoodMap.put(5.0, .055);
+        // _feedHoodMap.put(2.0, .15);
+        // _feedHoodMap.put(3.0, .4);
+        _feedHoodMap.put(7.5, 0.7);
+        _feedHoodMap.put(10.0, 0.77);
+        _feedHoodMap.put(12.0, 0.85);
+        
+        _feedShooterMap.put(5.0, 58.5);
+        // _feedShooterMap.put(2.0, .15);
+        //_feedShooterMap.put(3.0, .4);
+        _feedShooterMap.put(7.5, 70.0);
+        _feedShooterMap.put(10.0, 80.0);
+        _feedShooterMap.put(12.0, 85.0);
 
         // _shooterMap.put(2.0, 60.0);
 
         // _shooterMap.put(3.5, 60.0);
-        _shooterMap.put(1.0, 51.5);
-        _shooterMap.put(2.0, 51.5);
+        _shooterMap.put(1.0, 45.0);
+        _shooterMap.put(2.0, 47.0);
         _shooterMap.put(3.0, 51.5);
         _shooterMap.put(3.5, 53.0);        
         _shooterMap.put(4.0, 54.5);
@@ -111,6 +122,8 @@ public class Shooter extends SubsystemBase {
         configShooter();
         configHood();
         
+        _currentShooterMap = _shooterMap;
+        _currentHoodMap = _hoodMap;
     }
 
     private void configShooter(){
@@ -165,6 +178,19 @@ public class Shooter extends SubsystemBase {
         
         _hoodMotor.getConfigurator().apply(hoodConfig);
         _hoodMotor.setNeutralMode(NeutralModeValue.Brake);
+    }
+
+    public void setShotMap(boolean isFeedShot) {
+        if (isFeedShot) {
+            _currentHoodMap = _feedHoodMap;
+            _currentShooterMap = _feedShooterMap;
+
+        } else {
+            _currentHoodMap = _hoodMap;
+            _currentShooterMap = _shooterMap;
+        }
+        
+        SmartDashboard.putBoolean("ShotMapFeed", isFeedShot);
     }
 
     private void prepShooter() {
@@ -230,10 +256,12 @@ public class Shooter extends SubsystemBase {
 
     public void setShooterTargetSpeed(Supplier<Double> distanceSupplier){
         var distance = distanceSupplier.get();
-        var targetSpeed = _shooterMap.get(distance);
+        setShotMap(distance > 5);
+
+        var targetSpeed = _currentShooterMap.get(distance);
         shotVelocityTorqueCurrentFOC.Velocity = targetSpeed;
         
-        HOOD_MOVE.Position = _hoodMap.get(distance);
+        HOOD_MOVE.Position = _currentHoodMap.get(distance);
     }
 
     @Override
