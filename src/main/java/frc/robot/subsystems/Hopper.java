@@ -4,12 +4,14 @@ import com.ctre.phoenix6.configs.CANdiConfiguration;
 import com.ctre.phoenix6.configs.CurrentLimitsConfigs;
 import com.ctre.phoenix6.configs.Slot0Configs;
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
+import com.ctre.phoenix6.controls.Follower;
 import com.ctre.phoenix6.controls.PositionDutyCycle;
 import com.ctre.phoenix6.controls.VelocityTorqueCurrentFOC;
 import com.ctre.phoenix6.controls.VoltageOut;
 import com.ctre.phoenix6.hardware.CANdi;
 import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.InvertedValue;
+import com.ctre.phoenix6.signals.MotorAlignmentValue;
 import com.ctre.phoenix6.signals.NeutralModeValue;
 import com.ctre.phoenix6.signals.S1CloseStateValue;
 import com.ctre.phoenix6.signals.S2CloseStateValue;
@@ -23,6 +25,7 @@ public class Hopper extends SubsystemBase {
     private TalonFX _floor;
     private TalonFX _injector;
     private TalonFX _intake;
+    private TalonFX _intake2;
     private TalonFX _slide;
     private CANdi _candiFuel;
 
@@ -51,6 +54,7 @@ public class Hopper extends SubsystemBase {
 
     private void configHopper() {
         _intake = new TalonFX(20);
+        _intake2 = new TalonFX(36);
 
         var slideConfiguration = new TalonFXConfiguration();
         var currentLimits = new CurrentLimitsConfigs()
@@ -92,8 +96,10 @@ public class Hopper extends SubsystemBase {
         candiConfig.DigitalInputs.S2CloseState = S2CloseStateValue.CloseWhenHigh;
         _candiFuel.getConfigurator().apply(candiConfig);
         _intake.getConfigurator().apply(intakeConfiguration);
-
+        _intake2.getConfigurator().apply(intakeConfiguration);
         _slide.setPosition(0.0);
+
+        _intake2.setControl(new Follower(_intake.getDeviceID(), MotorAlignmentValue.Opposed));
     }
 
     private void configInjector(){

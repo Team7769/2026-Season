@@ -312,6 +312,7 @@ public class RobotContainer {
         Commands.runOnce(() -> {
           CLIMB.setWantedState(ClimbState.EXTEND);
           DRIVETRAIN.setWantedState(DrivetrainState.CLIMB_STAGE);
+          SHOOTER.setWantedState(ShooterState.STOP);
         }),
         Commands.runOnce(() -> DRIVETRAIN.setTargetStageLeftClimb(GeometryUtil::isRedAlliance)));
   }
