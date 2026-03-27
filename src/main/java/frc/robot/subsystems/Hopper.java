@@ -189,11 +189,11 @@ public class Hopper extends SubsystemBase {
         if(_timer <= 15){//20
             _slide.setControl(INTAKE_IN);
         } else if(_timer > 15 && _timer < 30) {//20,30
-            _slide.setControl(INTAKE_OUT);
+            _slide.setControl(INTAKE_SHOOT);//maybe do intake_shoot?
         } else if(_timer >= 30 && _timer < 45) {//30,40
             _slide.setControl(INTAKE_IN);
         } else {
-            _slide.setControl(INTAKE_OUT);
+            _slide.setControl(INTAKE_SHOOT);//maybe do intake_shoot?
         }
                // if(_timer <= 20){
         //     _injector.setControl(FLOOR_INJECT);
