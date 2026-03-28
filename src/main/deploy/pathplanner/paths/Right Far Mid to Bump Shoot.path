@@ -3,13 +3,13 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 8.605427465393396,
-        "y": 3.071681320771254
+        "x": 8.344539436754088,
+        "y": 3.084104560230269
       },
       "prevControl": null,
       "nextControl": {
-        "x": 7.623991548131239,
-        "y": 3.0344116023942105
+        "x": 6.990406335721494,
+        "y": 3.630727096426911
       },
       "isLocked": false,
       "linkedName": "Far Right Mid Prep"
@@ -46,8 +46,12 @@
   ],
   "rotationTargets": [
     {
-      "waypointRelativePos": 0.9721108087342684,
-      "rotationDegrees": 45.09834386914009
+      "waypointRelativePos": 0.7305756099736258,
+      "rotationDegrees": 4.18530277140005
+    },
+    {
+      "waypointRelativePos": 1.074456231937932,
+      "rotationDegrees": 22.15818552184781
     }
   ],
   "constraintZones": [],
@@ -63,13 +67,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 40.60129464500457
+    "rotation": 19.65382405805336
   },
   "reversed": false,
   "folder": null,
   "idealStartingState": {
     "velocity": 3.0,
-    "rotation": -79.99202019855859
+    "rotation": -73.61045966596541
   },
   "useDefaultConstraints": false
 }

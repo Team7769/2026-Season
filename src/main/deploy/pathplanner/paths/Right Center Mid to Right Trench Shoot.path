@@ -3,13 +3,13 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 8.605427465393396,
-        "y": 3.071681320771254
+        "x": 8.344539436754088,
+        "y": 3.084104560230269
       },
       "prevControl": null,
       "nextControl": {
-        "x": 8.617850704852408,
-        "y": 2.214477798099245
+        "x": 8.3569626762131,
+        "y": 2.22690103755826
       },
       "isLocked": false,
       "linkedName": "Far Right Mid Prep"
@@ -89,7 +89,7 @@
   "folder": null,
   "idealStartingState": {
     "velocity": 0,
-    "rotation": -79.99202019855859
+    "rotation": -73.61045966596541
   },
   "useDefaultConstraints": true
 }
