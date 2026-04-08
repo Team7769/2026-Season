@@ -4,12 +4,12 @@
     {
       "anchor": {
         "x": 8.344539436754088,
-        "y": 3.084104560230269
+        "y": 3.2704531521154867
       },
       "prevControl": null,
       "nextControl": {
         "x": 6.990406335721494,
-        "y": 3.630727096426911
+        "y": 3.817075688312129
       },
       "isLocked": false,
       "linkedName": "Far Right Mid Prep"
@@ -73,7 +73,7 @@
   "folder": null,
   "idealStartingState": {
     "velocity": 3.0,
-    "rotation": -73.61045966596541
+    "rotation": -77.2756443145778
   },
   "useDefaultConstraints": false
 }

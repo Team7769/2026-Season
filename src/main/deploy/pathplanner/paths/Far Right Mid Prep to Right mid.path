@@ -4,12 +4,12 @@
     {
       "anchor": {
         "x": 8.344539436754088,
-        "y": 3.084104560230269
+        "y": 3.2704531521154867
       },
       "prevControl": null,
       "nextControl": {
         "x": 8.978124649163833,
-        "y": 3.89161512506622
+        "y": 4.077963716951437
       },
       "isLocked": false,
       "linkedName": "Far Right Mid Prep"
@@ -34,7 +34,7 @@
   "eventMarkers": [],
   "globalConstraints": {
     "maxVelocity": 4.3,
-    "maxAcceleration": 4.0,
+    "maxAcceleration": 4.5,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0,
     "nominalVoltage": 12.0,
@@ -48,7 +48,7 @@
   "folder": null,
   "idealStartingState": {
     "velocity": 0,
-    "rotation": -73.61045966596541
+    "rotation": -77.2756443145778
   },
   "useDefaultConstraints": true
 }

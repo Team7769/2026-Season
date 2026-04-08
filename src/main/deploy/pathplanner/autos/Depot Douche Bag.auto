@@ -1,0 +1,160 @@
+{
+  "version": "2025.0",
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Bump Start to depot"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Depot to Prep Shoot"
+          }
+        },
+        {
+          "type": "sequential",
+          "data": {
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "PrepShooter"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "Start Shooting"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "Injecting"
+                }
+              },
+              {
+                "type": "wait",
+                "data": {
+                  "waitTime": 1.5
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "Idle"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Depot Shoot to mid circle"
+          }
+        },
+        {
+          "type": "sequential",
+          "data": {
+            "commands": [
+              {
+                "type": "wait",
+                "data": {
+                  "waitTime": 0.05
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "PrepShooter"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "Shoot"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "Injecting"
+                }
+              },
+              {
+                "type": "wait",
+                "data": {
+                  "waitTime": 3.5
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "Idle"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Left bump shoot to Left bump shoot"
+          }
+        },
+        {
+          "type": "sequential",
+          "data": {
+            "commands": [
+              {
+                "type": "wait",
+                "data": {
+                  "waitTime": 0.05
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "PrepShooter"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "Shoot"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "Injecting"
+                }
+              },
+              {
+                "type": "wait",
+                "data": {
+                  "waitTime": 3.5
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "Idle"
+                }
+              }
+            ]
+          }
+        }
+      ]
+    }
+  },
+  "resetOdom": true,
+  "folder": null,
+  "choreoAuto": false
+}

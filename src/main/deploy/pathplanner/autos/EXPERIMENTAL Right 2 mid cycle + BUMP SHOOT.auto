@@ -1,0 +1,109 @@
+{
+  "version": "2025.0",
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Right Trench Start to Far Right Mid Prep"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Right Far Mid to Bump Shoot"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "PrepShooter"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 0.05
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Start Shooting"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Injecting"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 3.0
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Idle"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Copy of Right Bump Shoot to Right Mid"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "PrepShooter"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 0.05
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Start Shooting"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Injecting"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 4.0
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Idle"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Right End"
+          }
+        }
+      ]
+    }
+  },
+  "resetOdom": true,
+  "folder": null,
+  "choreoAuto": false
+}

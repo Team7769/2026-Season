@@ -3,25 +3,25 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 0.6545542116240401,
-        "y": 5.916603156885601
+        "x": 0.629707732706011,
+        "y": 5.94144963580363
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.2891983177922044,
-        "y": 5.062261350105596
+        "x": 1.6438057060257336,
+        "y": 6.435877553542458
       },
       "isLocked": false,
       "linkedName": "Comp Depot"
     },
     {
       "anchor": {
-        "x": 1.8223387207714143,
-        "y": 5.419673578525017
+        "x": 2.5925795672303207,
+        "y": 6.5998813271314045
       },
       "prevControl": {
-        "x": 0.4745533441021559,
-        "y": 6.12640992126537
+        "x": 1.5400966903367241,
+        "y": 6.165517500465021
       },
       "nextControl": null,
       "isLocked": false,
@@ -34,7 +34,7 @@
   "eventMarkers": [],
   "globalConstraints": {
     "maxVelocity": 4.3,
-    "maxAcceleration": 4.0,
+    "maxAcceleration": 4.5,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0,
     "nominalVoltage": 12.0,
@@ -42,7 +42,7 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -33.465379346355256
+    "rotation": -49.89909245378787
   },
   "reversed": false,
   "folder": null,

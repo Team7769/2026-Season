@@ -59,9 +59,9 @@ public class Hopper extends SubsystemBase {
         var slideConfiguration = new TalonFXConfiguration();
         var currentLimits = new CurrentLimitsConfigs()
                                 .withStatorCurrentLimit(60)
-                                .withSupplyCurrentLimit(20)
+                                .withSupplyCurrentLimit(30)
                                 .withSupplyCurrentLowerTime(1)
-                                .withSupplyCurrentLowerLimit(10);
+                                .withSupplyCurrentLowerLimit(20);
         var slideSlot0Configs = new Slot0Configs()
                                  .withKP(0.25)
                                  .withKD(0.001);

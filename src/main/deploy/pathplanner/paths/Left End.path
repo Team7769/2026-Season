@@ -3,67 +3,71 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 6.81648098329529,
-        "y": 3.543764420213808
+        "x": 3.1665715650164765,
+        "y": 5.614172357206413
       },
       "prevControl": null,
       "nextControl": {
-        "x": 6.728390968053303,
-        "y": 2.8212817301180246
+        "x": 2.281998580754955,
+        "y": 6.500495411459287
       },
       "isLocked": false,
-      "linkedName": "Right Close Mid"
+      "linkedName": "Left Bump Shoot"
     },
     {
       "anchor": {
-        "x": 6.568016194114997,
-        "y": 1.1585024440830034
+        "x": 3.6858246396236067,
+        "y": 7.260083259398069
       },
       "prevControl": {
-        "x": 6.817419063339247,
-        "y": 1.5228111797142214
+        "x": 2.9528150484453173,
+        "y": 7.314306260485213
       },
       "nextControl": {
-        "x": 6.307390570355685,
-        "y": 0.7778003625063881
+        "x": 4.381526049328426,
+        "y": 7.2086200606231206
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 5.462347882262696,
-        "y": 0.922460894361725
+        "x": 5.984123939541311,
+        "y": 7.260083259398069
       },
       "prevControl": {
-        "x": 5.876209076106815,
-        "y": 0.9237558706127594
+        "x": 5.114497177410288,
+        "y": 7.245889779000164
       },
       "nextControl": {
-        "x": 4.887901850822833,
-        "y": 0.9206634463784868
+        "x": 7.054855235248193,
+        "y": 7.277559036730172
       },
       "isLocked": false,
-      "linkedName": "Right Prep Trench"
+      "linkedName": "Prep Left Trench"
     },
     {
       "anchor": {
-        "x": 4.215977844937331,
-        "y": 0.7758570876765793
+        "x": 7.673684505967298,
+        "y": 7.260083259398069
       },
       "prevControl": {
-        "x": 5.20145985362339,
-        "y": 0.7733820208535496
+        "x": 6.673684505967298,
+        "y": 7.260083259398069
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "Right Trench Shoot"
+      "linkedName": null
     }
   ],
   "rotationTargets": [
     {
-      "waypointRelativePos": 2,
-      "rotationDegrees": 90.0
+      "waypointRelativePos": 1,
+      "rotationDegrees": -179.1387477400848
+    },
+    {
+      "waypointRelativePos": 2.0,
+      "rotationDegrees": 179.26673470825176
     }
   ],
   "constraintZones": [],
@@ -79,13 +83,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 82.7249950421107
+    "rotation": 133.09536730666434
   },
   "reversed": false,
   "folder": null,
   "idealStartingState": {
     "velocity": 0,
-    "rotation": -91.7357045889285
+    "rotation": -26.913443430619743
   },
   "useDefaultConstraints": true
 }
