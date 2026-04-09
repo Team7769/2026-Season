@@ -302,6 +302,8 @@ public class Drivetrain extends SubsystemBase {
         for (VisionMeasurement visionMeasurement : visionMeasurements) {
             _swerve.addVisionMeasurement(
                     visionMeasurement.pose, Utils.fpgaToCurrentTime(visionMeasurement.timestamp));
+                    
+            m_field.getObject("visionTarget").setPose(visionMeasurement.pose);
         }
         publisher.set(getPose());
         m_field.setRobotPose(getPose());

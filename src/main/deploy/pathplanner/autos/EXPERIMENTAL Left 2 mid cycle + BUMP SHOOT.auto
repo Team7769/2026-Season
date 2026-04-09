@@ -85,7 +85,7 @@
         {
           "type": "wait",
           "data": {
-            "waitTime": 4.0
+            "waitTime": 3.5
           }
         },
         {
@@ -97,7 +97,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Left End"
+            "pathName": "Left bump shoot to Left bump shoot"
           }
         }
       ]

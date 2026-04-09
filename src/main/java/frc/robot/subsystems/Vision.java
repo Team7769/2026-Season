@@ -32,7 +32,7 @@ public class Vision extends SubsystemBase{
 
     @Override
     public void periodic() {
-        _limelightFourPose = LimelightHelpers.getBotPose2d("limelight");
+        //_limelightFourPose = LimelightHelpers.getBotPose2d("limelight");
         // if (DriverStation.isDisabled() && DriverStation.getAlliance().isPresent()){
         //     if (DriverStation.getAlliance().get() == Alliance.Red){
         //         LimelightHelpers.SetFiducialIDFiltersOverride("limelight-four", FieldConstants.kRedTagIDs);
@@ -78,6 +78,15 @@ public class Vision extends SubsystemBase{
                 0,
                 0
             );
+                        LimelightHelpers.SetRobotOrientation(
+                "limelight-fake",
+                rotation.getDegrees(),
+                0, 
+                0, 
+                0, 
+                0,
+                0
+            );
             LimelightHelpers.SetIMUMode("limelight", 0);
             LimelightHelpers.SetIMUMode("limelight-fake", 0);
 
@@ -89,9 +98,12 @@ public class Vision extends SubsystemBase{
                 LimelightHelpers.getBotPoseEstimate_wpiBlue_MegaTag2(
                     "limelight-fake"
                 );
-
+            SmartDashboard.putNumber("limelightFourBackupPose", limelightFourBackupPoseEstimate.pose.getX());
+            SmartDashboard.putString("Side Limelight Tag", "test"+limelightFourBackupPoseEstimate.tagCount);
             if (limelightFourPoseEstimate != null && limelightFourPoseEstimate.tagCount > 0) {
                 _limelightFourPoseEstimate = limelightFourPoseEstimate;
+                SmartDashboard.putString("Limelight Used", "Front"+limelightFourPoseEstimate.tagCount);
+                SmartDashboard.putBoolean("Backup Limelight test", limelightFourBackupPoseEstimate != null);
                 visionMeasurements.add(
                     new VisionMeasurement(
                         limelightFourPoseEstimate.pose,
@@ -100,6 +112,7 @@ public class Vision extends SubsystemBase{
                 );
             } else if (limelightFourBackupPoseEstimate != null && limelightFourBackupPoseEstimate.tagCount > 0) {
                 _limelightFourBackupPoseEstimate = limelightFourBackupPoseEstimate;
+                SmartDashboard.putString("Limelight Used", "Side"+limelightFourBackupPoseEstimate.tagCount);
                 visionMeasurements.add(
                     new VisionMeasurement(
                         limelightFourBackupPoseEstimate.pose,

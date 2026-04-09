@@ -3,13 +3,13 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 8.232730281622956,
-        "y": 4.761241887197241
+        "x": 8.580580986475365,
+        "y": 4.748818647738226
       },
       "prevControl": null,
       "nextControl": {
-        "x": 7.375526758950948,
-        "y": 4.202196111541584
+        "x": 7.723377463803357,
+        "y": 4.189772872082568
       },
       "isLocked": false,
       "linkedName": "Left Far Mid"
@@ -45,6 +45,10 @@
     }
   ],
   "rotationTargets": [
+    {
+      "waypointRelativePos": 0.23522376166789932,
+      "rotationDegrees": 0.0
+    },
     {
       "waypointRelativePos": 0.7797014131113837,
       "rotationDegrees": -7.733370278034906
