@@ -176,6 +176,10 @@ public class RobotContainer {
     DRIVER_CONTROLLER.a().onTrue(
         Commands.runOnce(() -> DRIVETRAIN.setWantedState(DrivetrainState.IDLE))).onFalse(
             Commands.runOnce(() -> DRIVETRAIN.setWantedState(DrivetrainState.OPEN_LOOP)));
+    // Baby Bird
+    DRIVER_CONTROLLER.y().onTrue(
+      Commands.runOnce(() -> HOPPER.setWantedState(HopperState.EMERGENCY))
+    ).onFalse(Commands.runOnce(() -> HOPPER.setWantedState(HopperState.IDLE)));
 
     // Reseed heading
     DRIVER_CONTROLLER.back().onTrue(
