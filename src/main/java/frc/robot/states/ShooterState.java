@@ -6,5 +6,6 @@ public enum ShooterState {
     PREPSHOOTER,
     STOP,
     EMERGENCY,
-    EMERGENCY_FEED
+    EMERGENCY_FEED,
+    SHOWCASE
 }
