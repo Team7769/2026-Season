@@ -94,23 +94,22 @@ public class Vision extends SubsystemBase{
                 LimelightHelpers.getBotPoseEstimate_wpiBlue_MegaTag2(
                     "limelight"
                 );
-            PoseEstimate limelightFourBackupPoseEstimate =
-                LimelightHelpers.getBotPoseEstimate_wpiBlue_MegaTag2(
-                    "limelight-fake"
-                );
-            SmartDashboard.putNumber("limelightFourBackupPose", limelightFourBackupPoseEstimate.pose.getX());
-            SmartDashboard.putString("Side Limelight Tag", "test"+limelightFourBackupPoseEstimate.tagCount);
             if (limelightFourPoseEstimate != null && limelightFourPoseEstimate.tagCount > 0) {
                 _limelightFourPoseEstimate = limelightFourPoseEstimate;
                 SmartDashboard.putString("Limelight Used", "Front"+limelightFourPoseEstimate.tagCount);
-                SmartDashboard.putBoolean("Backup Limelight test", limelightFourBackupPoseEstimate != null);
                 visionMeasurements.add(
                     new VisionMeasurement(
                         limelightFourPoseEstimate.pose,
                         limelightFourPoseEstimate.timestampSeconds
                     )
                 );
-            } else if (limelightFourBackupPoseEstimate != null && limelightFourBackupPoseEstimate.tagCount > 0) {
+            } else {
+                
+            PoseEstimate limelightFourBackupPoseEstimate =
+                LimelightHelpers.getBotPoseEstimate_wpiBlue_MegaTag2(
+                    "limelight-fake"
+                );
+                if (limelightFourBackupPoseEstimate != null && limelightFourBackupPoseEstimate.tagCount > 0) {
                 _limelightFourBackupPoseEstimate = limelightFourBackupPoseEstimate;
                 SmartDashboard.putString("Limelight Used", "Side"+limelightFourBackupPoseEstimate.tagCount);
                 visionMeasurements.add(
@@ -119,6 +118,7 @@ public class Vision extends SubsystemBase{
                         limelightFourBackupPoseEstimate.timestampSeconds
                     )
                 );
+            }
             }
         return visionMeasurements;
     }

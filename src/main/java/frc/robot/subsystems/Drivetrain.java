@@ -34,6 +34,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 import frc.robot.configuration.FieldConstants;
+import frc.robot.enums.DriveTarget;
 import frc.robot.generated.TunerConstants;
 import frc.robot.generated.TunerConstants.TunerSwerveDrivetrain;
 import frc.robot.states.DrivetrainState;
@@ -84,6 +85,7 @@ public class Drivetrain extends SubsystemBase {
     private double _targetFollowLimit = 0.35;
     private double _xFollow = 0;
     private double _yFollow = 0;
+    private DriveTarget _currentDriveTarget;
 
     StructPublisher<Pose2d> publisher = NetworkTableInstance.getDefault()
             .getStructTopic("Robot Pose", Pose2d.struct).publish();
@@ -291,6 +293,7 @@ public class Drivetrain extends SubsystemBase {
         handleCurrentTarget();
         handleCurrentState();
          SmartDashboard.putString("Current State", _currentState.toString());
+         SmartDashboard.putString("Current Drive Target", _currentDriveTarget.name());
     }
 
     private void updateOdometry() {
@@ -321,6 +324,10 @@ public class Drivetrain extends SubsystemBase {
         return distance;
     }
 
+    public DriveTarget getDriveTarget() {
+        return _currentDriveTarget;
+    }
+
     public void setWantedState(DrivetrainState wantedState) {
         if (wantedState != _currentState) {
             _currentState = wantedState;
@@ -332,6 +339,7 @@ public class Drivetrain extends SubsystemBase {
     }
 
     public void setTargetHub(Supplier<Boolean> isRedAlliance) {
+        _currentDriveTarget = DriveTarget.HUB;
         if (isRedAlliance.get()) {
             _target = new Pose2d(FieldConstants.kRedHub, new Rotation2d());
         } else {
@@ -422,6 +430,7 @@ public class Drivetrain extends SubsystemBase {
     }
 
     public void setTargetZoneA(Supplier<Boolean> isRedAlliance) {
+        _currentDriveTarget = DriveTarget.ZONE;
         if (isRedAlliance.get()) {
             _target = new Pose2d(FieldConstants.kRedZoneA, new Rotation2d());
         } else {
@@ -430,6 +439,7 @@ public class Drivetrain extends SubsystemBase {
     }
 
     public void setTargetZoneB(Supplier<Boolean> isRedAlliance) {
+        _currentDriveTarget = DriveTarget.ZONE;
         if (isRedAlliance.get()) {
             _target = new Pose2d(FieldConstants.kRedZoneB, new Rotation2d());
         } else {

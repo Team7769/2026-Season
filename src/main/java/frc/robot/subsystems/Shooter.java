@@ -31,6 +31,7 @@ import edu.wpi.first.wpilibj.motorcontrol.Talon;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.states.ShooterState;
 import frc.robot.configuration.FieldConstants;
+import frc.robot.enums.DriveTarget;
 
 
 public class Shooter extends SubsystemBase {
@@ -96,7 +97,7 @@ public class Shooter extends SubsystemBase {
         _hoodMap.put(4.0, 0.48);
         _hoodMap.put(5.0, 0.55);
 
-        _feedHoodMap.put(5.0, .055);
+        _feedHoodMap.put(5.0, .55);
         // _feedHoodMap.put(2.0, .15);
         // _feedHoodMap.put(3.0, .4);
         _feedHoodMap.put(7.5, 0.7);
@@ -181,17 +182,16 @@ public class Shooter extends SubsystemBase {
         _hoodMotor.setNeutralMode(NeutralModeValue.Brake);
     }
 
-    public void setShotMap(boolean isFeedShot) {
-        if (isFeedShot) {
+    public void setShotMap(DriveTarget driveTarget) {
+        if (driveTarget == DriveTarget.ZONE) {
             _currentHoodMap = _feedHoodMap;
             _currentShooterMap = _feedShooterMap;
-
         } else {
             _currentHoodMap = _hoodMap;
             _currentShooterMap = _shooterMap;
         }
         
-        SmartDashboard.putBoolean("ShotMapFeed", isFeedShot);
+        SmartDashboard.putBoolean("ShotMapFeed", driveTarget == DriveTarget.ZONE);
     }
 
     private void prepShooter() {
@@ -262,9 +262,9 @@ public class Shooter extends SubsystemBase {
         }
     }
 
-    public void setShooterTargetSpeed(Supplier<Double> distanceSupplier){
+    public void setShooterTargetSpeed(Supplier<Double> distanceSupplier, Supplier<DriveTarget> driveTargetSupplier){
         var distance = distanceSupplier.get();
-        setShotMap(distance > 5);
+        setShotMap(driveTargetSupplier.get());
 
         var targetSpeed = _currentShooterMap.get(distance);
         shotVelocityTorqueCurrentFOC.Velocity = targetSpeed;
@@ -274,7 +274,7 @@ public class Shooter extends SubsystemBase {
 
     @Override
     public void periodic() {
-        setShooterTargetSpeed(DRIVETRAIN::getDistanceToTarget);
+        setShooterTargetSpeed(DRIVETRAIN::getDistanceToTarget, DRIVETRAIN::getDriveTarget);
         // SmartDashboard.putNumber("Left Hood", _leftHood.getPosition());
         // SmartDashboard.putNumber("Left Hood Speed", _leftHood.getSpeed());
         SmartDashboard.putString("Shooter State", _currentState.name());
