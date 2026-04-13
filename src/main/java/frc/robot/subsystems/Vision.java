@@ -17,6 +17,9 @@ public class Vision extends SubsystemBase{
     private Pose2d _limelightFourPose = new Pose2d();
 
     private PoseEstimate _limelightFourPoseEstimate = new PoseEstimate();
+    private PoseEstimate _limelightFourBackupPoseEstimate = new PoseEstimate();
+
+
 
     private static final double filterDistanceError = 2;
     private static final double filterAngleError = 5;
@@ -29,7 +32,7 @@ public class Vision extends SubsystemBase{
 
     @Override
     public void periodic() {
-        _limelightFourPose = LimelightHelpers.getBotPose2d("limelight");
+        //_limelightFourPose = LimelightHelpers.getBotPose2d("limelight");
         // if (DriverStation.isDisabled() && DriverStation.getAlliance().isPresent()){
         //     if (DriverStation.getAlliance().get() == Alliance.Red){
         //         LimelightHelpers.SetFiducialIDFiltersOverride("limelight-four", FieldConstants.kRedTagIDs);
@@ -75,27 +78,57 @@ public class Vision extends SubsystemBase{
                 0,
                 0
             );
+                        LimelightHelpers.SetRobotOrientation(
+                "limelight-fake",
+                rotation.getDegrees(),
+                0, 
+                0, 
+                0, 
+                0,
+                0
+            );
             LimelightHelpers.SetIMUMode("limelight", 0);
+            LimelightHelpers.SetIMUMode("limelight-fake", 0);
 
             PoseEstimate limelightFourPoseEstimate =
                 LimelightHelpers.getBotPoseEstimate_wpiBlue_MegaTag2(
                     "limelight"
                 );
-
             if (limelightFourPoseEstimate != null && limelightFourPoseEstimate.tagCount > 0) {
                 _limelightFourPoseEstimate = limelightFourPoseEstimate;
+                SmartDashboard.putString("Limelight Used", "Front"+limelightFourPoseEstimate.tagCount);
                 visionMeasurements.add(
                     new VisionMeasurement(
                         limelightFourPoseEstimate.pose,
                         limelightFourPoseEstimate.timestampSeconds
                     )
                 );
-            }
+             } //else {
+                
+            // PoseEstimate limelightFourBackupPoseEstimate =
+            //     LimelightHelpers.getBotPoseEstimate_wpiBlue_MegaTag2(
+            //         "limelight-fake"
+            //     );
+            //     if (limelightFourBackupPoseEstimate != null && limelightFourBackupPoseEstimate.tagCount > 0) {
+            //     _limelightFourBackupPoseEstimate = limelightFourBackupPoseEstimate;
+            //     SmartDashboard.putString("Limelight Used", "Side"+limelightFourBackupPoseEstimate.tagCount);
+            //     visionMeasurements.add(
+            //         new VisionMeasurement(
+            //             limelightFourBackupPoseEstimate.pose,
+            //             limelightFourBackupPoseEstimate.timestampSeconds
+            //         )
+            //     );
+            // }
+            // }
         return visionMeasurements;
     }
 
     public Pose2d getFrontLimelightPose(){
         return _limelightFourPoseEstimate.pose;
+    }
+
+        public Pose2d getSideLimelightPose(){
+        return _limelightFourBackupPoseEstimate.pose;
     }
 
     public Pose2d getRobotPoseInTargetSpace() {

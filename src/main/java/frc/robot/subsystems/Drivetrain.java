@@ -34,6 +34,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 import frc.robot.configuration.FieldConstants;
+import frc.robot.enums.DriveTarget;
 import frc.robot.generated.TunerConstants;
 import frc.robot.generated.TunerConstants.TunerSwerveDrivetrain;
 import frc.robot.states.DrivetrainState;
@@ -84,6 +85,7 @@ public class Drivetrain extends SubsystemBase {
     private double _targetFollowLimit = 0.35;
     private double _xFollow = 0;
     private double _yFollow = 0;
+    private DriveTarget _currentDriveTarget;
 
     StructPublisher<Pose2d> publisher = NetworkTableInstance.getDefault()
             .getStructTopic("Robot Pose", Pose2d.struct).publish();
@@ -120,7 +122,7 @@ public class Drivetrain extends SubsystemBase {
 
         _targetFollowControllerX = new PIDController(1.45, 0, 0.04);
         _targetFollowControllerY = new PIDController(1.45, 0, 0.04);
-        _targetFollowControllerZ = new PIDController(0.05, 0, 0.002);
+        _targetFollowControllerZ = new PIDController(0.05, 0, 0.002);//0.002
         _targetFollowControllerX.setTolerance(.05);
         _targetFollowControllerY.setTolerance(.05);
         _targetFollowControllerZ.setTolerance(2);
@@ -291,6 +293,7 @@ public class Drivetrain extends SubsystemBase {
         handleCurrentTarget();
         handleCurrentState();
          SmartDashboard.putString("Current State", _currentState.toString());
+         SmartDashboard.putString("Current Drive Target", _currentDriveTarget.name());
     }
 
     private void updateOdometry() {
@@ -302,6 +305,8 @@ public class Drivetrain extends SubsystemBase {
         for (VisionMeasurement visionMeasurement : visionMeasurements) {
             _swerve.addVisionMeasurement(
                     visionMeasurement.pose, Utils.fpgaToCurrentTime(visionMeasurement.timestamp));
+                    
+            m_field.getObject("visionTarget").setPose(visionMeasurement.pose);
         }
         publisher.set(getPose());
         m_field.setRobotPose(getPose());
@@ -319,6 +324,10 @@ public class Drivetrain extends SubsystemBase {
         return distance;
     }
 
+    public DriveTarget getDriveTarget() {
+        return _currentDriveTarget;
+    }
+
     public void setWantedState(DrivetrainState wantedState) {
         if (wantedState != _currentState) {
             _currentState = wantedState;
@@ -330,6 +339,7 @@ public class Drivetrain extends SubsystemBase {
     }
 
     public void setTargetHub(Supplier<Boolean> isRedAlliance) {
+        _currentDriveTarget = DriveTarget.HUB;
         if (isRedAlliance.get()) {
             _target = new Pose2d(FieldConstants.kRedHub, new Rotation2d());
         } else {
@@ -420,6 +430,7 @@ public class Drivetrain extends SubsystemBase {
     }
 
     public void setTargetZoneA(Supplier<Boolean> isRedAlliance) {
+        _currentDriveTarget = DriveTarget.ZONE;
         if (isRedAlliance.get()) {
             _target = new Pose2d(FieldConstants.kRedZoneA, new Rotation2d());
         } else {
@@ -428,6 +439,7 @@ public class Drivetrain extends SubsystemBase {
     }
 
     public void setTargetZoneB(Supplier<Boolean> isRedAlliance) {
+        _currentDriveTarget = DriveTarget.ZONE;
         if (isRedAlliance.get()) {
             _target = new Pose2d(FieldConstants.kRedZoneB, new Rotation2d());
         } else {

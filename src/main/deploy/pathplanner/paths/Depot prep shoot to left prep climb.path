@@ -3,13 +3,13 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 1.8223387207714143,
-        "y": 5.419673578525017
+        "x": 2.5925795672303207,
+        "y": 6.5998813271314045
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.788250005978236,
-        "y": 4.954961582967516
+        "x": 3.558490852437142,
+        "y": 6.135169331573904
       },
       "isLocked": false,
       "linkedName": "Prep Shoot Depot"
@@ -34,7 +34,7 @@
   "eventMarkers": [],
   "globalConstraints": {
     "maxVelocity": 4.3,
-    "maxAcceleration": 4.0,
+    "maxAcceleration": 4.5,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0,
     "nominalVoltage": 12.0,
@@ -48,7 +48,7 @@
   "folder": null,
   "idealStartingState": {
     "velocity": 0,
-    "rotation": -33.465379346355256
+    "rotation": -49.89909245378787
   },
   "useDefaultConstraints": true
 }

@@ -56,7 +56,7 @@ public class RobotContainer {
   public final Drivetrain DRIVETRAIN = new Drivetrain(DRIVER_CONTROLLER, VISION, _isComp);
   public final KitbotShooter KITBOT_SHOOTER = _isComp ? null : new KitbotShooter();
   public final KitbotIntake KITBOT_INTAKE = _isComp ? null : new KitbotIntake();
-  public final Hopper HOPPER = _isComp ? new Hopper() : null;
+  public final Hopper HOPPER = _isComp ? new Hopper(DRIVETRAIN) : null;
   public final Shooter SHOOTER = _isComp ? new Shooter(DRIVETRAIN) : null;
   public final Ledinator LEDINATOR = _isComp ? new Ledinator() : null;
   //private final GameManager GAME_MANAGER = new GameManager(DRIVER_CONTROLLER);
@@ -176,6 +176,10 @@ public class RobotContainer {
     DRIVER_CONTROLLER.a().onTrue(
         Commands.runOnce(() -> DRIVETRAIN.setWantedState(DrivetrainState.IDLE))).onFalse(
             Commands.runOnce(() -> DRIVETRAIN.setWantedState(DrivetrainState.OPEN_LOOP)));
+    // Baby Bird
+    DRIVER_CONTROLLER.y().onTrue(
+      Commands.runOnce(() -> HOPPER.setWantedState(HopperState.EMERGENCY))
+    ).onFalse(Commands.runOnce(() -> HOPPER.setWantedState(HopperState.FLOOR_INTAKE)));
 
     // Reseed heading
     DRIVER_CONTROLLER.back().onTrue(
@@ -194,12 +198,28 @@ public class RobotContainer {
         Commands.runOnce(() -> CLIMB.setWantedState(ClimbState.EXTEND)));
 
     OPERATOR_CONTROLLER.a().onTrue(
-      Commands.runOnce(() -> HOPPER.setWantedState(HopperState.EMERGENCY))
-    ).onFalse(Commands.runOnce(() -> HOPPER.setWantedState(HopperState.IDLE)));
+      Commands.runOnce(() -> {
+          SHOOTER.setWantedState(ShooterState.EMERGENCY_FEED);
+          HOPPER.setWantedState(HopperState.INJECTING);
+        })
+    ).onFalse(Commands.runOnce(() -> {
+          SHOOTER.setWantedState(ShooterState.IDLE);
+          HOPPER.setWantedState(HopperState.STOW);
+        }));
 
+    OPERATOR_CONTROLLER.y().onTrue(
+      Commands.runOnce(() -> {
+          SHOOTER.setWantedState(ShooterState.SHOWCASE);
+          HOPPER.setWantedState(HopperState.INJECTING);
+        })
+    ).onFalse(Commands.runOnce(() -> {
+          SHOOTER.setWantedState(ShooterState.IDLE);
+          HOPPER.setWantedState(HopperState.STOW);
+        }));
+    
     OPERATOR_CONTROLLER.x().onTrue(
-      Commands.runOnce(() -> HOPPER.setWantedState(HopperState.JAM))
-    ).onFalse(Commands.runOnce(() -> HOPPER.setWantedState(HopperState.IDLE)));
+      Commands.runOnce(() -> HOPPER.setWantedState(HopperState.EMERGENCY))
+    ).onFalse(Commands.runOnce(() -> HOPPER.setWantedState(HopperState.FLOOR_INTAKE)));
 
       OPERATOR_CONTROLLER.leftTrigger().onTrue(
         Commands.runOnce(() -> {
@@ -306,6 +326,7 @@ public class RobotContainer {
         Commands.runOnce(() -> {
           CLIMB.setWantedState(ClimbState.EXTEND);
           DRIVETRAIN.setWantedState(DrivetrainState.CLIMB_STAGE);
+          SHOOTER.setWantedState(ShooterState.STOP);
         }),
         Commands.runOnce(() -> DRIVETRAIN.setTargetStageLeftClimb(GeometryUtil::isRedAlliance)));
   }

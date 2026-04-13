@@ -3,13 +3,13 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 8.605427465393396,
-        "y": 3.059258081312238
+        "x": 8.29484647891803,
+        "y": 3.5064947018367647
       },
       "prevControl": null,
       "nextControl": {
-        "x": 8.617850704852408,
-        "y": 2.202054558640229
+        "x": 8.307269718377043,
+        "y": 2.6492911791647558
       },
       "isLocked": false,
       "linkedName": "Far Right Mid Prep"
@@ -32,16 +32,16 @@
     },
     {
       "anchor": {
-        "x": 5.437501403344668,
-        "y": 0.82
+        "x": 5.462347882262696,
+        "y": 0.922460894361725
       },
       "prevControl": {
-        "x": 5.902781949421307,
-        "y": 0.8403450629824027
+        "x": 5.927628428339335,
+        "y": 0.9428059573441278
       },
       "nextControl": {
-        "x": 4.828762669852952,
-        "y": 0.7933820208535495
+        "x": 4.85360914877098,
+        "y": 0.8958429152152745
       },
       "isLocked": false,
       "linkedName": "Right Prep Trench"
@@ -75,7 +75,7 @@
   "eventMarkers": [],
   "globalConstraints": {
     "maxVelocity": 4.3,
-    "maxAcceleration": 4.0,
+    "maxAcceleration": 4.5,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0,
     "nominalVoltage": 12.0,
@@ -89,7 +89,7 @@
   "folder": null,
   "idealStartingState": {
     "velocity": 0,
-    "rotation": -79.99202019855859
+    "rotation": -76.37300514010859
   },
   "useDefaultConstraints": true
 }

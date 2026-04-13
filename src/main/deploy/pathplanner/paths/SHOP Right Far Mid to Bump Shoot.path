@@ -3,32 +3,16 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 8.29484647891803,
-        "y": 3.5064947018367647
+        "x": 7.934572534606605,
+        "y": 3.0219883629351942
       },
       "prevControl": null,
       "nextControl": {
-        "x": 7.450066195705035,
-        "y": 4.574893295312021
+        "x": 6.953136617344449,
+        "y": 2.984718644558151
       },
       "isLocked": false,
-      "linkedName": "Far Right Mid Prep"
-    },
-    {
-      "anchor": {
-        "x": 7.586721829754195,
-        "y": 2.711407376459829
-      },
-      "prevControl": {
-        "x": 7.474912674623063,
-        "y": 3.344992588869575
-      },
-      "nextControl": {
-        "x": 7.655335186383916,
-        "y": 2.3225983555580743
-      },
-      "isLocked": false,
-      "linkedName": null
+      "linkedName": "SHOP FAR RIGHT MID"
     },
     {
       "anchor": {
@@ -62,16 +46,8 @@
   ],
   "rotationTargets": [
     {
-      "waypointRelativePos": 0.1440509791663745,
-      "rotationDegrees": 75.44821309577542
-    },
-    {
-      "waypointRelativePos": 1.45,
-      "rotationDegrees": 4.18530277140005
-    },
-    {
-      "waypointRelativePos": 2.074456231937932,
-      "rotationDegrees": 22.15818552184781
+      "waypointRelativePos": 0.9721108087342684,
+      "rotationDegrees": 45.09834386914009
     }
   ],
   "constraintZones": [],
@@ -92,8 +68,8 @@
   "reversed": false,
   "folder": null,
   "idealStartingState": {
-    "velocity": 2.0,
-    "rotation": -76.37300514010859
+    "velocity": 3.0,
+    "rotation": -90.0
   },
   "useDefaultConstraints": false
 }

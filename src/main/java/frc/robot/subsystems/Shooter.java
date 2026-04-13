@@ -31,6 +31,7 @@ import edu.wpi.first.wpilibj.motorcontrol.Talon;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.states.ShooterState;
 import frc.robot.configuration.FieldConstants;
+import frc.robot.enums.DriveTarget;
 
 
 public class Shooter extends SubsystemBase {
@@ -43,7 +44,7 @@ public class Shooter extends SubsystemBase {
     private VelocityVoltage _shooterVelocity = new VelocityVoltage(0);
     private final VelocityTorqueCurrentFOC shotVelocityTorqueCurrentFOC = new VelocityTorqueCurrentFOC(52);
     private final VelocityTorqueCurrentFOC idleVelocityTorqueCurrentFOC = new VelocityTorqueCurrentFOC(35);
-    private final PositionDutyCycle HOOD_DOWN = new PositionDutyCycle(.05);
+    private final PositionDutyCycle HOOD_DOWN = new PositionDutyCycle(.02);
     private final PositionDutyCycle HOOD_MOVE = new PositionDutyCycle(.6);
     private final VoltageOut SHOOTER_VOLTAGE = new VoltageOut(3);
     private DigitalInput _leftPhotoEye;
@@ -51,7 +52,10 @@ public class Shooter extends SubsystemBase {
     private TalonFX _hoodMotor;
     private final PositionDutyCycle EMERGENCY_HOOD = new PositionDutyCycle(0.44);
     private final VelocityTorqueCurrentFOC EMERGENCY_SHOT = new VelocityTorqueCurrentFOC(51.5);
-
+    private final PositionDutyCycle EMERGENCY_FEED_HOOD = new PositionDutyCycle(0.7);
+    private final VelocityTorqueCurrentFOC EMERGENCY_FEED_SHOT = new VelocityTorqueCurrentFOC(61.5);
+    private final PositionDutyCycle SHOWCASE_HOOD = new PositionDutyCycle(0.5);
+    private final VelocityTorqueCurrentFOC SHOWCASE_SHOT = new VelocityTorqueCurrentFOC(20);
 
     private SimpleMotorFeedforward _ff = new SimpleMotorFeedforward(0, 0);
     private boolean _isReadyToShoot = false;
@@ -64,6 +68,10 @@ public class Shooter extends SubsystemBase {
     private final Drivetrain DRIVETRAIN;
     private InterpolatingDoubleTreeMap _hoodMap = new InterpolatingDoubleTreeMap();
     private InterpolatingDoubleTreeMap _shooterMap = new InterpolatingDoubleTreeMap();
+    private InterpolatingDoubleTreeMap _feedHoodMap = new InterpolatingDoubleTreeMap();
+    private InterpolatingDoubleTreeMap _feedShooterMap = new InterpolatingDoubleTreeMap();
+    private InterpolatingDoubleTreeMap _currentShooterMap;
+    private InterpolatingDoubleTreeMap _currentHoodMap;
 
     private final double[] kDistanceIDs = {1.77, 2, 2.5, 3, 3.5, 4};
     private final double[] kHoodAngles = {4.5, 5.1, 5.55, 5.85, 6.2, 6.35};
@@ -82,25 +90,45 @@ public class Shooter extends SubsystemBase {
         // _hoodMap.put(3.1, .9);
         // _hoodMap.put(4.0, 1.15);
         //everything -.38
-        _hoodMap.put(1.0, .02);
-        _hoodMap.put(2.0, .15);
-        _hoodMap.put(3.0, .4);
-        _hoodMap.put(4.0, 0.48);
+        _hoodMap.put(1.0, .06);
+        _hoodMap.put(2.0, .23);
+        _hoodMap.put(3.0, .32);
+        _hoodMap.put(3.5, .4);
+        _hoodMap.put(4.0, 0.46);//.48
         _hoodMap.put(5.0, 0.55);
+
+        _feedHoodMap.put(5.0, .55);
+        // _feedHoodMap.put(2.0, .15);
+        // _feedHoodMap.put(3.0, .4);
+        _feedHoodMap.put(7.5, 0.7);
+        _feedHoodMap.put(10.0, 0.77);
+        _feedHoodMap.put(12.0, 0.9);
+        _feedHoodMap.put(14.0, 0.9);
+        
+        _feedShooterMap.put(5.0, 58.5);
+        // _feedShooterMap.put(2.0, .15);
+        //_feedShooterMap.put(3.0, .4);
+        _feedShooterMap.put(7.5, 70.0);
+        _feedShooterMap.put(10.0, 80.0);
+        _feedShooterMap.put(12.0, 90.0);
+        _feedShooterMap.put(14.0, 90.0);
 
 
         // _shooterMap.put(2.0, 60.0);
 
         // _shooterMap.put(3.5, 60.0);
-        _shooterMap.put(1.0, 51.5);
-        _shooterMap.put(2.0, 51.5);
+        _shooterMap.put(1.0, 45.0);
+        _shooterMap.put(2.0, 47.0);
         _shooterMap.put(3.0, 51.5);
+        _shooterMap.put(3.5, 53.0);        
         _shooterMap.put(4.0, 54.5);
         _shooterMap.put(5.0, 58.5);
 
         configShooter();
         configHood();
         
+        _currentShooterMap = _shooterMap;
+        _currentHoodMap = _hoodMap;
     }
 
     private void configShooter(){
@@ -121,9 +149,9 @@ public class Shooter extends SubsystemBase {
 
         var leftSlot0 = leftShooterConfig.Slot0;
 
-        leftSlot0.kV = 0.3;
-        leftSlot0.kP = 3;
-        leftSlot0.kS = 0.7;
+        leftSlot0.kV = 0.03;
+        leftSlot0.kP = 5;
+        leftSlot0.kS = 3.7;
 
         _leftShooter1.getConfigurator().apply(leftShooterConfig);
         _leftShooter2.getConfigurator().apply(leftShooterConfig);
@@ -136,7 +164,8 @@ public class Shooter extends SubsystemBase {
         _rightShooter2.setNeutralMode(NeutralModeValue.Coast);
 
         _leftShooter2.setControl(new Follower(_leftShooter1.getDeviceID(), MotorAlignmentValue.Aligned));
-        _rightShooter2.setControl(new Follower(_rightShooter1.getDeviceID(), MotorAlignmentValue.Aligned));
+        _rightShooter1.setControl(new Follower(_leftShooter1.getDeviceID(), MotorAlignmentValue.Opposed));
+        _rightShooter2.setControl(new Follower(_leftShooter1.getDeviceID(), MotorAlignmentValue.Opposed));
 
     }
 
@@ -156,37 +185,63 @@ public class Shooter extends SubsystemBase {
         _hoodMotor.setNeutralMode(NeutralModeValue.Brake);
     }
 
+    public void setShotMap(DriveTarget driveTarget) {
+        if (driveTarget == DriveTarget.ZONE) {
+            _currentHoodMap = _feedHoodMap;
+            _currentShooterMap = _feedShooterMap;
+        } else {
+            _currentHoodMap = _hoodMap;
+            _currentShooterMap = _shooterMap;
+        }
+        
+        SmartDashboard.putBoolean("ShotMapFeed", driveTarget == DriveTarget.ZONE);
+    }
+
     private void prepShooter() {
         _leftShooter1.setControl(shotVelocityTorqueCurrentFOC);
-        _rightShooter1.setControl(shotVelocityTorqueCurrentFOC);
+       // _rightShooter1.setControl(shotVelocityTorqueCurrentFOC);
         _hoodMotor.setControl(HOOD_MOVE);
     }
 
     private void shoot(double shot) {
         _leftShooter1.setControl(shotVelocityTorqueCurrentFOC);
-        _rightShooter1.setControl(shotVelocityTorqueCurrentFOC);
+       // _rightShooter1.setControl(shotVelocityTorqueCurrentFOC);
     }
 
     private void emergencyShot(){
         _hoodMotor.setControl(EMERGENCY_HOOD);
         _leftShooter1.setControl(EMERGENCY_SHOT);
-        _rightShooter1.setControl(EMERGENCY_SHOT);
+       // _rightShooter1.setControl(EMERGENCY_SHOT);
         
     }
 
-    private void farShot(){
+        private void emergencyFeed(){
+        _hoodMotor.setControl(EMERGENCY_FEED_HOOD);
+        _leftShooter1.setControl(EMERGENCY_FEED_SHOT);
+       // _rightShooter1.setControl(EMERGENCY_SHOT);
+        
+    }
+
+    private void showcase(){
+        _hoodMotor.setControl(SHOWCASE_HOOD);
+        _leftShooter1.setControl(SHOWCASE_SHOT);
+       // _rightShooter1.setControl(EMERGENCY_SHOT);
+        
+    }
+
+    private void feedShot(){
 
     }
 
     private void stop() {
         _leftShooter1.set(0);
-        _rightShooter1.set(0);
+       // _rightShooter1.set(0);
         _hoodMotor.setControl(HOOD_DOWN);
     }
 
     private void setIdle() {
         _leftShooter1.setControl(idleVelocityTorqueCurrentFOC);
-        _rightShooter1.setControl(idleVelocityTorqueCurrentFOC);
+       // _rightShooter1.setControl(idleVelocityTorqueCurrentFOC);
         _hoodMotor.setControl(HOOD_DOWN);
     }
 
@@ -210,17 +265,19 @@ public class Shooter extends SubsystemBase {
         }
     }
 
-    public void setShooterTargetSpeed(Supplier<Double> distanceSupplier){
+    public void setShooterTargetSpeed(Supplier<Double> distanceSupplier, Supplier<DriveTarget> driveTargetSupplier){
         var distance = distanceSupplier.get();
-        var targetSpeed = _shooterMap.get(distance);
+        setShotMap(driveTargetSupplier.get());
+
+        var targetSpeed = _currentShooterMap.get(distance);
         shotVelocityTorqueCurrentFOC.Velocity = targetSpeed;
         
-        HOOD_MOVE.Position = _hoodMap.get(distance);
+        HOOD_MOVE.Position = _currentHoodMap.get(distance);
     }
 
     @Override
     public void periodic() {
-        setShooterTargetSpeed(DRIVETRAIN::getDistanceToTarget);
+        setShooterTargetSpeed(DRIVETRAIN::getDistanceToTarget, DRIVETRAIN::getDriveTarget);
         // SmartDashboard.putNumber("Left Hood", _leftHood.getPosition());
         // SmartDashboard.putNumber("Left Hood Speed", _leftHood.getSpeed());
         SmartDashboard.putString("Shooter State", _currentState.name());
@@ -246,6 +303,12 @@ public class Shooter extends SubsystemBase {
                 break;
             case EMERGENCY:
                 emergencyShot();
+                break;
+            case EMERGENCY_FEED:
+                emergencyFeed();
+                break;
+            case SHOWCASE:
+                showcase();
                 break;
             default:
                 setIdle();

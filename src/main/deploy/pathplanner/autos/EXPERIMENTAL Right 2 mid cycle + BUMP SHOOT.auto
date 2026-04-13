@@ -7,55 +7,13 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Comp Left Trench Start to Left Far Mid"
+            "pathName": "Right Trench Start to Far Right Mid Prep"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "Left Far Mid to Left Bump Shoot"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "PrepShooter"
-          }
-        },
-        {
-          "type": "wait",
-          "data": {
-            "waitTime": 0.05
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "Start Shooting"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "Injecting"
-          }
-        },
-        {
-          "type": "wait",
-          "data": {
-            "waitTime": 3.0
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "Idle"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "Left bump shoot to Left bump shoot"
+            "pathName": "Right Far Mid to Bump Shoot"
           }
         },
         {
@@ -97,7 +55,49 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Left bump shoot to Left bump shoot"
+            "pathName": "Copy of Right Bump Shoot to Right Mid"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "PrepShooter"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 0.05
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Start Shooting"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Injecting"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 3.5
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Idle"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Right End"
           }
         }
       ]

@@ -1,0 +1,187 @@
+{
+  "version": "2025.0",
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 2.5925795672303207,
+        "y": 6.5998813271314045
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 2.9356794007005584,
+        "y": 7.25660707381676
+      },
+      "isLocked": false,
+      "linkedName": "Prep Shoot Depot"
+    },
+    {
+      "anchor": {
+        "x": 4.381526049328426,
+        "y": 7.37012217359031
+      },
+      "prevControl": {
+        "x": 3.3816271108938794,
+        "y": 7.512680021241221
+      },
+      "nextControl": {
+        "x": 4.8848378979163325,
+        "y": 7.298363867751695
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 5.437501403344668,
+        "y": 7.37012217359031
+      },
+      "prevControl": {
+        "x": 4.370263072703162,
+        "y": 7.40198146739419
+      },
+      "nextControl": {
+        "x": 5.729066009256051,
+        "y": 7.361418360978034
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 8.13334436595084,
+        "y": 7.37012217359031
+      },
+      "prevControl": {
+        "x": 7.676701605468184,
+        "y": 7.551676724057301
+      },
+      "nextControl": {
+        "x": 8.950133203866727,
+        "y": 7.045378756794356
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 8.717236620524528,
+        "y": 5.568752452033191
+      },
+      "prevControl": {
+        "x": 8.737667407839595,
+        "y": 6.040825400744111
+      },
+      "nextControl": {
+        "x": 8.698695710117569,
+        "y": 5.140346923033173
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 7.83518661893449,
+        "y": 4.015847519656364
+      },
+      "prevControl": {
+        "x": 8.663192716101559,
+        "y": 4.161531624327378
+      },
+      "nextControl": {
+        "x": 7.124132896799624,
+        "y": 3.890740681389559
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 5.996547179000325,
+        "y": 5.407250339066001
+      },
+      "prevControl": {
+        "x": 6.682007748890784,
+        "y": 4.97351449207902
+      },
+      "nextControl": {
+        "x": 5.305922920124715,
+        "y": 5.844253590647692
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 3.2137415401810516,
+        "y": 5.407250339066001
+      },
+      "prevControl": {
+        "x": 4.488007337950462,
+        "y": 5.796065645997789
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": null
+    }
+  ],
+  "rotationTargets": [
+    {
+      "waypointRelativePos": 1,
+      "rotationDegrees": 180.0
+    },
+    {
+      "waypointRelativePos": 2.0,
+      "rotationDegrees": 180.0
+    },
+    {
+      "waypointRelativePos": 3,
+      "rotationDegrees": 93.6913859864515
+    },
+    {
+      "waypointRelativePos": 4,
+      "rotationDegrees": 87.9545915111131
+    },
+    {
+      "waypointRelativePos": 4.66328344443909,
+      "rotationDegrees": -3.114926629325888
+    },
+    {
+      "waypointRelativePos": 6.0,
+      "rotationDegrees": 0.0
+    }
+  ],
+  "constraintZones": [],
+  "pointTowardsZones": [],
+  "eventMarkers": [
+    {
+      "name": "IntakeOut",
+      "waypointRelativePos": 0.5157595012082601,
+      "endWaypointRelativePos": null,
+      "command": {
+        "type": "named",
+        "data": {
+          "name": "IntakeOut"
+        }
+      }
+    }
+  ],
+  "globalConstraints": {
+    "maxVelocity": 4.3,
+    "maxAcceleration": 4.5,
+    "maxAngularVelocity": 540.0,
+    "maxAngularAcceleration": 720.0,
+    "nominalVoltage": 12.0,
+    "unlimited": false
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": -45.000000000000185
+  },
+  "reversed": false,
+  "folder": null,
+  "idealStartingState": {
+    "velocity": 0,
+    "rotation": -49.89909245378787
+  },
+  "useDefaultConstraints": true
+}
