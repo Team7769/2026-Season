@@ -3,13 +3,13 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 3.1665715650164765,
-        "y": 5.614172357206413
+        "x": 3.0770859061318907,
+        "y": 5.6060221704102355
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.2031610703517437,
-        "y": 6.693768834637303
+        "x": 2.113675411467158,
+        "y": 6.6856186478411255
       },
       "isLocked": false,
       "linkedName": "Left Bump Shoot"
@@ -48,60 +48,76 @@
     },
     {
       "anchor": {
-        "x": 7.760647182180401,
+        "x": 7.537028871918137,
         "y": 7.403686224018816
       },
       "prevControl": {
-        "x": 6.456207038983865,
-        "y": 7.481931328721442
+        "x": 6.231992904389074,
+        "y": 7.336102889919201
       },
       "nextControl": {
-        "x": 9.409112870605655,
-        "y": 7.304805205167738
+        "x": 8.568157747016352,
+        "y": 7.457084849803413
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 7.338257040573904,
-        "y": 4.400967942885817
+        "x": 7.400373237868978,
+        "y": 4.077963716951437
       },
       "prevControl": {
-        "x": 8.692390141606497,
-        "y": 4.177349632623555
+        "x": 9.260255920082384,
+        "y": 2.8633464550977816
       },
       "nextControl": {
-        "x": 6.518203573230073,
-        "y": 4.536389616392137
+        "x": 6.791634504377262,
+        "y": 4.475507379639906
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 5.735659150361019,
-        "y": 5.614172357206413
+        "x": 6.592862673033027,
+        "y": 4.699125689902169
       },
       "prevControl": {
-        "x": 6.376929369031702,
-        "y": 5.263475059267116
+        "x": 6.685710342121553,
+        "y": 4.467006517180854
       },
       "nextControl": {
-        "x": 5.114497177410288,
-        "y": 5.953872875262644
+        "x": 6.500015003944501,
+        "y": 4.931244862623483
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 3.1665715650164765,
-        "y": 5.614172357206413
+        "x": 5.6983894319839745,
+        "y": 5.469366536361074
       },
       "prevControl": {
-        "x": 4.3691028098694105,
-        "y": 5.61844540986925
+        "x": 6.779211264918246,
+        "y": 5.33698395497475
+      },
+      "nextControl": {
+        "x": 4.995658953411176,
+        "y": 5.555439256154079
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 3.0770859061318907,
+        "y": 5.6060221704102355
+      },
+      "prevControl": {
+        "x": 4.279617150984825,
+        "y": 5.610295223073073
       },
       "nextControl": null,
       "isLocked": false,
@@ -131,21 +147,38 @@
     },
     {
       "waypointRelativePos": 4,
-      "rotationDegrees": 1.3639275316028026
+      "rotationDegrees": 0.0
     },
     {
-      "waypointRelativePos": 4.95,
+      "waypointRelativePos": 5,
+      "rotationDegrees": -84.55966796899438
+    },
+    {
+      "waypointRelativePos": 5.9,
       "rotationDegrees": -5.103442452857278
     }
   ],
   "constraintZones": [
     {
       "name": "Constraints Zone",
-      "minWaypointRelativePos": 4.81426059953658,
-      "maxWaypointRelativePos": 5.794355228310116,
+      "minWaypointRelativePos": 5.65,
+      "maxWaypointRelativePos": 6.794355228310116,
       "constraints": {
         "maxVelocity": 3.3,
         "maxAcceleration": 3.0,
+        "maxAngularVelocity": 540.0,
+        "maxAngularAcceleration": 720.0,
+        "nominalVoltage": 12.0,
+        "unlimited": false
+      }
+    },
+    {
+      "name": "Constraints Zone",
+      "minWaypointRelativePos": 3.289668954777718,
+      "maxWaypointRelativePos": 3.927508316360531,
+      "constraints": {
+        "maxVelocity": 2.3,
+        "maxAcceleration": 4.5,
         "maxAngularVelocity": 540.0,
         "maxAngularAcceleration": 720.0,
         "nominalVoltage": 12.0,

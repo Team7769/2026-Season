@@ -103,23 +103,23 @@ public class Vision extends SubsystemBase{
                         limelightFourPoseEstimate.timestampSeconds
                     )
                 );
-            } else {
+             } //else {
                 
-            PoseEstimate limelightFourBackupPoseEstimate =
-                LimelightHelpers.getBotPoseEstimate_wpiBlue_MegaTag2(
-                    "limelight-fake"
-                );
-                if (limelightFourBackupPoseEstimate != null && limelightFourBackupPoseEstimate.tagCount > 0) {
-                _limelightFourBackupPoseEstimate = limelightFourBackupPoseEstimate;
-                SmartDashboard.putString("Limelight Used", "Side"+limelightFourBackupPoseEstimate.tagCount);
-                visionMeasurements.add(
-                    new VisionMeasurement(
-                        limelightFourBackupPoseEstimate.pose,
-                        limelightFourBackupPoseEstimate.timestampSeconds
-                    )
-                );
-            }
-            }
+            // PoseEstimate limelightFourBackupPoseEstimate =
+            //     LimelightHelpers.getBotPoseEstimate_wpiBlue_MegaTag2(
+            //         "limelight-fake"
+            //     );
+            //     if (limelightFourBackupPoseEstimate != null && limelightFourBackupPoseEstimate.tagCount > 0) {
+            //     _limelightFourBackupPoseEstimate = limelightFourBackupPoseEstimate;
+            //     SmartDashboard.putString("Limelight Used", "Side"+limelightFourBackupPoseEstimate.tagCount);
+            //     visionMeasurements.add(
+            //         new VisionMeasurement(
+            //             limelightFourBackupPoseEstimate.pose,
+            //             limelightFourBackupPoseEstimate.timestampSeconds
+            //         )
+            //     );
+            // }
+            // }
         return visionMeasurements;
     }
 

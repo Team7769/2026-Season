@@ -56,7 +56,7 @@ public class RobotContainer {
   public final Drivetrain DRIVETRAIN = new Drivetrain(DRIVER_CONTROLLER, VISION, _isComp);
   public final KitbotShooter KITBOT_SHOOTER = _isComp ? null : new KitbotShooter();
   public final KitbotIntake KITBOT_INTAKE = _isComp ? null : new KitbotIntake();
-  public final Hopper HOPPER = _isComp ? new Hopper() : null;
+  public final Hopper HOPPER = _isComp ? new Hopper(DRIVETRAIN) : null;
   public final Shooter SHOOTER = _isComp ? new Shooter(DRIVETRAIN) : null;
   public final Ledinator LEDINATOR = _isComp ? new Ledinator() : null;
   //private final GameManager GAME_MANAGER = new GameManager(DRIVER_CONTROLLER);
@@ -179,7 +179,7 @@ public class RobotContainer {
     // Baby Bird
     DRIVER_CONTROLLER.y().onTrue(
       Commands.runOnce(() -> HOPPER.setWantedState(HopperState.EMERGENCY))
-    ).onFalse(Commands.runOnce(() -> HOPPER.setWantedState(HopperState.IDLE)));
+    ).onFalse(Commands.runOnce(() -> HOPPER.setWantedState(HopperState.FLOOR_INTAKE)));
 
     // Reseed heading
     DRIVER_CONTROLLER.back().onTrue(
@@ -219,7 +219,7 @@ public class RobotContainer {
     
     OPERATOR_CONTROLLER.x().onTrue(
       Commands.runOnce(() -> HOPPER.setWantedState(HopperState.EMERGENCY))
-    ).onFalse(Commands.runOnce(() -> HOPPER.setWantedState(HopperState.IDLE)));
+    ).onFalse(Commands.runOnce(() -> HOPPER.setWantedState(HopperState.FLOOR_INTAKE)));
 
       OPERATOR_CONTROLLER.leftTrigger().onTrue(
         Commands.runOnce(() -> {

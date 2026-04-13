@@ -18,6 +18,7 @@ import com.ctre.phoenix6.signals.S2CloseStateValue;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.enums.DriveTarget;
 import frc.robot.states.HopperState;
 
 public class Hopper extends SubsystemBase {
@@ -32,10 +33,12 @@ public class Hopper extends SubsystemBase {
     private final VoltageOut HALT = new VoltageOut(0);
      private final VoltageOut SLOW = new VoltageOut(5);
     private final VoltageOut FLOOR_INJECT = new VoltageOut(11);
+    private final VoltageOut FLOOR_INJECT_ZONE = new VoltageOut(9);
     private final VoltageOut REVERSE = new VoltageOut(-11);
     //private final VelocityTorqueCurrentFOC INTAKE = new VelocityTorqueCurrentFOC(85);
     private final VoltageOut INTAKE = new VoltageOut(11);
 
+    private Drivetrain _drivetrain;
     private int _timer = 0; 
     private final PositionDutyCycle INTAKE_IN = new PositionDutyCycle(.1);
     private final PositionDutyCycle INTAKE_OUT = new PositionDutyCycle(14.25);
@@ -47,9 +50,10 @@ public class Hopper extends SubsystemBase {
         }
     }
 
-    public Hopper() {
+    public Hopper(Drivetrain drivetrain) {
         configInjector();
         configHopper();
+        _drivetrain = drivetrain;
     }
 
     private void configHopper() {
@@ -78,7 +82,7 @@ public class Hopper extends SubsystemBase {
         var intakeCurrentLimits = new CurrentLimitsConfigs()
                                     .withStatorCurrentLimit(100) //60
                                     .withSupplyCurrentLimit(60) //40
-                                    .withSupplyCurrentLowerTime(1)
+                                    .withSupplyCurrentLowerTime(0)//1
                                     .withSupplyCurrentLowerLimit(40); //30
         intakeConfiguration.withCurrentLimits(intakeCurrentLimits);
 
@@ -179,7 +183,13 @@ public class Hopper extends SubsystemBase {
 
     private void handleInject() {
         _intake.setControl(SLOW);
-        _injector.setControl(FLOOR_INJECT);  
+        if(_drivetrain.getDriveTarget()==DriveTarget.ZONE){
+        _injector.setControl(FLOOR_INJECT_ZONE);
+        } else {
+            _injector.setControl(FLOOR_INJECT);
+        }
+         
+
 
         if(_timer > 55){//45
         //_floor.setControl(REVERSE);

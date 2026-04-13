@@ -44,7 +44,7 @@ public class Shooter extends SubsystemBase {
     private VelocityVoltage _shooterVelocity = new VelocityVoltage(0);
     private final VelocityTorqueCurrentFOC shotVelocityTorqueCurrentFOC = new VelocityTorqueCurrentFOC(52);
     private final VelocityTorqueCurrentFOC idleVelocityTorqueCurrentFOC = new VelocityTorqueCurrentFOC(35);
-    private final PositionDutyCycle HOOD_DOWN = new PositionDutyCycle(.05);
+    private final PositionDutyCycle HOOD_DOWN = new PositionDutyCycle(.02);
     private final PositionDutyCycle HOOD_MOVE = new PositionDutyCycle(.6);
     private final VoltageOut SHOOTER_VOLTAGE = new VoltageOut(3);
     private DigitalInput _leftPhotoEye;
@@ -94,7 +94,7 @@ public class Shooter extends SubsystemBase {
         _hoodMap.put(2.0, .23);
         _hoodMap.put(3.0, .32);
         _hoodMap.put(3.5, .4);
-        _hoodMap.put(4.0, 0.48);
+        _hoodMap.put(4.0, 0.46);//.48
         _hoodMap.put(5.0, 0.55);
 
         _feedHoodMap.put(5.0, .55);
@@ -102,14 +102,17 @@ public class Shooter extends SubsystemBase {
         // _feedHoodMap.put(3.0, .4);
         _feedHoodMap.put(7.5, 0.7);
         _feedHoodMap.put(10.0, 0.77);
-        _feedHoodMap.put(12.0, 0.85);
+        _feedHoodMap.put(12.0, 0.9);
+        _feedHoodMap.put(14.0, 0.9);
         
         _feedShooterMap.put(5.0, 58.5);
         // _feedShooterMap.put(2.0, .15);
         //_feedShooterMap.put(3.0, .4);
         _feedShooterMap.put(7.5, 70.0);
         _feedShooterMap.put(10.0, 80.0);
-        _feedShooterMap.put(12.0, 85.0);
+        _feedShooterMap.put(12.0, 90.0);
+        _feedShooterMap.put(14.0, 90.0);
+
 
         // _shooterMap.put(2.0, 60.0);
 
@@ -147,7 +150,7 @@ public class Shooter extends SubsystemBase {
         var leftSlot0 = leftShooterConfig.Slot0;
 
         leftSlot0.kV = 0.03;
-        leftSlot0.kP = 4;
+        leftSlot0.kP = 5;
         leftSlot0.kS = 3.7;
 
         _leftShooter1.getConfigurator().apply(leftShooterConfig);
