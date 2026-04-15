@@ -49,7 +49,13 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Copy of Left bump shoot to Left bump shoot"
+            "pathName": "Left bump Shoot to depot"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Left Depot Shoot to Side Climb"
           }
         },
         {
@@ -79,7 +85,7 @@
         {
           "type": "wait",
           "data": {
-            "waitTime": 3.0
+            "waitTime": 2.5
           }
         },
         {
@@ -89,9 +95,15 @@
           }
         },
         {
-          "type": "path",
+          "type": "named",
           "data": {
-            "pathName": "Left End"
+            "name": "IntakeIn"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Auto Climb"
           }
         }
       ]

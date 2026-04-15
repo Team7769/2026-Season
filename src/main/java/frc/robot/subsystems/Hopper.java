@@ -40,9 +40,9 @@ public class Hopper extends SubsystemBase {
 
     private Drivetrain _drivetrain;
     private int _timer = 0; 
-    private final PositionDutyCycle INTAKE_IN = new PositionDutyCycle(.1);
-    private final PositionDutyCycle INTAKE_OUT = new PositionDutyCycle(14.25);
-    private final PositionDutyCycle INTAKE_SHOOT = new PositionDutyCycle(4.5);
+    private final PositionDutyCycle INTAKE_IN = new PositionDutyCycle(.01);
+    private final PositionDutyCycle INTAKE_OUT = new PositionDutyCycle(16.6);
+    private final PositionDutyCycle INTAKE_SHOOT = new PositionDutyCycle(7.4);
 
     public void setWantedState(HopperState wantedState) {
         if (wantedState != _currentState) {

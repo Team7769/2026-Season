@@ -19,6 +19,8 @@ public class Vision extends SubsystemBase{
     private PoseEstimate _limelightFourPoseEstimate = new PoseEstimate();
     private PoseEstimate _limelightFourBackupPoseEstimate = new PoseEstimate();
 
+    private boolean _useSideLimelight = false;
+
 
 
     private static final double filterDistanceError = 2;
@@ -103,28 +105,36 @@ public class Vision extends SubsystemBase{
                         limelightFourPoseEstimate.timestampSeconds
                     )
                 );
-             } //else {
+             } else if(_useSideLimelight) {
                 
-            // PoseEstimate limelightFourBackupPoseEstimate =
-            //     LimelightHelpers.getBotPoseEstimate_wpiBlue_MegaTag2(
-            //         "limelight-fake"
-            //     );
-            //     if (limelightFourBackupPoseEstimate != null && limelightFourBackupPoseEstimate.tagCount > 0) {
-            //     _limelightFourBackupPoseEstimate = limelightFourBackupPoseEstimate;
-            //     SmartDashboard.putString("Limelight Used", "Side"+limelightFourBackupPoseEstimate.tagCount);
-            //     visionMeasurements.add(
-            //         new VisionMeasurement(
-            //             limelightFourBackupPoseEstimate.pose,
-            //             limelightFourBackupPoseEstimate.timestampSeconds
-            //         )
-            //     );
-            // }
-            // }
+             PoseEstimate limelightFourBackupPoseEstimate =
+                 LimelightHelpers.getBotPoseEstimate_wpiBlue_MegaTag2(
+                    "limelight-fake"
+                );
+                if (limelightFourBackupPoseEstimate != null && limelightFourBackupPoseEstimate.tagCount > 0) {
+                _limelightFourBackupPoseEstimate = limelightFourBackupPoseEstimate;
+                SmartDashboard.putString("Limelight Used", "Side"+limelightFourBackupPoseEstimate.tagCount);
+                visionMeasurements.add(
+                    new VisionMeasurement(
+                        limelightFourBackupPoseEstimate.pose,
+                        limelightFourBackupPoseEstimate.timestampSeconds
+                    )
+                );
+            }
+            }
         return visionMeasurements;
     }
 
     public Pose2d getFrontLimelightPose(){
         return _limelightFourPoseEstimate.pose;
+    }
+
+    public void setSideLimelightOn(){
+        _useSideLimelight = true;
+    }
+
+    public void setSideLimelightOff(){
+        _useSideLimelight = false;
     }
 
         public Pose2d getSideLimelightPose(){

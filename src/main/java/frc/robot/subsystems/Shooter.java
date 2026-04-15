@@ -177,9 +177,9 @@ public class Shooter extends SubsystemBase {
 
         var hoodSlot0 = hoodConfig.Slot0;
 
-        hoodSlot0.kP = 1.5;
+        hoodSlot0.kP = 1.4;
         //raise
-        hoodSlot0.kD = 0.02;
+        hoodSlot0.kD = 0.012;
         
         _hoodMotor.getConfigurator().apply(hoodConfig);
         _hoodMotor.setNeutralMode(NeutralModeValue.Brake);

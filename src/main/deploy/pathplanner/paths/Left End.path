@@ -3,13 +3,13 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 3.0770859061318907,
-        "y": 5.6060221704102355
+        "x": 2.977699990459773,
+        "y": 5.481789775820089
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.192512921870369,
-        "y": 6.49234522466311
+        "x": 2.0931270061982516,
+        "y": 6.368112830072963
       },
       "isLocked": false,
       "linkedName": "Left Bump Shoot"
@@ -89,7 +89,7 @@
   "folder": null,
   "idealStartingState": {
     "velocity": 0,
-    "rotation": -26.913443430619743
+    "rotation": -51.842773412630976
   },
   "useDefaultConstraints": true
 }
