@@ -35,6 +35,12 @@
           }
         },
         {
+          "type": "wait",
+          "data": {
+            "waitTime": 0.5
+          }
+        },
+        {
           "type": "named",
           "data": {
             "name": "Injecting"
@@ -43,7 +49,13 @@
         {
           "type": "wait",
           "data": {
-            "waitTime": 3.75
+            "waitTime": 3.2
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Idle"
           }
         },
         {
@@ -71,6 +83,12 @@
           }
         },
         {
+          "type": "wait",
+          "data": {
+            "waitTime": 0.3
+          }
+        },
+        {
           "type": "named",
           "data": {
             "name": "Injecting"
@@ -79,7 +97,7 @@
         {
           "type": "wait",
           "data": {
-            "waitTime": 3.0
+            "waitTime": 2.7
           }
         },
         {

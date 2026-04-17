@@ -35,6 +35,12 @@
           }
         },
         {
+          "type": "wait",
+          "data": {
+            "waitTime": 0.5
+          }
+        },
+        {
           "type": "named",
           "data": {
             "name": "Injecting"
@@ -77,6 +83,12 @@
           }
         },
         {
+          "type": "wait",
+          "data": {
+            "waitTime": 0.3
+          }
+        },
+        {
           "type": "named",
           "data": {
             "name": "Injecting"
@@ -85,7 +97,7 @@
         {
           "type": "wait",
           "data": {
-            "waitTime": 3.5
+            "waitTime": 3.2
           }
         },
         {
