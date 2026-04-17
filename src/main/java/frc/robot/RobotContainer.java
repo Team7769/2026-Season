@@ -230,8 +230,15 @@ public class RobotContainer {
         }));
     
     OPERATOR_CONTROLLER.x().onTrue(
-      Commands.runOnce(() -> HOPPER.setWantedState(HopperState.EMERGENCY))
-    ).onFalse(Commands.runOnce(() -> HOPPER.setWantedState(HopperState.FLOOR_INTAKE)));
+      Commands.runOnce(() -> {
+        HOPPER.setWantedState(HopperState.EMERGENCY);
+        SHOOTER.setWantedState(ShooterState.REVERSE);
+      })
+    ).onFalse(Commands.runOnce(() -> 
+    {HOPPER.setWantedState(HopperState.FLOOR_INTAKE);
+      SHOOTER.setWantedState(ShooterState.IDLE);
+    })
+  );
 
       OPERATOR_CONTROLLER.leftTrigger().onTrue(
         Commands.runOnce(() -> {
@@ -309,6 +316,9 @@ public class RobotContainer {
 
     NamedCommands.registerCommand("Injecting",
         Commands.runOnce(() -> HOPPER.setWantedState(HopperState.INJECTING)));
+
+        NamedCommands.registerCommand("Stop Shooter",
+        Commands.runOnce(() -> SHOOTER.setWantedState(ShooterState.STOP)));
 
     NamedCommands.registerCommand("Start Shooting",
         Commands.sequence(

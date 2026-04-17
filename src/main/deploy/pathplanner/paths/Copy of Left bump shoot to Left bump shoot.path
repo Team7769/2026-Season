@@ -198,6 +198,17 @@
           "name": "IntakeOut"
         }
       }
+    },
+    {
+      "name": "Idle",
+      "waypointRelativePos": 2.9667518883308923,
+      "endWaypointRelativePos": null,
+      "command": {
+        "type": "named",
+        "data": {
+          "name": "Idle"
+        }
+      }
     }
   ],
   "globalConstraints": {
