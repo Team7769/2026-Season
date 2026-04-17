@@ -200,6 +200,9 @@ public class RobotContainer {
 
     OPERATOR_CONTROLLER.povUp().onTrue(
         Commands.runOnce(() -> CLIMB.setWantedState(ClimbState.EXTEND)));
+        
+    OPERATOR_CONTROLLER.povRight().onTrue(
+        Commands.runOnce(() -> CLIMB.setWantedState(ClimbState.ENGAGE)));
 
     OPERATOR_CONTROLLER.povLeft().onTrue(
         Commands.runOnce(() -> VISION.setSideLimelightOn())).onFalse(
