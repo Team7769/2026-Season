@@ -320,11 +320,15 @@ public class RobotContainer {
         NamedCommands.registerCommand("Stop Shooter",
         Commands.runOnce(() -> SHOOTER.setWantedState(ShooterState.STOP)));
 
+    NamedCommands.registerCommand("Idle Shooter",
+        Commands.runOnce(() -> SHOOTER.setWantedState(ShooterState.IDLE)));
+
     NamedCommands.registerCommand("Start Shooting",
         Commands.sequence(
             Commands.waitUntil(SHOOTER::shooterReady),
             Commands.runOnce(() -> {
               SHOOTER.setWantedState(ShooterState.SHOOT);
+              HOPPER.setWantedState(HopperState.INJECTING_HOPPER_OUT);
               // DRIVETRAIN.setWantedState(DrivetrainState.AIM);
             })));
 
