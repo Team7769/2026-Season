@@ -95,7 +95,10 @@ public class RobotContainer {
 
     RobotModeTriggers.autonomous().onTrue(Commands.runOnce(() -> DRIVETRAIN.setWantedState(DrivetrainState.AUTO)));
 
-    RobotModeTriggers.teleop().onTrue(Commands.runOnce(() ->  DRIVETRAIN.setWantedState(DrivetrainState.OPEN_LOOP)));
+    RobotModeTriggers.teleop().onTrue(Commands.runOnce(() ->  {
+      DRIVETRAIN.setWantedState(DrivetrainState.OPEN_LOOP);
+      VISION.setSideLimelightOff();
+    }));
 
     DRIVER_CONTROLLER.back().onTrue(
         Commands.runOnce(() -> DRIVETRAIN.seedFieldCentric()));
@@ -153,6 +156,7 @@ public class RobotContainer {
     DRIVER_CONTROLLER.leftBumper().onTrue(
         Commands.runOnce(() -> {
           HOPPER.setWantedState(HopperState.FLOOR_INTAKE);
+          SHOOTER.setWantedState(ShooterState.IDLE);
         }));
 
     // Intake in
@@ -196,6 +200,14 @@ public class RobotContainer {
 
     OPERATOR_CONTROLLER.povUp().onTrue(
         Commands.runOnce(() -> CLIMB.setWantedState(ClimbState.EXTEND)));
+        
+    OPERATOR_CONTROLLER.povRight().onTrue(
+        Commands.runOnce(() -> CLIMB.setWantedState(ClimbState.ENGAGE)));
+
+    OPERATOR_CONTROLLER.povLeft().onTrue(
+        Commands.runOnce(() -> VISION.setSideLimelightOn())).onFalse(
+          Commands.runOnce(() -> VISION.setSideLimelightOff())
+          );
 
     OPERATOR_CONTROLLER.a().onTrue(
       Commands.runOnce(() -> {
@@ -218,8 +230,15 @@ public class RobotContainer {
         }));
     
     OPERATOR_CONTROLLER.x().onTrue(
-      Commands.runOnce(() -> HOPPER.setWantedState(HopperState.EMERGENCY))
-    ).onFalse(Commands.runOnce(() -> HOPPER.setWantedState(HopperState.FLOOR_INTAKE)));
+      Commands.runOnce(() -> {
+        HOPPER.setWantedState(HopperState.EMERGENCY);
+        SHOOTER.setWantedState(ShooterState.REVERSE);
+      })
+    ).onFalse(Commands.runOnce(() -> 
+    {HOPPER.setWantedState(HopperState.FLOOR_INTAKE);
+      SHOOTER.setWantedState(ShooterState.IDLE);
+    })
+  );
 
       OPERATOR_CONTROLLER.leftTrigger().onTrue(
         Commands.runOnce(() -> {
@@ -271,6 +290,7 @@ public class RobotContainer {
           SmartDashboard.putBoolean("isClimbed", true);
           DRIVETRAIN.setWantedState(DrivetrainState.OPEN_LOOP);
           CLIMB.setWantedState(ClimbState.ENGAGE);
+          VISION.setSideLimelightOff();
         }));
 
   }
@@ -297,11 +317,18 @@ public class RobotContainer {
     NamedCommands.registerCommand("Injecting",
         Commands.runOnce(() -> HOPPER.setWantedState(HopperState.INJECTING)));
 
+        NamedCommands.registerCommand("Stop Shooter",
+        Commands.runOnce(() -> SHOOTER.setWantedState(ShooterState.STOP)));
+
+    NamedCommands.registerCommand("Idle Shooter",
+        Commands.runOnce(() -> SHOOTER.setWantedState(ShooterState.IDLE)));
+
     NamedCommands.registerCommand("Start Shooting",
         Commands.sequence(
             Commands.waitUntil(SHOOTER::shooterReady),
             Commands.runOnce(() -> {
               SHOOTER.setWantedState(ShooterState.SHOOT);
+              HOPPER.setWantedState(HopperState.INJECTING_HOPPER_OUT);
               // DRIVETRAIN.setWantedState(DrivetrainState.AIM);
             })));
 
@@ -327,6 +354,7 @@ public class RobotContainer {
           CLIMB.setWantedState(ClimbState.EXTEND);
           DRIVETRAIN.setWantedState(DrivetrainState.CLIMB_STAGE);
           SHOOTER.setWantedState(ShooterState.STOP);
+          VISION.setSideLimelightOn();
         }),
         Commands.runOnce(() -> DRIVETRAIN.setTargetStageLeftClimb(GeometryUtil::isRedAlliance)));
   }

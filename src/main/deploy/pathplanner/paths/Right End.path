@@ -3,13 +3,13 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 3.052239427213861,
-        "y": 2.425672868902493
+        "x": 3.1143556245089337,
+        "y": 2.5374820240336247
       },
       "prevControl": null,
       "nextControl": {
-        "x": 1.859608439148458,
-        "y": 1.0839630073289155
+        "x": 1.9217246364435308,
+        "y": 1.195772162460047
       },
       "isLocked": false,
       "linkedName": "Right Bump Shoot"
@@ -53,7 +53,7 @@
       },
       "prevControl": {
         "x": 6.015252814639524,
-        "y": 0.7733820208535496
+        "y": 0.7733820208535497
       },
       "nextControl": null,
       "isLocked": false,
@@ -89,7 +89,7 @@
   "folder": null,
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 19.65382405805336
+    "rotation": 52.765166018425376
   },
   "useDefaultConstraints": true
 }

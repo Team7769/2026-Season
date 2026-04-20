@@ -3,13 +3,13 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 3.052239427213861,
-        "y": 2.425672868902493
+        "x": 3.1143556245089337,
+        "y": 2.5374820240336247
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.276009345121108,
-        "y": 1.315428761356345
+        "x": 2.3381255424161806,
+        "y": 1.4272379164874764
       },
       "isLocked": false,
       "linkedName": "Right Bump Shoot"
@@ -96,12 +96,12 @@
     },
     {
       "anchor": {
-        "x": 3.052239427213861,
-        "y": 2.425672868902493
+        "x": 3.1143556245089337,
+        "y": 2.5374820240336247
       },
       "prevControl": {
-        "x": 4.249448059764606,
-        "y": 2.6297926726185383
+        "x": 4.311564257059678,
+        "y": 2.74160182774967
       },
       "nextControl": null,
       "isLocked": false,
@@ -203,13 +203,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 19.65382405805336
+    "rotation": 52.765166018425376
   },
   "reversed": false,
   "folder": null,
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 19.65382405805336
+    "rotation": 52.765166018425376
   },
   "useDefaultConstraints": true
 }

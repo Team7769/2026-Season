@@ -1,0 +1,66 @@
+{
+  "version": "2025.0",
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 2.977699990459773,
+        "y": 5.481789775820089
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 3.4465423952751277,
+        "y": 5.370136378127387
+      },
+      "isLocked": false,
+      "linkedName": "Left Bump Shoot"
+    },
+    {
+      "anchor": {
+        "x": 0.629707732706011,
+        "y": 5.94144963580363
+      },
+      "prevControl": {
+        "x": 0.3123491342190157,
+        "y": 5.999526047220083
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": "Comp Depot"
+    }
+  ],
+  "rotationTargets": [],
+  "constraintZones": [],
+  "pointTowardsZones": [],
+  "eventMarkers": [
+    {
+      "name": "IntakeOut",
+      "waypointRelativePos": 0,
+      "endWaypointRelativePos": null,
+      "command": {
+        "type": "named",
+        "data": {
+          "name": "IntakeOut"
+        }
+      }
+    }
+  ],
+  "globalConstraints": {
+    "maxVelocity": 4.3,
+    "maxAcceleration": 4.5,
+    "maxAngularVelocity": 540.0,
+    "maxAngularAcceleration": 720.0,
+    "nominalVoltage": 12.0,
+    "unlimited": false
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": 0.0
+  },
+  "reversed": false,
+  "folder": null,
+  "idealStartingState": {
+    "velocity": 0,
+    "rotation": -51.842773412630976
+  },
+  "useDefaultConstraints": true
+}

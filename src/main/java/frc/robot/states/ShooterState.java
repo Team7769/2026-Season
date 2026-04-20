@@ -7,5 +7,6 @@ public enum ShooterState {
     STOP,
     EMERGENCY,
     EMERGENCY_FEED,
-    SHOWCASE
+    SHOWCASE,
+    REVERSE
 }

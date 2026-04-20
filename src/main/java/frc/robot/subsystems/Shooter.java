@@ -56,6 +56,7 @@ public class Shooter extends SubsystemBase {
     private final VelocityTorqueCurrentFOC EMERGENCY_FEED_SHOT = new VelocityTorqueCurrentFOC(61.5);
     private final PositionDutyCycle SHOWCASE_HOOD = new PositionDutyCycle(0.5);
     private final VelocityTorqueCurrentFOC SHOWCASE_SHOT = new VelocityTorqueCurrentFOC(20);
+    private final VelocityTorqueCurrentFOC REVERSE = new VelocityTorqueCurrentFOC(-15);
 
     private SimpleMotorFeedforward _ff = new SimpleMotorFeedforward(0, 0);
     private boolean _isReadyToShoot = false;
@@ -94,7 +95,7 @@ public class Shooter extends SubsystemBase {
         _hoodMap.put(2.0, .23);
         _hoodMap.put(3.0, .32);
         _hoodMap.put(3.5, .4);
-        _hoodMap.put(4.0, 0.46);//.48
+        _hoodMap.put(4.0, 0.44);//.46
         _hoodMap.put(5.0, 0.55);
 
         _feedHoodMap.put(5.0, .55);
@@ -177,9 +178,9 @@ public class Shooter extends SubsystemBase {
 
         var hoodSlot0 = hoodConfig.Slot0;
 
-        hoodSlot0.kP = 1.5;
+        hoodSlot0.kP = 1.4;
         //raise
-        hoodSlot0.kD = 0.02;
+        hoodSlot0.kD = 0.012;
         
         _hoodMotor.getConfigurator().apply(hoodConfig);
         _hoodMotor.setNeutralMode(NeutralModeValue.Brake);
@@ -235,6 +236,12 @@ public class Shooter extends SubsystemBase {
 
     private void stop() {
         _leftShooter1.set(0);
+       // _rightShooter1.set(0);
+        _hoodMotor.setControl(HOOD_DOWN);
+    }
+
+    private void reverse() {
+        _leftShooter1.setControl(REVERSE);
        // _rightShooter1.set(0);
         _hoodMotor.setControl(HOOD_DOWN);
     }
@@ -309,6 +316,9 @@ public class Shooter extends SubsystemBase {
                 break;
             case SHOWCASE:
                 showcase();
+                break;
+            case REVERSE:
+                reverse();
                 break;
             default:
                 setIdle();

@@ -7,13 +7,13 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Right Trench Start to Far Right Mid Prep"
+            "pathName": "Comp Left Trench Start to Left Far Mid"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "Right Far Mid to Bump Shoot"
+            "pathName": "Left Far Mid to Left Bump Shoot"
           }
         },
         {
@@ -35,12 +35,6 @@
           }
         },
         {
-          "type": "wait",
-          "data": {
-            "waitTime": 1.5
-          }
-        },
-        {
           "type": "named",
           "data": {
             "name": "Injecting"
@@ -49,19 +43,19 @@
         {
           "type": "wait",
           "data": {
-            "waitTime": 2.2
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "Stop Shooter"
+            "waitTime": 3.75
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "Copy of Right Bump Shoot to Right Mid"
+            "pathName": "Left bump Shoot to depot"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Left Depot Shoot to Side Climb"
           }
         },
         {
@@ -83,12 +77,6 @@
           }
         },
         {
-          "type": "wait",
-          "data": {
-            "waitTime": 2.0
-          }
-        },
-        {
           "type": "named",
           "data": {
             "name": "Injecting"
@@ -97,7 +85,7 @@
         {
           "type": "wait",
           "data": {
-            "waitTime": 1.0
+            "waitTime": 2.5
           }
         },
         {
@@ -107,9 +95,15 @@
           }
         },
         {
-          "type": "path",
+          "type": "named",
           "data": {
-            "pathName": "Right End"
+            "name": "IntakeIn"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Auto Climb"
           }
         }
       ]

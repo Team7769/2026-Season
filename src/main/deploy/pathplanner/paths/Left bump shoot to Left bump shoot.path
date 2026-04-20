@@ -3,13 +3,13 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 3.0770859061318907,
-        "y": 5.6060221704102355
+        "x": 2.977699990459773,
+        "y": 5.481789775820089
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.227559596441675,
-        "y": 6.782152166265528
+        "x": 2.1281736807695575,
+        "y": 6.657919771675382
       },
       "isLocked": false,
       "linkedName": "Left Bump Shoot"
@@ -96,12 +96,12 @@
     },
     {
       "anchor": {
-        "x": 3.0770859061318907,
-        "y": 5.6060221704102355
+        "x": 2.977699990459773,
+        "y": 5.481789775820089
       },
       "prevControl": {
-        "x": 4.347389073904132,
-        "y": 5.734284118924165
+        "x": 4.248003158232015,
+        "y": 5.610051724334019
       },
       "nextControl": null,
       "isLocked": false,
@@ -169,13 +169,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -26.913443430619743
+    "rotation": -51.842773412630976
   },
   "reversed": false,
   "folder": null,
   "idealStartingState": {
     "velocity": 0,
-    "rotation": -26.913443430619743
+    "rotation": -51.842773412630976
   },
   "useDefaultConstraints": true
 }

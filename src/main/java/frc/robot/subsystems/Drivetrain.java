@@ -86,6 +86,7 @@ public class Drivetrain extends SubsystemBase {
     private double _xFollow = 0;
     private double _yFollow = 0;
     private DriveTarget _currentDriveTarget;
+    private int _climbTimer = 0;
 
     StructPublisher<Pose2d> publisher = NetworkTableInstance.getDefault()
             .getStructTopic("Robot Pose", Pose2d.struct).publish();
@@ -294,6 +295,7 @@ public class Drivetrain extends SubsystemBase {
         handleCurrentState();
          SmartDashboard.putString("Current State", _currentState.toString());
          SmartDashboard.putString("Current Drive Target", _currentDriveTarget.name());
+         _climbTimer++;
     }
 
     private void updateOdometry() {
@@ -331,7 +333,11 @@ public class Drivetrain extends SubsystemBase {
     public void setWantedState(DrivetrainState wantedState) {
         if (wantedState != _currentState) {
             _currentState = wantedState;
+            if(_currentState == DrivetrainState.CLIMB_ENGAGE){
+                _climbTimer = 0;
+            }
         }
+        
     }
 
     public void setWantedTarget(Translation2d target) {
@@ -612,9 +618,9 @@ public class Drivetrain extends SubsystemBase {
     public boolean isReadyToClimb() {
         // If position is at the ready position
         return _currentState == DrivetrainState.CLIMB_ENGAGE
-                && _targetFollowControllerX.atSetpoint()
+                && ((_targetFollowControllerX.atSetpoint()
                 && _targetFollowControllerY.atSetpoint()
-                && _targetFollowControllerZ.atSetpoint();
+                && _targetFollowControllerZ.atSetpoint()) || _climbTimer>25);
     }
 
     public boolean isStagedForClimb() {

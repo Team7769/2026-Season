@@ -3,16 +3,16 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 3.619024590163934,
-        "y": 4.027811475409836
+        "x": 0.629707732706011,
+        "y": 5.94144963580363
       },
       "prevControl": null,
       "nextControl": {
-        "x": 3.3255506953121823,
-        "y": 3.81707568831213
+        "x": 1.6343679613731696,
+        "y": 5.326776443672172
       },
       "isLocked": false,
-      "linkedName": "Hub Center"
+      "linkedName": "Comp Depot"
     },
     {
       "anchor": {
@@ -20,20 +20,15 @@
         "y": 4.9972834369185195
       },
       "prevControl": {
-        "x": 2.99012279278494,
-        "y": 5.1587879372907945
+        "x": 1.1114045853824204,
+        "y": 5.6108930780432305
       },
       "nextControl": null,
       "isLocked": false,
       "linkedName": "Prep climb"
     }
   ],
-  "rotationTargets": [
-    {
-      "waypointRelativePos": 0.436385422863792,
-      "rotationDegrees": 0.0
-    }
-  ],
+  "rotationTargets": [],
   "constraintZones": [],
   "pointTowardsZones": [],
   "eventMarkers": [],
