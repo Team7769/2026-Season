@@ -122,6 +122,6 @@
     }
   },
   "resetOdom": true,
-  "folder": null,
+  "folder": "Fun Autos",
   "choreoAuto": false
 }

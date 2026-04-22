@@ -1,0 +1,111 @@
+{
+  "version": "2025.0",
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 4.480911965000542,
+        "y": 0.38826159762409707
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 5.4499246428036825,
+        "y": 0.41310807654212456
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 8.704813381065511,
+        "y": 3.2704531521154867
+      },
+      "prevControl": {
+        "x": 8.853892254573687,
+        "y": 2.0157059667550103
+      },
+      "nextControl": {
+        "x": 8.623203518501922,
+        "y": 3.9573361620256926
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 5.7232359109020035,
+        "y": 2.5374820240336247
+      },
+      "prevControl": {
+        "x": 6.804057743836275,
+        "y": 2.6368679397057417
+      },
+      "nextControl": {
+        "x": 5.474286197809396,
+        "y": 2.514590096392925
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 3.1143556245089337,
+        "y": 2.5374820240336247
+      },
+      "prevControl": {
+        "x": 4.803916190934923,
+        "y": 2.698984137000815
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": "Right Bump Shoot"
+    }
+  ],
+  "rotationTargets": [
+    {
+      "waypointRelativePos": 0.5,
+      "rotationDegrees": -131.3365026114735
+    },
+    {
+      "waypointRelativePos": 1.5195734670236054,
+      "rotationDegrees": 27.879266326209944
+    },
+    {
+      "waypointRelativePos": 1.9862685968323133,
+      "rotationDegrees": 0.0
+    }
+  ],
+  "constraintZones": [],
+  "pointTowardsZones": [],
+  "eventMarkers": [
+    {
+      "name": "IntakeOut",
+      "waypointRelativePos": 0.2991489950252099,
+      "endWaypointRelativePos": null,
+      "command": {
+        "type": "named",
+        "data": {
+          "name": "IntakeOut"
+        }
+      }
+    }
+  ],
+  "globalConstraints": {
+    "maxVelocity": 4.3,
+    "maxAcceleration": 4.5,
+    "maxAngularVelocity": 540.0,
+    "maxAngularAcceleration": 720.0,
+    "nominalVoltage": 12.0,
+    "unlimited": false
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": 52.765166018425376
+  },
+  "reversed": false,
+  "folder": null,
+  "idealStartingState": {
+    "velocity": 0,
+    "rotation": -90.0
+  },
+  "useDefaultConstraints": true
+}

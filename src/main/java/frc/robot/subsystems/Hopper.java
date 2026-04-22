@@ -43,10 +43,30 @@ public class Hopper extends SubsystemBase {
     private final PositionDutyCycle INTAKE_IN = new PositionDutyCycle(.01);
     private final PositionDutyCycle INTAKE_OUT = new PositionDutyCycle(16);//.6
     private final PositionDutyCycle INTAKE_SHOOT = new PositionDutyCycle(7.4);
+    private double _intakePosition = 0;
+    private CurrentLimitsConfigs _lowSlideLimits = new CurrentLimitsConfigs()
+                                .withStatorCurrentLimit(5)//60
+                                .withSupplyCurrentLimit(30)
+                                .withSupplyCurrentLowerTime(0)
+                                .withSupplyCurrentLowerLimit(20);
+    private CurrentLimitsConfigs _highSlideLimits = new CurrentLimitsConfigs()
+                                .withStatorCurrentLimit(60)//60
+                                .withSupplyCurrentLimit(30)
+                                .withSupplyCurrentLowerTime(0)
+                                .withSupplyCurrentLowerLimit(20);
+        
 
     public void setWantedState(HopperState wantedState) {
         if (wantedState != _currentState) {
             _currentState = wantedState;
+            switch (wantedState) {
+                case FLOOR_INTAKE:
+                    _slide.getConfigurator().apply(_lowSlideLimits);
+                    break;
+                default:
+                _slide.getConfigurator().apply(_highSlideLimits);
+                    break;
+            }
         }
     }
 
@@ -66,6 +86,7 @@ public class Hopper extends SubsystemBase {
                                 .withSupplyCurrentLimit(30)
                                 .withSupplyCurrentLowerTime(1)
                                 .withSupplyCurrentLowerLimit(20);
+        
         var slideSlot0Configs = new Slot0Configs()
                                  .withKP(0.25)
                                  .withKD(0.001);
@@ -129,6 +150,7 @@ public class Hopper extends SubsystemBase {
         if(_timer>60){//50
             _timer = 0;
         }
+        _intakePosition = _slide.getPosition().getValueAsDouble();
     }
 
     private void handleCurrentState() {
@@ -138,6 +160,9 @@ public class Hopper extends SubsystemBase {
                 break;
             case FLOOR_INTAKE:
                 handleFloorIntake();
+                break;
+            case DEPLOY_INTAKE:
+                handleDeployIntake();
                 break;
             case INJECTING:
                 handleInject();
@@ -162,6 +187,19 @@ public class Hopper extends SubsystemBase {
         _intake.setControl(INTAKE);
         _floor.setControl(HALT);
         _injector.setControl(HALT);
+        if(_intakePosition<13){
+            setWantedState(HopperState.DEPLOY_INTAKE);
+        }
+    }
+
+    private void handleDeployIntake() {
+        _slide.setControl(INTAKE_OUT);
+        _intake.setControl(INTAKE);
+        _floor.setControl(HALT);
+        _injector.setControl(HALT);
+        if(_intakePosition>7){
+            setWantedState(HopperState.FLOOR_INTAKE);
+        }
     }
 
     private void handleIdle() {
