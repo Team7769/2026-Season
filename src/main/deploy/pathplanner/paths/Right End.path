@@ -8,8 +8,8 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 1.9217246364435308,
-        "y": 1.195772162460047
+        "x": 1.787262719036384,
+        "y": 1.28518583294255
       },
       "isLocked": false,
       "linkedName": "Right Bump Shoot"
@@ -20,12 +20,12 @@
         "y": 0.6322541230558307
       },
       "prevControl": {
-        "x": 3.060029693805902,
-        "y": 0.6655148904988867
+        "x": 3.146523461381097,
+        "y": 0.6460937581426895
       },
       "nextControl": {
-        "x": 4.083368302312074,
-        "y": 0.5994566684273446
+        "x": 4.1545878360661215,
+        "y": 0.6135554958697563
       },
       "isLocked": false,
       "linkedName": null
@@ -36,24 +36,40 @@
         "y": 0.6322541230558307
       },
       "prevControl": {
-        "x": 4.090731330156363,
-        "y": 0.5887727849492799
+        "x": 4.217516420726891,
+        "y": 0.6073614709441394
       },
       "nextControl": {
-        "x": 6.85881091328706,
-        "y": 0.6757354611623816
+        "x": 6.794824678408731,
+        "y": 0.6583901430121768
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 7.015252814639524,
-        "y": 0.7733820208535496
+        "x": 7.077369011934596,
+        "y": 0.7609587813945335
       },
       "prevControl": {
-        "x": 6.015252814639524,
-        "y": 0.7733820208535497
+        "x": 6.697068040853535,
+        "y": 0.5979726509312211
+      },
+      "nextControl": {
+        "x": 7.860033097852519,
+        "y": 1.0963862467879288
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 8.282423239459014,
+        "y": 3.3822623072466182
+      },
+      "prevControl": {
+        "x": 7.984863789338096,
+        "y": 2.3860334196919495
       },
       "nextControl": null,
       "isLocked": false,
@@ -72,7 +88,19 @@
   ],
   "constraintZones": [],
   "pointTowardsZones": [],
-  "eventMarkers": [],
+  "eventMarkers": [
+    {
+      "name": "IntakeOut",
+      "waypointRelativePos": 1.1352327197470462,
+      "endWaypointRelativePos": null,
+      "command": {
+        "type": "named",
+        "data": {
+          "name": "IntakeOut"
+        }
+      }
+    }
+  ],
   "globalConstraints": {
     "maxVelocity": 4.3,
     "maxAcceleration": 4.5,
@@ -83,7 +111,7 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -128.48655003760535
+    "rotation": -86.72951207681646
   },
   "reversed": false,
   "folder": null,

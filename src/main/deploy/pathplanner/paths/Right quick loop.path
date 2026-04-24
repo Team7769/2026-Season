@@ -1,0 +1,151 @@
+{
+  "version": "2025.0",
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 3.1143556245089337,
+        "y": 2.5374820240336247
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 2.9077235401227477,
+        "y": 1.4628516413845356
+      },
+      "isLocked": false,
+      "linkedName": "Right Bump Shoot"
+    },
+    {
+      "anchor": {
+        "x": 3.5118992871974015,
+        "y": 0.8106517392305932
+      },
+      "prevControl": {
+        "x": 3.1256252583882755,
+        "y": 1.0356086032457985
+      },
+      "nextControl": {
+        "x": 3.7829723389235275,
+        "y": 0.6527852012618356
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 6.058663376295398,
+        "y": 0.8106517392305932
+      },
+      "prevControl": {
+        "x": 5.000153376138023,
+        "y": 0.3911818633497468
+      },
+      "nextControl": {
+        "x": 7.2325239772557355,
+        "y": 1.27583313620657
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 8.282423239459014,
+        "y": 3.121374278607312
+      },
+      "prevControl": {
+        "x": 8.840658762738883,
+        "y": 2.346095449746776
+      },
+      "nextControl": {
+        "x": 7.814657655582219,
+        "y": 3.7710082394103677
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 5.7232359109020035,
+        "y": 2.5374820240336247
+      },
+      "prevControl": {
+        "x": 6.375643862769366,
+        "y": 2.80327345631938
+      },
+      "nextControl": {
+        "x": 4.906692399702056,
+        "y": 2.2048216560165335
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 3.1143556245089337,
+        "y": 2.5374820240336247
+      },
+      "prevControl": {
+        "x": 4.528504296252534,
+        "y": 2.418690091334328
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": "Right Bump Shoot"
+    }
+  ],
+  "rotationTargets": [
+    {
+      "waypointRelativePos": 1,
+      "rotationDegrees": 177.79740183823426
+    },
+    {
+      "waypointRelativePos": 2.0,
+      "rotationDegrees": -176.5317707410828
+    },
+    {
+      "waypointRelativePos": 3,
+      "rotationDegrees": -30.379126011368292
+    },
+    {
+      "waypointRelativePos": 3.5195734670236054,
+      "rotationDegrees": 27.879266326209944
+    },
+    {
+      "waypointRelativePos": 3.9862685968323133,
+      "rotationDegrees": 0.0
+    }
+  ],
+  "constraintZones": [],
+  "pointTowardsZones": [],
+  "eventMarkers": [
+    {
+      "name": "IntakeOut",
+      "waypointRelativePos": 0.8,
+      "endWaypointRelativePos": null,
+      "command": {
+        "type": "named",
+        "data": {
+          "name": "IntakeOut"
+        }
+      }
+    }
+  ],
+  "globalConstraints": {
+    "maxVelocity": 4.5,
+    "maxAcceleration": 6.0,
+    "maxAngularVelocity": 720.0,
+    "maxAngularAcceleration": 720.0,
+    "nominalVoltage": 12.0,
+    "unlimited": false
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": 52.765166018425376
+  },
+  "reversed": false,
+  "folder": null,
+  "idealStartingState": {
+    "velocity": 0,
+    "rotation": 52.765166018425376
+  },
+  "useDefaultConstraints": false
+}
