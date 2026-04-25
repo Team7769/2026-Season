@@ -3,29 +3,29 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 0.8409028035092596,
-        "y": 0.6739961051814316
+        "x": 2.977699990459773,
+        "y": 5.481789775820089
       },
       "prevControl": null,
       "nextControl": {
-        "x": 1.1391220541207652,
-        "y": 0.8064314222585649
+        "x": 3.3416541567351925,
+        "y": 5.699861324142704
       },
       "isLocked": false,
-      "linkedName": "Outpost"
+      "linkedName": "Left Bump Shoot"
     },
     {
       "anchor": {
-        "x": 1.9465711153615608,
-        "y": 1.605739064607528
+        "x": 2.10807322832875,
+        "y": 4.9972834369185195
       },
       "prevControl": {
-        "x": 1.6882916530193348,
-        "y": 1.3764985185455527
+        "x": 1.8948569205468875,
+        "y": 4.866750659058436
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "outpost shoot"
+      "linkedName": "Prep climb"
     }
   ],
   "rotationTargets": [],
@@ -42,13 +42,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 45.000000000000135
+    "rotation": -53.61564818416418
   },
   "reversed": false,
   "folder": null,
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 0.0
+    "rotation": -51.842773412630976
   },
   "useDefaultConstraints": true
 }

@@ -3,84 +3,88 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 6.468630278442881,
-        "y": 4.574893295312021
+        "x": 4.4560654860825135,
+        "y": 7.643433441688632
       },
       "prevControl": null,
       "nextControl": {
-        "x": 6.654358525715388,
-        "y": 6.258027267610125
+        "x": 5.289052239790887,
+        "y": 7.305440818725194
       },
       "isLocked": false,
-      "linkedName": "Close Mid"
+      "linkedName": "Left Far Trench Start"
     },
     {
       "anchor": {
-        "x": 6.021393657918354,
-        "y": 7.134080623869034
+        "x": 8.43150211296719,
+        "y": 5.121515831508666
       },
       "prevControl": {
-        "x": 6.67614451195779,
-        "y": 6.859507685078301
+        "x": 8.869943319316262,
+        "y": 6.573803289351307
       },
       "nextControl": {
-        "x": 5.636273234688901,
-        "y": 7.2955827368362245
+        "x": 8.147739774336651,
+        "y": 4.18158482266749
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 3.996405626098972,
-        "y": 7.27
+        "x": 5.673542953065945,
+        "y": 5.481789775820089
       },
       "prevControl": {
-        "x": 4.252837057049123,
-        "y": 7.229746228862476
+        "x": 6.337016548298345,
+        "y": 5.279875854947543
       },
       "nextControl": {
-        "x": 1.8596084391484582,
-        "y": 7.605427465393395
+        "x": 4.716139300320952,
+        "y": 5.773154988803021
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 0.629707732706011,
-        "y": 5.94144963580363
+        "x": 2.977699990459773,
+        "y": 5.481789775820089
       },
       "prevControl": {
-        "x": 1.97141759427959,
-        "y": 6.003565833098704
+        "x": 4.741389840038271,
+        "y": 5.368252860047942
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "Comp Depot"
+      "linkedName": "Left Bump Shoot"
     }
   ],
   "rotationTargets": [
     {
-      "waypointRelativePos": 1.4028996845714208,
-      "rotationDegrees": -90.0
+      "waypointRelativePos": 0.5,
+      "rotationDegrees": 136.9253019204552
     },
     {
-      "waypointRelativePos": 1.9862685968323042,
-      "rotationDegrees": -90.0
+      "waypointRelativePos": 1.5195734670236054,
+      "rotationDegrees": 27.879266326209944
+    },
+    {
+      "waypointRelativePos": 1.9862685968323133,
+      "rotationDegrees": 0.0
     }
   ],
   "constraintZones": [],
   "pointTowardsZones": [],
   "eventMarkers": [
     {
-      "name": "PrepShooter",
-      "waypointRelativePos": 3.0,
+      "name": "IntakeOut",
+      "waypointRelativePos": 0.22136370702730837,
       "endWaypointRelativePos": null,
       "command": {
         "type": "named",
         "data": {
-          "name": "PrepShooter"
+          "name": "IntakeOut"
         }
       }
     }
@@ -95,13 +99,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 0.0
+    "rotation": -51.842773412630976
   },
   "reversed": false,
   "folder": null,
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 92.86240522611169
+    "rotation": 90.0
   },
   "useDefaultConstraints": true
 }

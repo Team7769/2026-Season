@@ -8,8 +8,8 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.0931270061982516,
-        "y": 6.368112830072963
+        "x": 2.4028584645209863,
+        "y": 6.254746501641302
       },
       "isLocked": false,
       "linkedName": "Left Bump Shoot"
@@ -20,12 +20,12 @@
         "y": 7.260083259398069
       },
       "prevControl": {
-        "x": 2.9528150484453173,
-        "y": 7.314306260485213
+        "x": 2.942323935625773,
+        "y": 7.11748749007473
       },
       "nextControl": {
-        "x": 4.381526049328426,
-        "y": 7.2086200606231206
+        "x": 4.208793920026086,
+        "y": 7.360383375417438
       },
       "isLocked": false,
       "linkedName": null
@@ -36,24 +36,24 @@
         "y": 7.260083259398069
       },
       "prevControl": {
-        "x": 5.114497177410288,
-        "y": 7.245889779000164
+        "x": 5.235949795140252,
+        "y": 7.595508011878094
       },
       "nextControl": {
-        "x": 7.054855235248193,
-        "y": 7.277559036730172
+        "x": 7.332893411347346,
+        "y": 6.655396944562472
       },
       "isLocked": false,
       "linkedName": "Prep Left Trench"
     },
     {
       "anchor": {
-        "x": 7.673684505967298,
-        "y": 7.260083259398069
+        "x": 8.096074647573795,
+        "y": 4.599739774230051
       },
       "prevControl": {
-        "x": 6.673684505967298,
-        "y": 7.260083259398069
+        "x": 7.710962918105108,
+        "y": 4.913186880810874
       },
       "nextControl": null,
       "isLocked": false,
@@ -72,18 +72,30 @@
   ],
   "constraintZones": [],
   "pointTowardsZones": [],
-  "eventMarkers": [],
+  "eventMarkers": [
+    {
+      "name": "IntakeOut",
+      "waypointRelativePos": 0.8592030686100649,
+      "endWaypointRelativePos": null,
+      "command": {
+        "type": "named",
+        "data": {
+          "name": "IntakeOut"
+        }
+      }
+    }
+  ],
   "globalConstraints": {
     "maxVelocity": 4.3,
     "maxAcceleration": 4.5,
-    "maxAngularVelocity": 540.0,
+    "maxAngularVelocity": 520.0,
     "maxAngularAcceleration": 720.0,
     "nominalVoltage": 12.0,
     "unlimited": false
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 133.09536730666434
+    "rotation": 93.20515094254891
   },
   "reversed": false,
   "folder": null,

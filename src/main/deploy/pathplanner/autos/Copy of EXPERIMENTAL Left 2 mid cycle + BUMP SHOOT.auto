@@ -7,13 +7,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Right Trench Start to Far Right Mid Prep"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "Right Far Mid to Bump Shoot"
+            "pathName": "VS Tall boy first pass Left"
           }
         },
         {
@@ -37,7 +31,7 @@
         {
           "type": "wait",
           "data": {
-            "waitTime": 1.5
+            "waitTime": 1.2
           }
         },
         {
@@ -49,7 +43,7 @@
         {
           "type": "wait",
           "data": {
-            "waitTime": 2.2
+            "waitTime": 2.5
           }
         },
         {
@@ -67,7 +61,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Copy of Right Bump Shoot to Right Mid"
+            "pathName": "Copy of Left bump shoot to Left bump shoot"
           }
         },
         {
@@ -91,7 +85,7 @@
         {
           "type": "wait",
           "data": {
-            "waitTime": 2.0
+            "waitTime": 1.0
           }
         },
         {
@@ -103,7 +97,7 @@
         {
           "type": "wait",
           "data": {
-            "waitTime": 1.0
+            "waitTime": 2.0
           }
         },
         {
@@ -115,7 +109,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Right End"
+            "pathName": "Left End"
           }
         }
       ]

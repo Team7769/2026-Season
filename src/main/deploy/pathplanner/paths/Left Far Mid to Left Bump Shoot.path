@@ -71,7 +71,7 @@
     },
     {
       "waypointRelativePos": 1.95,
-      "rotationDegrees": -19.958887887713054
+      "rotationDegrees": -19.958887887713058
     }
   ],
   "constraintZones": [
@@ -119,7 +119,7 @@
   "globalConstraints": {
     "maxVelocity": 4.3,
     "maxAcceleration": 4.5,
-    "maxAngularVelocity": 540.0,
+    "maxAngularVelocity": 520.0,
     "maxAngularAcceleration": 720.0,
     "nominalVoltage": 12.0,
     "unlimited": false

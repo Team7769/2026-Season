@@ -55,6 +55,12 @@
         {
           "type": "named",
           "data": {
+            "name": "Idle"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
             "name": "Stop Shooter"
           }
         },

@@ -7,13 +7,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Right Trench Start to Far Right Mid Prep"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "Right Far Mid to Bump Shoot"
+            "pathName": "VS Tall boy first pass Left"
           }
         },
         {
@@ -32,72 +26,6 @@
           "type": "named",
           "data": {
             "name": "Start Shooting"
-          }
-        },
-        {
-          "type": "wait",
-          "data": {
-            "waitTime": 1.5
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "Injecting"
-          }
-        },
-        {
-          "type": "wait",
-          "data": {
-            "waitTime": 2.2
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "Idle"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "Stop Shooter"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "Copy of Right Bump Shoot to Right Mid"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "PrepShooter"
-          }
-        },
-        {
-          "type": "wait",
-          "data": {
-            "waitTime": 0.05
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "Start Shooting"
-          }
-        },
-        {
-          "type": "wait",
-          "data": {
-            "waitTime": 2.0
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "Injecting"
           }
         },
         {
@@ -109,19 +37,79 @@
         {
           "type": "named",
           "data": {
+            "name": "Injecting"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 2.5
+          }
+        },
+        {
+          "type": "named",
+          "data": {
             "name": "Idle"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "Right End"
+            "pathName": "Rush Loop Left"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "PrepShooter"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 0.05
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Start Shooting"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 1.0
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Injecting"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 2.5
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Idle"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Left End"
           }
         }
       ]
     }
   },
   "resetOdom": true,
-  "folder": "Good Autos",
+  "folder": null,
   "choreoAuto": false
 }

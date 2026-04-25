@@ -47,6 +47,12 @@
           }
         },
         {
+          "type": "named",
+          "data": {
+            "name": "Idle"
+          }
+        },
+        {
           "type": "path",
           "data": {
             "pathName": "Left bump Shoot to depot"
