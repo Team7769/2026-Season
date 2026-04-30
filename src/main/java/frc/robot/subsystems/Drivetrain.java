@@ -311,10 +311,10 @@ public class Drivetrain extends SubsystemBase {
             m_field.getObject("visionTarget").setPose(visionMeasurement.pose);
         }
         publisher.set(getPose());
-        // m_field.setRobotPose(getPose());
-        // m_field.getObject("targetPose").setPose(_target);
-        // m_field.getObject("climbStagePose").setPose(_climbTargetStage);
-        // m_field.getObject("climbEngagePose").setPose(_climbTargetEngage);
+         m_field.setRobotPose(getPose());
+         m_field.getObject("targetPose").setPose(_target);
+         m_field.getObject("climbStagePose").setPose(_climbTargetStage);
+         m_field.getObject("climbEngagePose").setPose(_climbTargetEngage);
 
         SmartDashboard.putString("climbType", _currentClimb.name());
     }
