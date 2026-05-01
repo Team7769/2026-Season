@@ -50,7 +50,7 @@ public class Hopper extends SubsystemBase {
                                 .withSupplyCurrentLowerTime(0)
                                 .withSupplyCurrentLowerLimit(20);
     private CurrentLimitsConfigs _highSlideLimits = new CurrentLimitsConfigs()
-                                .withStatorCurrentLimit(60)//60
+                                .withStatorCurrentLimit(50)//60
                                 .withSupplyCurrentLimit(30)
                                 .withSupplyCurrentLowerTime(0)
                                 .withSupplyCurrentLowerLimit(20);
