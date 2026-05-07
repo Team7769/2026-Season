@@ -7,13 +7,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Right Trench Start to Far Right Mid Prep"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "Right Center Mid to Right Trench Shoot"
+            "pathName": "VS Tall boy first pass Left"
           }
         },
         {
@@ -37,7 +31,7 @@
         {
           "type": "wait",
           "data": {
-            "waitTime": 0.2
+            "waitTime": 0.75
           }
         },
         {
@@ -49,7 +43,7 @@
         {
           "type": "wait",
           "data": {
-            "waitTime": 2.5
+            "waitTime": 2.0
           }
         },
         {
@@ -59,21 +53,9 @@
           }
         },
         {
-          "type": "wait",
-          "data": {
-            "waitTime": 0.05
-          }
-        },
-        {
           "type": "path",
           "data": {
-            "pathName": "Right Trench Shoot to Close Right Mid"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "Right Close Mid to Right Trench Shoot"
+            "pathName": "Left bump shoot to Left bump shoot"
           }
         },
         {
@@ -97,7 +79,7 @@
         {
           "type": "wait",
           "data": {
-            "waitTime": 0.3
+            "waitTime": 0.5
           }
         },
         {
@@ -109,7 +91,7 @@
         {
           "type": "wait",
           "data": {
-            "waitTime": 2.25
+            "waitTime": 2.0
           }
         },
         {
@@ -119,21 +101,27 @@
           }
         },
         {
-          "type": "wait",
+          "type": "path",
           "data": {
-            "waitTime": 0.05
+            "pathName": "Left bump shoot to prep climb"
           }
         },
         {
-          "type": "path",
+          "type": "named",
           "data": {
-            "pathName": "Right Trench Shoot to Close Right Mid"
+            "name": "IntakeIn"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Auto Climb"
           }
         }
       ]
     }
   },
   "resetOdom": true,
-  "folder": "Fun Autos",
+  "folder": "Good Autos",
   "choreoAuto": false
 }

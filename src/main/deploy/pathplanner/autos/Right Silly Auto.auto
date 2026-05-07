@@ -7,19 +7,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Right Start to Outpost"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "Outpost to Depot"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "Depot to Prep Shoot"
+            "pathName": "VS Tall boy first pass"
           }
         },
         {
@@ -31,7 +19,7 @@
         {
           "type": "wait",
           "data": {
-            "waitTime": 0.3
+            "waitTime": 0.05
           }
         },
         {
@@ -43,7 +31,7 @@
         {
           "type": "wait",
           "data": {
-            "waitTime": 0.4
+            "waitTime": 0.8
           }
         },
         {
@@ -55,7 +43,7 @@
         {
           "type": "wait",
           "data": {
-            "waitTime": 3.0
+            "waitTime": 2.7
           }
         },
         {
@@ -65,9 +53,57 @@
           }
         },
         {
+          "type": "path",
+          "data": {
+            "pathName": "Rush Loop Right"
+          }
+        },
+        {
           "type": "named",
           "data": {
-            "name": "Auto Climb"
+            "name": "PrepShooter"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 0.05
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Start Shooting"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 0.8
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Injecting"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 2.7
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Idle"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Right End"
           }
         }
       ]

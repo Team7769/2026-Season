@@ -7,13 +7,19 @@
         {
           "type": "path",
           "data": {
-            "pathName": "SHOP Right Trench Start to Far Right Mid Prep"
+            "pathName": "Right Start to Outpost"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "SHOP Right Far Mid to Bump Shoot"
+            "pathName": "Outpost to Depot"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Depot to Prep Shoot"
           }
         },
         {
@@ -25,13 +31,19 @@
         {
           "type": "wait",
           "data": {
-            "waitTime": 0.05
+            "waitTime": 0.3
           }
         },
         {
           "type": "named",
           "data": {
             "name": "Start Shooting"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 0.4
           }
         },
         {
@@ -43,7 +55,7 @@
         {
           "type": "wait",
           "data": {
-            "waitTime": 4.0
+            "waitTime": 3.0
           }
         },
         {
@@ -53,39 +65,9 @@
           }
         },
         {
-          "type": "path",
-          "data": {
-            "pathName": "SHOP Right Bump Shoot to Right Mid"
-          }
-        },
-        {
           "type": "named",
           "data": {
-            "name": "PrepShooter"
-          }
-        },
-        {
-          "type": "wait",
-          "data": {
-            "waitTime": 0.05
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "Start Shooting"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "Injecting"
-          }
-        },
-        {
-          "type": "wait",
-          "data": {
-            "waitTime": 3.5
+            "name": "Auto Climb"
           }
         }
       ]

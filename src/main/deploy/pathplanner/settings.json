@@ -3,10 +3,13 @@
   "robotLength": 0.816,
   "holonomicMode": true,
   "pathFolders": [],
-  "autoFolders": [],
+  "autoFolders": [
+    "Good Autos",
+    "Fun Autos"
+  ],
   "defaultMaxVel": 4.3,
   "defaultMaxAccel": 4.5,
-  "defaultMaxAngVel": 540.0,
+  "defaultMaxAngVel": 520.0,
   "defaultMaxAngAccel": 720.0,
   "defaultNominalVoltage": 12.0,
   "robotMass": 49.895,

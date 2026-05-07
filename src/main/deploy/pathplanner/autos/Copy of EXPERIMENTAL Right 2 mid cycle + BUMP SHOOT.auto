@@ -7,13 +7,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Right Trench Start to Far Right Mid Prep"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "Right Center Mid to Right Trench Shoot"
+            "pathName": "VS Tall boy first pass"
           }
         },
         {
@@ -37,7 +31,7 @@
         {
           "type": "wait",
           "data": {
-            "waitTime": 0.2
+            "waitTime": 1.0
           }
         },
         {
@@ -49,7 +43,7 @@
         {
           "type": "wait",
           "data": {
-            "waitTime": 2.5
+            "waitTime": 2.7
           }
         },
         {
@@ -59,21 +53,15 @@
           }
         },
         {
-          "type": "wait",
+          "type": "named",
           "data": {
-            "waitTime": 0.05
+            "name": "Stop Shooter"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "Right Trench Shoot to Close Right Mid"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "Right Close Mid to Right Trench Shoot"
+            "pathName": "Copy of Right Bump Shoot to Right Mid"
           }
         },
         {
@@ -97,7 +85,7 @@
         {
           "type": "wait",
           "data": {
-            "waitTime": 0.3
+            "waitTime": 1.0
           }
         },
         {
@@ -109,7 +97,7 @@
         {
           "type": "wait",
           "data": {
-            "waitTime": 2.25
+            "waitTime": 2.0
           }
         },
         {
@@ -119,21 +107,15 @@
           }
         },
         {
-          "type": "wait",
-          "data": {
-            "waitTime": 0.05
-          }
-        },
-        {
           "type": "path",
           "data": {
-            "pathName": "Right Trench Shoot to Close Right Mid"
+            "pathName": "Right End"
           }
         }
       ]
     }
   },
   "resetOdom": true,
-  "folder": "Fun Autos",
+  "folder": "Good Autos",
   "choreoAuto": false
 }

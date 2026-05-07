@@ -3,84 +3,88 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 6.468630278442881,
-        "y": 4.574893295312021
+        "x": 4.480911965000542,
+        "y": 0.38826159762409707
       },
       "prevControl": null,
       "nextControl": {
-        "x": 6.654358525715388,
-        "y": 6.258027267610125
-      },
-      "isLocked": false,
-      "linkedName": "Close Mid"
-    },
-    {
-      "anchor": {
-        "x": 6.021393657918354,
-        "y": 7.134080623869034
-      },
-      "prevControl": {
-        "x": 6.67614451195779,
-        "y": 6.859507685078301
-      },
-      "nextControl": {
-        "x": 5.636273234688901,
-        "y": 7.2955827368362245
+        "x": 4.97814451344103,
+        "y": 0.2865289391827095
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 3.996405626098972,
-        "y": 7.27
+        "x": 8.630273944311423,
+        "y": 3.2207601942794293
       },
       "prevControl": {
-        "x": 4.252837057049123,
-        "y": 7.229746228862476
+        "x": 9.306628639430317,
+        "y": 1.8977124350727614
       },
       "nextControl": {
-        "x": 1.8596084391484582,
-        "y": 7.605427465393395
+        "x": 8.161700074271193,
+        "y": 4.137358560866571
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 0.629707732706011,
-        "y": 5.94144963580363
+        "x": 5.7232359109020035,
+        "y": 2.5374820240336247
       },
       "prevControl": {
-        "x": 1.97141759427959,
-        "y": 6.003565833098704
+        "x": 6.790218714845086,
+        "y": 2.5736509326418657
+      },
+      "nextControl": {
+        "x": 4.990264782820141,
+        "y": 2.512635545115595
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 3.1143556245089337,
+        "y": 2.5374820240336247
+      },
+      "prevControl": {
+        "x": 4.543028162295616,
+        "y": 2.5995982213286983
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "Comp Depot"
+      "linkedName": "Right Bump Shoot"
     }
   ],
   "rotationTargets": [
     {
-      "waypointRelativePos": 1.4028996845714208,
-      "rotationDegrees": -90.0
+      "waypointRelativePos": 0.5,
+      "rotationDegrees": -131.3365026114735
     },
     {
-      "waypointRelativePos": 1.9862685968323042,
-      "rotationDegrees": -90.0
+      "waypointRelativePos": 1.5195734670236054,
+      "rotationDegrees": 27.879266326209944
+    },
+    {
+      "waypointRelativePos": 1.9862685968323133,
+      "rotationDegrees": 0.0
     }
   ],
   "constraintZones": [],
   "pointTowardsZones": [],
   "eventMarkers": [
     {
-      "name": "PrepShooter",
-      "waypointRelativePos": 3.0,
+      "name": "IntakeOut",
+      "waypointRelativePos": 0.2446992934266794,
       "endWaypointRelativePos": null,
       "command": {
         "type": "named",
         "data": {
-          "name": "PrepShooter"
+          "name": "IntakeOut"
         }
       }
     }
@@ -95,13 +99,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 0.0
+    "rotation": 52.765166018425376
   },
   "reversed": false,
   "folder": null,
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 92.86240522611169
+    "rotation": -90.0
   },
   "useDefaultConstraints": true
 }

@@ -155,7 +155,7 @@ public class RobotContainer {
     // Intake out
     DRIVER_CONTROLLER.leftBumper().onTrue(
         Commands.runOnce(() -> {
-          HOPPER.setWantedState(HopperState.FLOOR_INTAKE);
+          HOPPER.setWantedState(HopperState.DEPLOY_INTAKE);
           SHOOTER.setWantedState(ShooterState.IDLE);
         }));
 
@@ -183,7 +183,7 @@ public class RobotContainer {
     // Baby Bird
     DRIVER_CONTROLLER.y().onTrue(
       Commands.runOnce(() -> HOPPER.setWantedState(HopperState.EMERGENCY))
-    ).onFalse(Commands.runOnce(() -> HOPPER.setWantedState(HopperState.FLOOR_INTAKE)));
+    ).onFalse(Commands.runOnce(() -> HOPPER.setWantedState(HopperState.DEPLOY_INTAKE)));
 
     // Reseed heading
     DRIVER_CONTROLLER.back().onTrue(
@@ -235,7 +235,7 @@ public class RobotContainer {
         SHOOTER.setWantedState(ShooterState.REVERSE);
       })
     ).onFalse(Commands.runOnce(() -> 
-    {HOPPER.setWantedState(HopperState.FLOOR_INTAKE);
+    {HOPPER.setWantedState(HopperState.DEPLOY_INTAKE);
       SHOOTER.setWantedState(ShooterState.IDLE);
     })
   );
@@ -309,7 +309,7 @@ public class RobotContainer {
 
   private void registerCompNamedCommands() {
     NamedCommands.registerCommand("IntakeOut",
-        Commands.runOnce(() -> HOPPER.setWantedState(HopperState.FLOOR_INTAKE)));
+        Commands.runOnce(() -> HOPPER.setWantedState(HopperState.DEPLOY_INTAKE)));
 
     NamedCommands.registerCommand("IntakeIn",
         Commands.runOnce(() -> HOPPER.setWantedState(HopperState.STOW)));

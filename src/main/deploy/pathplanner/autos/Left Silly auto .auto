@@ -7,13 +7,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Right Trench Start to Far Right Mid Prep"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "Right Center Mid to Right Trench Shoot"
+            "pathName": "VS Tall boy first pass Left"
           }
         },
         {
@@ -37,7 +31,7 @@
         {
           "type": "wait",
           "data": {
-            "waitTime": 0.2
+            "waitTime": 0.8
           }
         },
         {
@@ -49,7 +43,7 @@
         {
           "type": "wait",
           "data": {
-            "waitTime": 2.5
+            "waitTime": 2.7
           }
         },
         {
@@ -59,21 +53,9 @@
           }
         },
         {
-          "type": "wait",
-          "data": {
-            "waitTime": 0.05
-          }
-        },
-        {
           "type": "path",
           "data": {
-            "pathName": "Right Trench Shoot to Close Right Mid"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "Right Close Mid to Right Trench Shoot"
+            "pathName": "Rush Loop Left"
           }
         },
         {
@@ -97,7 +79,7 @@
         {
           "type": "wait",
           "data": {
-            "waitTime": 0.3
+            "waitTime": 0.8
           }
         },
         {
@@ -109,7 +91,7 @@
         {
           "type": "wait",
           "data": {
-            "waitTime": 2.25
+            "waitTime": 2.7
           }
         },
         {
@@ -119,21 +101,15 @@
           }
         },
         {
-          "type": "wait",
-          "data": {
-            "waitTime": 0.05
-          }
-        },
-        {
           "type": "path",
           "data": {
-            "pathName": "Right Trench Shoot to Close Right Mid"
+            "pathName": "Left End"
           }
         }
       ]
     }
   },
   "resetOdom": true,
-  "folder": "Fun Autos",
+  "folder": null,
   "choreoAuto": false
 }
